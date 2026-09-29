@@ -1,0 +1,51 @@
+# An example ICP for a fictional vendor. The pipeline reads everything that is
+# specific to a company from a file like this one; point ICP_SCOUT_CONFIG at
+# your own copy to scout a different market.
+
+vendor:
+  name: Helio Desk
+  pitch: >-
+    Fictional all-in-one software for renewable installers: CRM, system
+    planning and quoting in one place.
+
+market:
+  country: FR
+  # ADEME RGE registry domains that qualify a company as a target.
+  rge_domains:
+    - "Pompe à chaleur : chauffage"
+    - "Panneaux solaires photovoltaïques"
+    - "Chauffage et/ou eau chaude solaire"
+
+segment:
+  headcount_min: 30
+  headcount_max: 300
+
+# Companies known to fit well. The agent is shown them as calibration anchors.
+reference_customers:
+  - Soleil & Chaleur Installations (fictional)
+  - Atelier Thermique du Nord (fictional)
+
+# The rubric. The agent extracts each signal as a value in [0, 1] with its
+# evidence; the score is 1 + 9 x the weighted mean. Weights are relative.
+signals:
+  - id: size_fit
+    label: Headcount in the target band
+    weight: 3
+  - id: product_mix
+    label: Installs both heat pumps and solar
+    weight: 3
+  - id: growth
+    label: Hiring for sales, planning or install roles, or opening sites
+    weight: 2
+  - id: tech_maturity
+    label: Online configurator, lead forms, a CRM or a competing tool in use
+    weight: 2
+
+tiers:
+  A: 8   # score >= 8
+  B: 6   # score >= 6, otherwise C
+
+outreach:
+  language: fr
+  # Translation shown next to each drafted opener, for reviewers who do not read French.
+  translate_to: en

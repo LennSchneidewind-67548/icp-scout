@@ -1,0 +1,15 @@
+# Company-specific case material: never committed (ADR 0003).
+private/
+
+# Pulled and generated data. Synthetic samples live in fixtures/.
+data/
+
+.env
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+.streamlit/secrets.toml
