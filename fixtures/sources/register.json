@@ -1,0 +1,2145 @@
+[
+ {
+  "siren": "900000010",
+  "nom_complet": "BRISE MARINE ENERGIES",
+  "nom_raison_sociale": "BRISE MARINE ENERGIES",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 2,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "4 QUAI DES EMBRUNS 29200 BREST",
+   "code_postal": "29200",
+   "departement": "29",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.010000",
+   "longitude": "2.010000",
+   "siret": "90000001000012",
+   "tranche_effectif_salarie": "21"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "KERJEAN",
+    "prenoms": "YANN",
+    "annee_de_naissance": "1970",
+    "date_de_naissance": "1970-05",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "21",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1001000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000020",
+  "nom_complet": "GROUPE LUMEN HOLDING",
+  "nom_raison_sociale": "GROUPE LUMEN HOLDING",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "70.10Z",
+   "adresse": "1 PLACE DU PHARE 44000 NANTES",
+   "code_postal": "44000",
+   "departement": "44",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.020000",
+   "longitude": "2.020000",
+   "siret": "90000002000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "70.10Z",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "LUMEN",
+    "prenoms": "PAUL",
+    "annee_de_naissance": "1968",
+    "date_de_naissance": "1968-09",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1002000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000030",
+  "nom_complet": "LUMEN CHAUFFAGE OUEST",
+  "nom_raison_sociale": "LUMEN CHAUFFAGE OUEST",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "10 RUE DU LEVANT 35000 RENNES",
+   "code_postal": "35000",
+   "departement": "35",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.030000",
+   "longitude": "2.030000",
+   "siret": "90000003000012",
+   "tranche_effectif_salarie": "11"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "siren": "900000020",
+    "denomination": "GROUPE LUMEN HOLDING",
+    "qualite": "Président",
+    "type_dirigeant": "personne morale"
+   },
+   {
+    "siren": "900009000",
+    "denomination": "CABINET VERIF COMPTES",
+    "qualite": "Commissaire aux comptes titulaire",
+    "type_dirigeant": "personne morale"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "11",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1003000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000040",
+  "nom_complet": "LUMEN SOLAIRE EST",
+  "nom_raison_sociale": "LUMEN SOLAIRE EST",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.21A",
+   "adresse": "20 RUE DU COUCHANT 67000 STRASBOURG",
+   "code_postal": "67000",
+   "departement": "67",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.040000",
+   "longitude": "2.040000",
+   "siret": "90000004000012",
+   "tranche_effectif_salarie": "11"
+  },
+  "activite_principale": "43.21A",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "siren": "900000020",
+    "denomination": "GROUPE LUMEN HOLDING",
+    "qualite": "Président",
+    "type_dirigeant": "personne morale"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "11",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1004000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000051",
+  "nom_complet": "LUMEN THERMIE SUD",
+  "nom_raison_sociale": "LUMEN THERMIE SUD",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "30 RUE DU MIDI 13001 MARSEILLE",
+   "code_postal": "13001",
+   "departement": "13",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.050000",
+   "longitude": "2.050000",
+   "siret": "90000005100012",
+   "tranche_effectif_salarie": "11"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "siren": "900000020",
+    "denomination": "GROUPE LUMEN HOLDING",
+    "qualite": "Président",
+    "type_dirigeant": "personne morale"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "11",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1005000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000060",
+  "nom_complet": "VALLON THERMIQUE",
+  "nom_raison_sociale": "VALLON THERMIQUE",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "5 CHEMIN DU VALLON 38000 GRENOBLE",
+   "code_postal": "38000",
+   "departement": "38",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.060000",
+   "longitude": "2.060000",
+   "siret": "90000006000012",
+   "tranche_effectif_salarie": "11"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "DURANDAL (DURANDAL)",
+    "prenoms": "AURÉLIE MARIE",
+    "annee_de_naissance": "1975",
+    "date_de_naissance": "1975-03",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "11",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1006000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000070",
+  "nom_complet": "VALLON PHOTOVOLTAIQUE",
+  "nom_raison_sociale": "VALLON PHOTOVOLTAIQUE",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.21A",
+   "adresse": "7 CHEMIN DU VALLON 38000 GRENOBLE",
+   "code_postal": "38000",
+   "departement": "38",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.070000",
+   "longitude": "2.070000",
+   "siret": "90000007000012",
+   "tranche_effectif_salarie": "11"
+  },
+  "activite_principale": "43.21A",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "DURANDAL",
+    "prenoms": "Aurelie",
+    "annee_de_naissance": "1975",
+    "date_de_naissance": "1975-03",
+    "qualite": "Président",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "11",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1007000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000080",
+  "nom_complet": "VALLON SERVICES CHAUFFAGE",
+  "nom_raison_sociale": "VALLON SERVICES CHAUFFAGE",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "9 CHEMIN DU VALLON 38000 GRENOBLE",
+   "code_postal": "38000",
+   "departement": "38",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.080000",
+   "longitude": "2.080000",
+   "siret": "90000008000012",
+   "tranche_effectif_salarie": "11"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "DURANDAL (DURANDAL)",
+    "prenoms": "AURÉLIE MARIE",
+    "annee_de_naissance": "1975",
+    "date_de_naissance": "1975-03",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "11",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1008000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000090",
+  "nom_complet": "SCI LES TILLEULS DU VALLON",
+  "nom_raison_sociale": "SCI LES TILLEULS DU VALLON",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "68.20B",
+   "adresse": "9 CHEMIN DU VALLON 38000 GRENOBLE",
+   "code_postal": "38000",
+   "departement": "38",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.090000",
+   "longitude": "2.090000",
+   "siret": "90000009000012",
+   "tranche_effectif_salarie": null
+  },
+  "activite_principale": "68.20B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "DURANDAL (DURANDAL)",
+    "prenoms": "AURÉLIE MARIE",
+    "annee_de_naissance": "1975",
+    "date_de_naissance": "1975-03",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": null,
+  "annee_tranche_effectif_salarie": null,
+  "finances": {
+   "2023": {
+    "ca": 1009000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000101",
+  "nom_complet": "ATELIERS DURANDAL",
+  "nom_raison_sociale": "ATELIERS DURANDAL",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "3 RUE HAUTE 21000 DIJON",
+   "code_postal": "21000",
+   "departement": "21",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.100000",
+   "longitude": "2.100000",
+   "siret": "90000010100012",
+   "tranche_effectif_salarie": "11"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "DURANDAL",
+    "prenoms": "AURELIE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-07",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "11",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1010000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000110",
+  "nom_complet": "CAP HORIZON SOLAIRE",
+  "nom_raison_sociale": "CAP HORIZON SOLAIRE",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.21A",
+   "adresse": "2 RUE DU SOLEIL 84000 AVIGNON",
+   "code_postal": "84000",
+   "departement": "84",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.110000",
+   "longitude": "2.110000",
+   "siret": "90000011000012",
+   "tranche_effectif_salarie": "12"
+  },
+  "activite_principale": "43.21A",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ROCHE",
+    "prenoms": "LUC",
+    "annee_de_naissance": "1981",
+    "date_de_naissance": "1981-02",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "12",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1011000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000120",
+  "nom_complet": "HORIZON POSE",
+  "nom_raison_sociale": "HORIZON POSE",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "8 RUE DU SOLEIL 84000 AVIGNON",
+   "code_postal": "84000",
+   "departement": "84",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.120000",
+   "longitude": "2.120000",
+   "siret": "90000012000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ROCHE",
+    "prenoms": "ANNE",
+    "annee_de_naissance": "1983",
+    "date_de_naissance": "1983-04",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1012000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000130",
+  "nom_complet": "ECOTHERM ARTOIS",
+  "nom_raison_sociale": "ECOTHERM ARTOIS",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "1 RUE D'ARRAS 62000 ARRAS",
+   "code_postal": "62000",
+   "departement": "62",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.130000",
+   "longitude": "2.130000",
+   "siret": "90000013000012",
+   "tranche_effectif_salarie": "11"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "LEFORT",
+    "prenoms": "MARC",
+    "annee_de_naissance": "1972",
+    "date_de_naissance": "1972-06",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "11",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1013000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000140",
+  "nom_complet": "ECOTHERM FLANDRES",
+  "nom_raison_sociale": "ECOTHERM FLANDRES",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "2 RUE DE LILLE 59000 LILLE",
+   "code_postal": "59000",
+   "departement": "59",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.140000",
+   "longitude": "2.140000",
+   "siret": "90000014000012",
+   "tranche_effectif_salarie": "11"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "DEWAELE",
+    "prenoms": "SOPHIE",
+    "annee_de_naissance": "1979",
+    "date_de_naissance": "1979-11",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "11",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1014000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000150",
+  "nom_complet": "ATELIER BLEU CHALEUR",
+  "nom_raison_sociale": "ATELIER BLEU CHALEUR",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "12 RUE DES FICTIFS 59000 LILLE",
+   "code_postal": "59000",
+   "departement": "59",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.150000",
+   "longitude": "2.150000",
+   "siret": "90000015000012",
+   "tranche_effectif_salarie": "12"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "BLEU",
+    "prenoms": "ALAIN",
+    "annee_de_naissance": "1966",
+    "date_de_naissance": "1966-08",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "12",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1015000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000160",
+  "nom_complet": "ATELIER BLEU SOLAIRE",
+  "nom_raison_sociale": "ATELIER BLEU SOLAIRE",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.21A",
+   "adresse": "12 RUE DES FICTIFS 59000 LILLE",
+   "code_postal": "59000",
+   "departement": "59",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.160000",
+   "longitude": "2.160000",
+   "siret": "90000016000012",
+   "tranche_effectif_salarie": "03"
+  },
+  "activite_principale": "43.21A",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "AZUR",
+    "prenoms": "CLAIRE",
+    "annee_de_naissance": "1990",
+    "date_de_naissance": "1990-10",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "03",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1016000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000170",
+  "nom_complet": "RIVAGE CLIM",
+  "nom_raison_sociale": "RIVAGE CLIM",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "3 BOULEVARD DE LA MER 06000 NICE",
+   "code_postal": "06000",
+   "departement": "06",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.170000",
+   "longitude": "2.170000",
+   "siret": "90000017000012",
+   "tranche_effectif_salarie": "12"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "MARIN",
+    "prenoms": "LEA",
+    "annee_de_naissance": "1985",
+    "date_de_naissance": "1985-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   },
+   {
+    "siren": "900009000",
+    "denomination": "CABINET VERIF COMPTES",
+    "qualite": "Commissaire aux comptes titulaire",
+    "type_dirigeant": "personne morale"
+   },
+   {
+    "nom": "MARTEL",
+    "prenoms": "JEAN",
+    "annee_de_naissance": "1960",
+    "date_de_naissance": "1960-01",
+    "qualite": "Commissaire aux comptes suppléant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "12",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1017000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000180",
+  "nom_complet": "PIC SOLAIRE",
+  "nom_raison_sociale": "PIC SOLAIRE",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.21A",
+   "adresse": "4 ROUTE DU COL 65000 TARBES",
+   "code_postal": "65000",
+   "departement": "65",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.180000",
+   "longitude": "2.180000",
+   "siret": "90000018000012",
+   "tranche_effectif_salarie": "12"
+  },
+  "activite_principale": "43.21A",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "MONT",
+    "prenoms": "HUGO",
+    "annee_de_naissance": "1977",
+    "date_de_naissance": "1977-12",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   },
+   {
+    "siren": "900009000",
+    "denomination": "CABINET VERIF COMPTES",
+    "qualite": "Commissaire aux comptes titulaire",
+    "type_dirigeant": "personne morale"
+   },
+   {
+    "nom": "MARTEL",
+    "prenoms": "JEAN",
+    "annee_de_naissance": "1960",
+    "date_de_naissance": "1960-01",
+    "qualite": "Commissaire aux comptes suppléant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "12",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1018000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000190",
+  "nom_complet": "ANCIEN CHAUFFAGE",
+  "nom_raison_sociale": "ANCIEN CHAUFFAGE",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "1 RUE DU PASSE 75011 PARIS",
+   "code_postal": "75011",
+   "departement": "75",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.190000",
+   "longitude": "2.190000",
+   "siret": "90000019000012",
+   "tranche_effectif_salarie": "12"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "VIEUX",
+    "prenoms": "ROGER",
+    "annee_de_naissance": "1950",
+    "date_de_naissance": "1950-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "C",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "12",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1019000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000200",
+  "nom_complet": "PERIME ENERGIE",
+  "nom_raison_sociale": "PERIME ENERGIE",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "2 RUE DU PASSE 75011 PARIS",
+   "code_postal": "75011",
+   "departement": "75",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.200000",
+   "longitude": "2.200000",
+   "siret": "90000020000012",
+   "tranche_effectif_salarie": "12"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "FIN",
+    "prenoms": "JULES",
+    "annee_de_naissance": "1965",
+    "date_de_naissance": "1965-03",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "12",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1020000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000220",
+  "nom_complet": "MYSTERE SOLAIRE",
+  "nom_raison_sociale": "MYSTERE SOLAIRE",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.21A",
+   "adresse": "5 IMPASSE DU BROUILLARD 29000 QUIMPER",
+   "code_postal": "29000",
+   "departement": "29",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.220000",
+   "longitude": "2.220000",
+   "siret": "90000022000012",
+   "tranche_effectif_salarie": "NN"
+  },
+  "activite_principale": "43.21A",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "NUIT",
+    "prenoms": "EVA",
+    "annee_de_naissance": "1988",
+    "date_de_naissance": "1988-05",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "NN",
+  "annee_tranche_effectif_salarie": null,
+  "finances": {
+   "2023": {
+    "ca": 1022000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000230",
+  "nom_complet": "GIGAWATT INSTALLATIONS",
+  "nom_raison_sociale": "GIGAWATT INSTALLATIONS",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 12,
+  "siege": {
+   "activite_principale": "43.21A",
+   "adresse": "100 AVENUE DE LA PUISSANCE 92000 NANTERRE",
+   "code_postal": "92000",
+   "departement": "92",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.230000",
+   "longitude": "2.230000",
+   "siret": "90000023000012",
+   "tranche_effectif_salarie": "41"
+  },
+  "activite_principale": "43.21A",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "GRAND",
+    "prenoms": "VICTOR",
+    "annee_de_naissance": "1960",
+    "date_de_naissance": "1960-07",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "41",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1023000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000240",
+  "nom_complet": "NORDWATT PHOTOVOLTAÏQUE",
+  "nom_raison_sociale": "NORDWATT PHOTOVOLTAÏQUE",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.21A",
+   "adresse": "6 RUE DU VENT 80000 AMIENS",
+   "code_postal": "80000",
+   "departement": "80",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.240000",
+   "longitude": "2.240000",
+   "siret": "90000024000012",
+   "tranche_effectif_salarie": "12"
+  },
+  "activite_principale": "43.21A",
+  "categorie_entreprise": "PME",
+  "date_creation": "2025-11-02",
+  "dirigeants": [
+   {
+    "nom": "NORD",
+    "prenoms": "IDA",
+    "annee_de_naissance": "1992",
+    "date_de_naissance": "1992-02",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "12",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1024000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000250",
+  "nom_complet": "ESPACE BATIMENT CONFORT",
+  "nom_raison_sociale": "ESPACE BATIMENT CONFORT",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "7 RUE DU MUR 45000 ORLEANS",
+   "code_postal": "45000",
+   "departement": "45",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.250000",
+   "longitude": "2.250000",
+   "siret": "90000025000012",
+   "tranche_effectif_salarie": "12"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "CUBE",
+    "prenoms": "TOM",
+    "annee_de_naissance": "1974",
+    "date_de_naissance": "1974-09",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "12",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1025000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000260",
+  "nom_complet": "PLOMBERIE GENERALE DU CENTRE",
+  "nom_raison_sociale": "PLOMBERIE GENERALE DU CENTRE",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "8 RUE DU TUYAU 18000 BOURGES",
+   "code_postal": "18000",
+   "departement": "18",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.260000",
+   "longitude": "2.260000",
+   "siret": "90000026000012",
+   "tranche_effectif_salarie": "12"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "TUBE",
+    "prenoms": "ZOE",
+    "annee_de_naissance": "1971",
+    "date_de_naissance": "1971-03",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "12",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1026000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000270",
+  "nom_complet": "ARTISAN FICTIF 01",
+  "nom_raison_sociale": "ARTISAN FICTIF 01",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "1 AVENUE DU CENTRE D'AFFAIRES 69003 LYON",
+   "code_postal": "69003",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.270000",
+   "longitude": "2.270000",
+   "siret": "90000027000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN01",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1027000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000280",
+  "nom_complet": "ARTISAN FICTIF 02",
+  "nom_raison_sociale": "ARTISAN FICTIF 02",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "1 AVENUE DU CENTRE D'AFFAIRES 69003 LYON",
+   "code_postal": "69003",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.280000",
+   "longitude": "2.280000",
+   "siret": "90000028000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN02",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1028000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000291",
+  "nom_complet": "ARTISAN FICTIF 03",
+  "nom_raison_sociale": "ARTISAN FICTIF 03",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "1 AVENUE DU CENTRE D'AFFAIRES 69003 LYON",
+   "code_postal": "69003",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.290000",
+   "longitude": "2.290000",
+   "siret": "90000029100012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN03",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1029000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000300",
+  "nom_complet": "ARTISAN FICTIF 04",
+  "nom_raison_sociale": "ARTISAN FICTIF 04",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "1 AVENUE DU CENTRE D'AFFAIRES 69003 LYON",
+   "code_postal": "69003",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.300000",
+   "longitude": "2.300000",
+   "siret": "90000030000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN04",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1030000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000310",
+  "nom_complet": "ARTISAN FICTIF 05",
+  "nom_raison_sociale": "ARTISAN FICTIF 05",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "5 RUE DES ARTISANS 69007 LYON",
+   "code_postal": "69007",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.310000",
+   "longitude": "2.310000",
+   "siret": "90000031000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN05",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1031000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000320",
+  "nom_complet": "ARTISAN FICTIF 06",
+  "nom_raison_sociale": "ARTISAN FICTIF 06",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "6 RUE DES ARTISANS 69007 LYON",
+   "code_postal": "69007",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.320000",
+   "longitude": "2.320000",
+   "siret": "90000032000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN06",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1032000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000330",
+  "nom_complet": "ARTISAN FICTIF 07",
+  "nom_raison_sociale": "ARTISAN FICTIF 07",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "7 RUE DES ARTISANS 69007 LYON",
+   "code_postal": "69007",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.330000",
+   "longitude": "2.330000",
+   "siret": "90000033000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN07",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1033000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000341",
+  "nom_complet": "ARTISAN FICTIF 08",
+  "nom_raison_sociale": "ARTISAN FICTIF 08",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "8 RUE DES ARTISANS 69007 LYON",
+   "code_postal": "69007",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.340000",
+   "longitude": "2.340000",
+   "siret": "90000034100012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN08",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1034000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000350",
+  "nom_complet": "ARTISAN FICTIF 09",
+  "nom_raison_sociale": "ARTISAN FICTIF 09",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "9 RUE DES ARTISANS 69007 LYON",
+   "code_postal": "69007",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.350000",
+   "longitude": "2.350000",
+   "siret": "90000035000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN09",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1035000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000360",
+  "nom_complet": "ARTISAN FICTIF 10",
+  "nom_raison_sociale": "ARTISAN FICTIF 10",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "10 RUE DES ARTISANS 69007 LYON",
+   "code_postal": "69007",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.360000",
+   "longitude": "2.360000",
+   "siret": "90000036000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN10",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1036000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000370",
+  "nom_complet": "ARTISAN FICTIF 11",
+  "nom_raison_sociale": "ARTISAN FICTIF 11",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "11 RUE DES ARTISANS 69007 LYON",
+   "code_postal": "69007",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.370000",
+   "longitude": "2.370000",
+   "siret": "90000037000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN11",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1037000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000380",
+  "nom_complet": "ARTISAN FICTIF 12",
+  "nom_raison_sociale": "ARTISAN FICTIF 12",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "12 RUE DES ARTISANS 69007 LYON",
+   "code_postal": "69007",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.380000",
+   "longitude": "2.380000",
+   "siret": "90000038000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN12",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1038000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000390",
+  "nom_complet": "ARTISAN FICTIF 13",
+  "nom_raison_sociale": "ARTISAN FICTIF 13",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "13 RUE DES ARTISANS 69007 LYON",
+   "code_postal": "69007",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.390000",
+   "longitude": "2.390000",
+   "siret": "90000039000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN13",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1039000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000400",
+  "nom_complet": "ARTISAN FICTIF 14",
+  "nom_raison_sociale": "ARTISAN FICTIF 14",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "14 RUE DES ARTISANS 69007 LYON",
+   "code_postal": "69007",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.400000",
+   "longitude": "2.400000",
+   "siret": "90000040000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN14",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1040000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000410",
+  "nom_complet": "ARTISAN FICTIF 15",
+  "nom_raison_sociale": "ARTISAN FICTIF 15",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "15 RUE DES ARTISANS 69007 LYON",
+   "code_postal": "69007",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.410000",
+   "longitude": "2.410000",
+   "siret": "90000041000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN15",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1041000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000420",
+  "nom_complet": "ARTISAN FICTIF 16",
+  "nom_raison_sociale": "ARTISAN FICTIF 16",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "16 RUE DES ARTISANS 69007 LYON",
+   "code_postal": "69007",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.420000",
+   "longitude": "2.420000",
+   "siret": "90000042000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN16",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1042000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000430",
+  "nom_complet": "ARTISAN FICTIF 17",
+  "nom_raison_sociale": "ARTISAN FICTIF 17",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "17 RUE DES ARTISANS 69007 LYON",
+   "code_postal": "69007",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.430000",
+   "longitude": "2.430000",
+   "siret": "90000043000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN17",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1043000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000440",
+  "nom_complet": "ARTISAN FICTIF 18",
+  "nom_raison_sociale": "ARTISAN FICTIF 18",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "18 RUE DES ARTISANS 69007 LYON",
+   "code_postal": "69007",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.440000",
+   "longitude": "2.440000",
+   "siret": "90000044000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN18",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1044000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000450",
+  "nom_complet": "ARTISAN FICTIF 19",
+  "nom_raison_sociale": "ARTISAN FICTIF 19",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "19 RUE DES ARTISANS 69007 LYON",
+   "code_postal": "69007",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.450000",
+   "longitude": "2.450000",
+   "siret": "90000045000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN19",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1045000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000460",
+  "nom_complet": "ARTISAN FICTIF 20",
+  "nom_raison_sociale": "ARTISAN FICTIF 20",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "20 RUE DES ARTISANS 69007 LYON",
+   "code_postal": "69007",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.460000",
+   "longitude": "2.460000",
+   "siret": "90000046000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN20",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1046000,
+    "resultat_net": 50000
+   }
+  }
+ },
+ {
+  "siren": "900000470",
+  "nom_complet": "ARTISAN FICTIF 21",
+  "nom_raison_sociale": "ARTISAN FICTIF 21",
+  "sigle": null,
+  "nombre_etablissements": 1,
+  "nombre_etablissements_ouverts": 1,
+  "siege": {
+   "activite_principale": "43.22B",
+   "adresse": "21 RUE DES ARTISANS 69007 LYON",
+   "code_postal": "69007",
+   "departement": "69",
+   "region": "99",
+   "etat_administratif": "A",
+   "est_siege": true,
+   "latitude": "45.470000",
+   "longitude": "2.470000",
+   "siret": "90000047000012",
+   "tranche_effectif_salarie": "01"
+  },
+  "activite_principale": "43.22B",
+  "categorie_entreprise": "PME",
+  "date_creation": "2010-04-01",
+  "dirigeants": [
+   {
+    "nom": "ARTISAN21",
+    "prenoms": "PIERRE",
+    "annee_de_naissance": "1980",
+    "date_de_naissance": "1980-01",
+    "qualite": "Gérant",
+    "nationalite": null,
+    "type_dirigeant": "personne physique"
+   }
+  ],
+  "etat_administratif": "A",
+  "nature_juridique": "5710",
+  "section_activite_principale": "F",
+  "tranche_effectif_salarie": "01",
+  "annee_tranche_effectif_salarie": "2023",
+  "finances": {
+   "2023": {
+    "ca": 1047000,
+    "resultat_net": 50000
+   }
+  }
+ }
+]

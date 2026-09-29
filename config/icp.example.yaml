@@ -15,6 +15,16 @@ market:
     - "Pompe à chaleur : chauffage"
     - "Panneaux solaires photovoltaïques"
     - "Chauffage et/ou eau chaude solaire"
+  # Product line -> the RGE domains that prove it (the product-mix pre-score).
+  product_lines:
+    heat_pump: ["Pompe à chaleur : chauffage"]
+    solar: ["Panneaux solaires photovoltaïques", "Chauffage et/ou eau chaude solaire"]
+  # Installers without RGE, from the company register: installer NAF codes,
+  # at least 10 staff, and an energy word in the name (whole words only).
+  second_source:
+    naf_codes: ["43.21A", "43.22B"]
+    name_keywords: ["solaire", "photovoltaïque", "énergie", "energie", "pac", "thermique"]
+    min_headcount_band: "11"
 
 segment:
   headcount_min: 30
@@ -57,6 +67,10 @@ signals:
       1 = a lead form or simulator on its own website, or a named CRM or
       installer tool in use. 0.5 = own website with contact details only.
       0 = no own website.
+
+# The rule-based pre-score (no LLM) picks this many groups for agent research.
+prefilter:
+  shortlist_size: 175
 
 tiers:
   A: 8   # score >= 8

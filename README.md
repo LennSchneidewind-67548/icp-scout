@@ -15,8 +15,9 @@ pointing it at another ICP is a config change, not a code change.
 
 ## Status
 
-Early. Setup and the config loader are done; the stages land one work package
-at a time (`docs/plan.md`).
+Sourcing (WP1) works: `icp-scout source` pulls the market, rolls sister
+companies up to groups and pre-filters a shortlist. The other stages land one
+work package at a time (`docs/plan.md`).
 
 ## Design choices worth reading
 
@@ -35,7 +36,15 @@ python -m venv .venv && source .venv/Scripts/activate   # Windows Git Bash
 pip install -e ".[dev]"
 pytest
 icp-scout show-config
+icp-scout source --limit 200   # a sample; the full first pull takes about an hour
+icp-scout funnel               # market -> segment -> shortlist, with the reason at each stage
 ```
+
+`source` caches every HTTP response under `data/cache/`, so a re-run makes no
+calls. `--offline` reads the cache only; `--refresh` fetches again. It writes
+`data/companies.parquet` (one row per company), `data/market.parquet` (one row
+per group, with pre-score, segment flags and the reason for every exclusion)
+and `data/funnel.json`.
 
 ## License
 
