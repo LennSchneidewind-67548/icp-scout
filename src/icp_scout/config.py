@@ -63,6 +63,19 @@ class Prefilter(BaseModel):
     shortlist_size: int = Field(default=175, gt=0)
 
 
+class Research(BaseModel):
+    """The research agent (WP2). The model must support the web_search/web_fetch
+    tool versions in enrich/agent.py; recordings are per model."""
+
+    model: str = "claude-opus-5-5"
+    effort: str = "medium"
+    max_searches: int = Field(default=5, ge=0)
+    max_fetches: int = Field(default=6, ge=0)
+    # Stop starting new leads once this run's live spend passes this.
+    budget_usd: float = Field(default=60, gt=0)
+    concurrency: int = Field(default=4, ge=1)
+
+
 class Tiers(BaseModel):
     A: float
     B: float
@@ -82,6 +95,7 @@ class IcpConfig(BaseModel):
     tiers: Tiers
     outreach: Outreach
     prefilter: Prefilter = Prefilter()
+    research: Research = Research()
 
     @model_validator(mode="after")
     def _unique_signals(self) -> "IcpConfig":

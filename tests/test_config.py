@@ -36,6 +36,13 @@ def test_example_config_has_the_sourcing_keys():
     assert icp.market.second_source.naf_codes == ["43.21A", "43.22B"]
     assert icp.market.second_source.min_headcount_band == "11"
     assert icp.prefilter.shortlist_size == 175
+    assert icp.research == config.Research()
+
+
+def test_example_config_has_the_research_keys():
+    r = config.load(EXAMPLE).research
+    assert (r.model, r.effort, r.max_searches, r.max_fetches) == ("claude-opus-5-5", "medium", 5, 6)
+    assert (r.budget_usd, r.concurrency) == (60, 4)
 
 
 def test_sourcing_keys_are_optional(tmp_path):
@@ -43,11 +50,13 @@ def test_sourcing_keys_are_optional(tmp_path):
     for key in ["product_lines", "second_source"]:
         del raw["market"][key]
     del raw["prefilter"]
+    del raw["research"]
     old = tmp_path / "icp.yaml"
     old.write_text(yaml.safe_dump(raw, allow_unicode=True), encoding="utf-8")
     icp = config.load(old)
     assert icp.market.product_lines == {} and icp.market.second_source is None
     assert icp.prefilter.shortlist_size == 175
+    assert icp.research == config.Research()
 
 
 def test_rejects_a_product_line_domain_outside_rge_domains(tmp_path):

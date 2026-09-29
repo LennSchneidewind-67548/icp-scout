@@ -15,7 +15,7 @@ Keep entries free of case-company specifics (ADR 0003); those go in `private/not
 
 | Author time | Agent sessions | LLM spend (pipeline) | Work packages done |
 |---|---|---|---|
-| TODO | 6 | $0 | 1 of 8 (WP0); WP1 merged, WP2 planned |
+| TODO | 7 | $0 | 1 of 8 (WP0); WP1 merged, WP2 in review |
 
 ---
 
@@ -224,3 +224,50 @@ is now a setting: `fixtures/llm/` for synthetic ones, `private/llm/` for the cas
 claude-api skill: the current Opus at medium effort), and the budget.
 
 **Output:** `docs/wp/wp2-research.md`, WP2 linked from `docs/plan.md`.
+
+---
+
+## 2026-09-29 · WP2 agent research · `local`
+
+**Author time:** TODO
+
+**Asked for:** implement `docs/wp/wp2-research.md`. It was planned as a
+`remote` session; Anthropic was having an incident, so it ran locally
+instead, with the same rules (synthetic data only, no API key, branch + PR).
+
+**The agent built, per the plan:** `llm.py` (record / replay / refresh,
+sha256 request keys, atomic recordings, a cost ledger, prices from the pricing
+page), the agent (`enrich/agent.py`: web search + web fetch + a strict
+`record_signals` tool built from the config's signals), the runner
+(`research.py`: thread pool, resumable, budget guard, `signals.parquet`),
+`icp-scout research` / `icp-scout cost`, synthetic recordings made by
+`fixtures/llm/make_fixtures.py` through the agent itself, 19 new tests.
+
+**The agent decided, for the author to review in the PR:**
+- Structured outputs vs. a strict tool: the skill documents structured
+  outputs as incompatible with citations, and web search answers carry
+  citations, so it kept the strict `record_signals` tool with `tool_choice: auto`.
+- Only schema failures (a missing signal, a value out of range) get the one
+  retry and then fail the lead. A value without evidence and an unseen URL are
+  flagged but not retried: re-asking costs a call, and a flag is enough for
+  the SDR to check.
+- Server-side refusal fallback on by default (`fallbacks: "default"`), as the
+  skill recommends. A fallback answer is priced at the model the response names.
+- `icp-scout cost` counts each recording once, at its recorded cost, so a replay
+  doesn't double the cost per lead. Live spend is shown on its own line.
+- The CLI now reads `.env` (the plan puts the API key there).
+
+**Caught during the session:**
+- The author's `.env` points `ICP_SCOUT_CONFIG` at the private case config.
+  Once the CLI read `.env`, a test ran against it and missed its recordings.
+  Tests now switch `.env` loading off.
+- Recording the case run into the committed `fixtures/llm/` by mistake would
+  leak case content. `research` now refuses to record there with any config
+  but the example.
+
+**Not verified:** no live call was made (no key in the session). A dry run
+through the real SDK with a mock transport showed the request is built as
+intended. Whether the API accepts the strict schema, and what a lead really
+costs, is for the author's 5-lead pilot.
+
+**Output:** branch `wp2-research`, PR opened.

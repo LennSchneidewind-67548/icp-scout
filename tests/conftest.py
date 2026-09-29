@@ -75,6 +75,16 @@ class FakeApis:
         )
 
 
+@pytest.fixture(autouse=True)
+def no_dotenv(monkeypatch):
+    """The author's .env may point at the private case config: tests never read it."""
+    from icp_scout import cli
+
+    monkeypatch.setattr(cli, "load_env", lambda *a, **k: None)
+    monkeypatch.delenv("ICP_SCOUT_CONFIG", raising=False)
+    monkeypatch.delenv("ICP_SCOUT_RECORDINGS", raising=False)
+
+
 @pytest.fixture
 def fake_apis():
     return FakeApis()
@@ -88,3 +98,35 @@ def icp():
 @pytest.fixture
 def sirens():
     return load("sirens.json")
+
+
+class ScriptedClient:
+    """Stands in for `anthropic.Anthropic()`: answers `beta.messages.stream(...)` from a
+    script, in the shape of `message.to_dict()`. `script(params)` returns the answer."""
+
+    def __init__(self, script):
+        self.script = script
+        self.requests = []
+        self.beta = self
+        self.messages = self
+
+    def stream(self, **params):
+        self.requests.append(json.loads(json.dumps(params)))
+        return _Stream(self.script(params))
+
+
+class _Stream:
+    def __init__(self, message: dict):
+        self.message = message
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
+
+    def get_final_message(self):
+        return self
+
+    def to_dict(self):
+        return json.loads(json.dumps(self.message))
