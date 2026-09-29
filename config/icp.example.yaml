@@ -78,6 +78,7 @@ research:
   effort: medium
   max_searches: 5          # web searches per lead ($10 per 1,000)
   max_fetches: 6           # pages fetched per lead
+  # max_page_tokens: 6000  # cap each fetched page (pages are most of the input cost)
   budget_usd: 60           # stop starting new leads once a run has spent this
   concurrency: 4
 

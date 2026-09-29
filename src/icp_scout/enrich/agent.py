@@ -180,9 +180,12 @@ def _object(properties: dict) -> dict:
 
 def tools(icp: IcpConfig) -> list[dict]:
     r = icp.research
+    fetch = {"type": WEB_FETCH, "name": "web_fetch", "max_uses": r.max_fetches}
+    if r.max_page_tokens:
+        fetch["max_content_tokens"] = r.max_page_tokens
     return [
         {"type": WEB_SEARCH, "name": "web_search", "max_uses": r.max_searches},
-        {"type": WEB_FETCH, "name": "web_fetch", "max_uses": r.max_fetches},
+        fetch,
         record_tool(icp),
     ]
 
