@@ -31,6 +31,9 @@ class Market(BaseModel):
     product_lines: dict[str, list[str]] = {}
     # None or no NAF codes: the register is only used to enrich RGE companies.
     second_source: SecondSource | None = None
+    # Companies to add by SIREN whatever the filters say (e.g. reference customers
+    # that neither source finds), so they can be researched and scored like the rest.
+    extra_sirens: list[str] = []
 
     @model_validator(mode="after")
     def _lines_use_known_domains(self) -> "Market":

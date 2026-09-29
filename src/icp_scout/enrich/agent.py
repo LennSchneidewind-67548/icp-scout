@@ -23,10 +23,14 @@ from icp_scout.llm import LLM
 
 PURPOSE = "research"
 TOOL = "record_signals"
-# Current server tool versions (claude-api skill, 2026-09): dynamic filtering,
-# on Opus 5.5/5/4.8/4.7/4.6, Sonnet 5.5/5/4.6. Not on Haiku 4.5.
-WEB_SEARCH = "web_search_20260209"
-WEB_FETCH = "web_fetch_20260209"
+# The basic server tool versions, not the dynamic-filtering ones (_20260209).
+# In the pilot (2026-09-29, Sonnet 5.5), the model called the _20260209 tools
+# directly with their code-execution input ({"params": {...}}), and every call
+# failed with invalid_tool_input. When they did work, each search went through
+# several code-execution turns and cost about twice as much. The basic versions
+# also run on Haiku 4.5.
+WEB_SEARCH = "web_search_20250305"
+WEB_FETCH = "web_fetch_20250910"
 MAX_TOKENS = 64000  # streamed, so no HTTP timeout; thinking counts against it
 MAX_CALLS = 6  # per lead: first answer + pause_turn resumes + one retry
 REGISTRY_URL = "https://annuaire-entreprises.data.gouv.fr/entreprise/{siren}"
@@ -119,6 +123,7 @@ French), one or two sentences. quote_en is its English translation.
 in this conversation, or a registry page given to you. Never cite a URL you did \
 not retrieve.
 - rationale_en: one sentence in English on why this value.
+- Write everything in English except the quotes, including any text between tool calls.
 
 When you are done, call {TOOL} once with everything. That call is your answer; \
 do not write the findings as text. In notes_en, tell an SDR what to know before \

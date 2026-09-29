@@ -147,6 +147,33 @@ def run(
             truncated_bands=stats["truncated_bands"],
         )
 
+    # 3b. Companies named in the config (e.g. reference customers neither source finds).
+    known = {c.siren for c in companies}
+    extra = [s for s in icp.market.extra_sirens if s not in known]
+    if icp.market.extra_sirens:
+        added = []
+        for siren in extra:
+            result = sirene.lookup(reg_client, siren)
+            if result is None:
+                log(f"  extra SIREN {siren} not found in the register")
+                continue
+            c = sirene.from_register(result, source="register", via="config")
+            if not c.active:
+                c.exclusion_reason = "closed"
+            companies.append(c)
+            if c.active:
+                active.append(c)
+                added.append(c)
+        funnel.add(
+            "config_source",
+            "+ named in the config",
+            len(active),
+            f"+{len(added):,} of {len(icp.market.extra_sirens):,} market.extra_sirens "
+            f"({len(icp.market.extra_sirens) - len(extra):,} already found)",
+            kind="add",
+            added=len(added),
+        )
+
     # 4. Groups: other companies of the same managers, then the roll-up.
     cap = group.EXPANSION_MAX_CALLS if limit is None else min(group.EXPANSION_MAX_CALLS, limit)
     log("Manager expansion ...")

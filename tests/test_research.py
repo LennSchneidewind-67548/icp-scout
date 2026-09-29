@@ -290,3 +290,11 @@ def test_page_cap_goes_on_the_fetch_tool_only_when_set(icp):
     fetch = next(t for t in agent.tools(icp.model_copy(update={"research": capped}))
                  if t["name"] == "web_fetch")  # fmt: skip
     assert fetch["max_content_tokens"] == 6000
+
+
+def test_named_groups_may_come_from_off_the_shortlist(data_dir):
+    market = pd.read_parquet(data_dir / "market.parquet")
+    off = market.loc[~market["shortlisted"], "group_id"].iloc[0]
+    assert research.shortlist(data_dir, [off], None)[0]["group_id"] == off
+    with pytest.raises(ValueError, match="not in the market"):
+        research.shortlist(data_dir, ["g000000000"], None)

@@ -134,7 +134,8 @@ class LLM:
         """Stream the request and return the final message as a dict."""
         extra = {"betas": [FALLBACK_BETA], "fallbacks": "default"} if self.fallbacks else {}
         with self.client.beta.messages.stream(**params, **extra) as stream:
-            return stream.get_final_message().to_dict()
+            # mode="json": search results carry datetimes, which must serialize.
+            return stream.get_final_message().to_dict(mode="json")
 
     def _log(self, purpose: str, lead_id: str, key: str, rec: dict, replayed: bool) -> None:
         usage = rec["usage"]

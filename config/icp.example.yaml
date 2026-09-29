@@ -25,6 +25,9 @@ market:
     naf_codes: ["43.21A", "43.22B"]
     name_keywords: ["solaire", "photovoltaïque", "énergie", "energie", "pac", "thermique"]
     min_headcount_band: "11"
+  # Companies to add by SIREN whatever the filters say, e.g. a reference customer
+  # that neither source finds. Optional.
+  extra_sirens: []
 
 segment:
   headcount_min: 30

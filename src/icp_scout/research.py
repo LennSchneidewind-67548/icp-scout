@@ -83,16 +83,18 @@ def _one(icp: IcpConfig, llm: LLM, lead: dict) -> dict:
 
 
 def shortlist(data_dir: Path, group_ids: list[str] | None, limit: int | None) -> list[dict]:
+    """The shortlisted groups by pre-score, or the named groups (shortlisted or not)."""
     path = data_dir / "market.parquet"
     if not path.exists():
         raise FileNotFoundError(f"{path} not found: run `icp-scout source` first")
-    market = pd.read_parquet(path)
-    rows = market[market["shortlisted"]].sort_values("pre_score", ascending=False, kind="stable")
+    market = pd.read_parquet(path).sort_values("pre_score", ascending=False, kind="stable")
+    rows = market[market["shortlisted"]]
     if group_ids:
-        missing = set(group_ids) - set(rows["group_id"])
+        # Named groups may come from off the shortlist (e.g. a reference customer).
+        missing = set(group_ids) - set(market["group_id"])
         if missing:
-            raise ValueError(f"not on the shortlist: {', '.join(sorted(missing))}")
-        rows = rows[rows["group_id"].isin(group_ids)]
+            raise ValueError(f"not in the market: {', '.join(sorted(missing))}")
+        rows = market[market["group_id"].isin(group_ids)]
     if limit is not None:
         rows = rows.head(limit)
     return [_row(r) for r in rows.to_dict("records")]
