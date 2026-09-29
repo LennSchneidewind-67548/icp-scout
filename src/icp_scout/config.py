@@ -2,6 +2,7 @@
 
 import os
 from pathlib import Path
+from typing import Literal
 
 import yaml
 from pydantic import BaseModel, Field, model_validator
@@ -70,6 +71,9 @@ class Research(BaseModel):
     """The research agent (WP2). The model must support the web_search/web_fetch
     tool versions in enrich/agent.py; recordings are per model."""
 
+    # "api": Messages API calls, billed per token (llm.py). "claude-code": the
+    # `claude` CLI on the author's subscription, no API money (claude_code.py).
+    backend: Literal["api", "claude-code"] = "api"
     model: str = "claude-opus-5-5"
     effort: str = "medium"
     max_searches: int = Field(default=5, ge=0)
@@ -79,6 +83,10 @@ class Research(BaseModel):
     # Stop starting new leads once this run's live spend passes this.
     budget_usd: float = Field(default=60, gt=0)
     concurrency: int = Field(default=4, ge=1)
+    # claude-code only: stop starting new leads once a usage window of the
+    # subscription is this full (window name as the CLI reports it; others: 0.9).
+    # The 7-day cap is lower so the plan stays usable for other work that week.
+    max_utilization: dict[str, float] = {"five_hour": 0.9, "seven_day": 0.7}
 
 
 class Tiers(BaseModel):

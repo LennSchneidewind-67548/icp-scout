@@ -67,8 +67,10 @@ signals:
     label: Online configurator, lead forms, a CRM or a competing tool in use
     weight: 2
     definition: >-
-      1 = a lead form or simulator on its own website, or a named CRM or
-      installer tool in use. 0.5 = own website with contact details only.
+      1 = a quote form that asks about the project (product, home, heating,
+      roof or budget) or a simulator on its own website, or a named CRM or
+      installer tool in use. 0.5 = own website with contact details or a plain
+      contact form (name, email, message) only, whatever its title.
       0 = no own website.
 
 # The rule-based pre-score (no LLM) picks this many groups for agent research.
@@ -77,6 +79,9 @@ prefilter:
 
 # The research agent. All keys are optional; these are the defaults.
 research:
+  # api: Messages API, billed per token. claude-code: the `claude` CLI on your
+  # Claude subscription, no API money (log in with `claude` first).
+  backend: api
   model: claude-opus-5-5   # recordings are per model: a new model means new calls
   effort: medium
   max_searches: 5          # web searches per lead ($10 per 1,000)
@@ -84,6 +89,8 @@ research:
   # max_page_tokens: 6000  # cap each fetched page (pages are most of the input cost)
   budget_usd: 60           # stop starting new leads once a run has spent this
   concurrency: 4
+  # claude-code only: stop starting leads once a usage window is this full.
+  max_utilization: {five_hour: 0.9, seven_day: 0.7}
 
 tiers:
   A: 8   # score >= 8

@@ -16,20 +16,6 @@ sys.path.insert(0, str(RECORDINGS))
 import make_fixtures
 
 
-@pytest.fixture(scope="module")
-def market_dir(tmp_path_factory):
-    """data/ after `icp-scout source` on the source fixtures."""
-    data_dir = tmp_path_factory.mktemp("data")
-    make_fixtures.market(data_dir)
-    return data_dir
-
-
-@pytest.fixture
-def data_dir(market_dir, tmp_path):
-    (tmp_path / "market.parquet").write_bytes((market_dir / "market.parquet").read_bytes())
-    return tmp_path
-
-
 def lead(data_dir, gid="g900000010"):
     return research.shortlist(data_dir, [gid], None)[0]
 

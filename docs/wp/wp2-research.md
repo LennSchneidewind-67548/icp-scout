@@ -194,6 +194,30 @@ failure, and say so in the PR.
 5. `icp-scout research --offline --recordings private/llm` replays with no key.
    Run the leak check.
 
+## After the pilot: a second backend (2026-09-29)
+
+The pilot's API runs are the cost evidence. The full run goes through the
+author's Claude subscription instead, so it spends no API money:
+`research.backend: claude-code` runs each lead as one `claude -p` call
+(`claude_code.py`) with Claude Code's WebSearch and WebFetch and a JSON schema
+for the answer. Same prompt (tool names swapped), same schema, same checks,
+same recordings and ledger. The ledger shows $0 and the CLI's list-price
+estimate as `notional_usd`.
+
+- **Guards:** the API key is stripped from the child's environment, and a run
+  whose init message reports an API key source is killed before its first
+  model call. The stream reports how full the 5-hour and 7-day usage windows
+  are; past `max_utilization` (default 90% and 70%) no new lead starts. A
+  lead cut off by a limit isn't recorded, so the next run resumes it.
+- **Differences to the API run:** the CLI's WebSearch returns titles and links
+  only, and its WebFetch returns a small model's reading of the page, not the
+  page. The prompt asks WebFetch for verbatim passages. Search and fetch
+  limits are in the prompt only; the CLI doesn't enforce them.
+- **Rubric change from the pilot:** a plain contact form counts 0.5 for tech
+  maturity, and only a quote form that asks about the project, or a simulator,
+  counts 1. Almost every site has a contact form, so counting it doesn't tell
+  leads apart.
+
 ## Assumptions to state on the slides
 
 - Signals come from public web pages at research time; no page, no signal

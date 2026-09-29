@@ -79,7 +79,15 @@ def result_model(icp: IcpConfig) -> type[BaseModel]:
 # Prompt and tools: identical for every lead, so they stay in the prompt cache.
 
 
-def system_prompt(icp: IcpConfig) -> str:
+def system_prompt(
+    icp: IcpConfig,
+    search: str = "web_search",
+    fetch: str = "web_fetch",
+    answer: str = TOOL,
+    extra: str = "",
+) -> str:
+    """The research brief. The defaults name the API tools; the claude-code backend
+    passes its own tool names and a note on WebFetch."""
     r, seg = icp.research, icp.segment
     signals = "\n".join(
         f"- `{s.id}` ({s.label}): {' '.join((s.definition or '').split())}" for s in icp.signals
@@ -107,12 +115,12 @@ How to work:
 and registry pages, certified domains, headcount bands, revenue, and the \
 website if the registry lists one. Registry facts count as evidence; cite the \
 company's registry page as the URL.
-- If no website is given, look for it with web_search. Before you use a site, \
+- If no website is given, look for it with {search}. Before you use a site, \
 check that it belongs to this group (same name, town or SIREN), not a namesake.
-- Read the pages that matter with web_fetch: home, services or products, \
+- Read the pages that matter with {fetch}: home, services or products, \
 careers or recruitment, about, contact or quote request. Also look for the \
 group's job ads. You have at most {r.max_searches} searches and {r.max_fetches} \
-fetches; stop when you have enough.
+fetches; stop when you have enough.{extra}
 
 Rules for evidence:
 - A value above 0 needs at least one piece of evidence. If you find nothing, \
@@ -125,7 +133,7 @@ not retrieve.
 - rationale_en: one sentence in English on why this value.
 - Write everything in English except the quotes, including any text between tool calls.
 
-When you are done, call {TOOL} once with everything. That call is your answer; \
+When you are done, call {answer} once with everything. That call is your answer; \
 do not write the findings as text. In notes_en, tell an SDR what to know before \
 calling (in English): group structure, recent news, a namesake you ruled out.
 """
@@ -300,6 +308,57 @@ def research(icp: IcpConfig, llm: LLM, lead: dict) -> dict:
         out.update(status="ok", result=result, flags=check(result, seen))
         return out
     out["reason"] = f"no answer after {MAX_CALLS} calls"
+    return out
+
+
+# The claude-code backend: the CLI runs the loop, on the author's subscription.
+
+CC_SEARCH, CC_FETCH, CC_ANSWER = "WebSearch", "WebFetch", "StructuredOutput"
+# Claude Code's WebFetch hands the page to a small model with a prompt and
+# returns its answer, not the page. Without this, quotes come back paraphrased.
+CC_FETCH_NOTE = f"""
+- {CC_FETCH} shows you another model's reading of the page, not the page \
+itself. In its prompt, ask for the relevant passages copied verbatim in the \
+original language, so your quotes are verbatim."""
+
+
+def research_claude_code(icp: IcpConfig, cc, lead: dict) -> dict:
+    """Research one group through the `claude` CLI (claude_code.ClaudeCode).
+    One run per lead: the CLI runs the loop and checks the answer against the schema."""
+    from icp_scout.claude_code import tool_calls, tool_results
+
+    gid, first = lead["group_id"], lead_message(lead)
+    out = {"group_id": gid, "name": lead["name"], "model": icp.research.model, "calls": 0,
+           "status": "failed", "reason": None, "flags": [], "result": None}  # fmt: skip
+    rec = cc.run(
+        PURPOSE,
+        gid,
+        model=icp.research.model,
+        effort=icp.research.effort,
+        system=system_prompt(icp, CC_SEARCH, CC_FETCH, CC_ANSWER, CC_FETCH_NOTE),
+        prompt=first,
+        schema=record_tool(icp)["input_schema"],
+        tools=[CC_SEARCH, CC_FETCH],
+    )
+    out["calls"] = rec["result"].get("num_turns")
+    answer = rec["result"].get("structured_output")
+    if answer is None:
+        out["reason"] = "no structured output"
+        return out
+    try:
+        result = result_model(icp).model_validate(answer).model_dump()
+    except ValidationError as e:
+        out["reason"] = f"invalid structured output: {_short(e)}"
+        out["flags"] = [{"code": "invalid_output", "signal": None, "detail": _short(e)}]
+        return out
+    # Retrieved: the URLs in search results and fetched pages, and the URLs fetched.
+    seen = set(map(normalize_url, urls_in(first)))
+    for text in tool_results(rec["transcript"]):
+        seen |= set(map(normalize_url, urls_in(text)))
+    for call in tool_calls(rec["transcript"]):
+        if call.get("name") == CC_FETCH and (call.get("input") or {}).get("url"):
+            seen.add(normalize_url(call["input"]["url"]))
+    out.update(status="ok", result=result, flags=check(result, seen))
     return out
 
 
