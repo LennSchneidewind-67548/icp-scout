@@ -1,6 +1,6 @@
 # Plan
 
-About 20 hours. Presentation date: TODO (around 2026-10-06).
+About 20 hours. Presentation date: 2026-10-05.
 Rule of thumb: if the pipeline runs late, cut app polish, never the insights.
 
 | WP | What | Budget | Done when |
