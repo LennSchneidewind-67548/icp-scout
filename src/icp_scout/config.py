@@ -34,6 +34,8 @@ class Signal(BaseModel):
     id: str
     label: str
     weight: float = Field(gt=0)
+    # What 0, 0.5 and 1 mean. The agent is shown it, so extraction stays consistent.
+    definition: str | None = None
 
 
 class Tiers(BaseModel):

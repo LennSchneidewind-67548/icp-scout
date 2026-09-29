@@ -27,19 +27,36 @@ reference_customers:
 
 # The rubric. The agent extracts each signal as a value in [0, 1] with its
 # evidence; the score is 1 + 9 x the weighted mean. Weights are relative.
+# `definition` says what 0, 0.5 and 1 mean; the agent extracts against it.
 signals:
   - id: size_fit
     label: Headcount in the target band
     weight: 3
+    definition: >-
+      Headcount of the whole group (sister companies with the same manager,
+      address or website count together). 1 = inside the segment band.
+      0.5 = within half the band's width outside it, or no headcount but
+      indirect evidence (branches, teams). 0 = far outside.
   - id: product_mix
     label: Installs both heat pumps and solar
     weight: 3
+    definition: >-
+      1 = installs solar PV and heat pumps. 0.5 = one of them plus an adjacent
+      line (storage, EV chargers, heat-pump water heaters, solar thermal).
+      0 = a single line.
   - id: growth
     label: Hiring for sales, planning or install roles, or opening sites
     weight: 2
+    definition: >-
+      1 = open roles in sales, planning, admin or installation, or a branch or
+      entity opened in the last 24 months. 0.5 = one weak sign. 0 = no evidence.
   - id: tech_maturity
     label: Online configurator, lead forms, a CRM or a competing tool in use
     weight: 2
+    definition: >-
+      1 = a lead form or simulator on its own website, or a named CRM or
+      installer tool in use. 0.5 = own website with contact details only.
+      0 = no own website.
 
 tiers:
   A: 8   # score >= 8
