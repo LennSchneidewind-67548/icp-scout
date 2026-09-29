@@ -15,7 +15,7 @@ Keep entries free of case-company specifics (ADR 0003); those go in `private/not
 
 | Author time | Agent sessions | LLM spend (pipeline) | Work packages done |
 |---|---|---|---|
-| TODO | 5 | $0 | 1 of 8 (WP0); WP1 in review |
+| TODO | 6 | $0 | 1 of 8 (WP0); WP1 merged, WP2 planned |
 
 ---
 
@@ -197,3 +197,30 @@ here (about 2 lookups/s through the sandbox proxy); it is left for the author.
 The sandbox clone had no git remote. The author gave the repository, the agent
 pushed the branch; the sandbox has no GitHub CLI, so the author opens the PR
 from the drafted description.
+
+---
+
+## 2026-09-29 · WP2 plan · `local`
+
+**Author time:** TODO
+
+**Asked for:** a plan for WP2 (agent research) in `docs/`, and how to run
+its implementation in a remote session.
+
+**The agent proposed:** `docs/wp/wp2-research.md`, in the same shape as WP1:
+one door to the model (`llm.py`) that records, replays and writes a cost
+ledger; an agent with web search and web fetch that ends by calling a strict
+`record_signals` tool whose schema comes from the config; checks in code
+(evidence required for any value above 0, every evidence URL must have been
+seen in the conversation); `icp-scout research` and `icp-scout cost`; a
+budget guard. The remote session builds against synthetic recordings and needs
+no API key; the live pilot (5 leads) and the full run are the author's, locally.
+
+**Caught while planning:** recordings of real companies are case content, so
+they can't live under the committed `fixtures/llm/`. The recordings directory
+is now a setting: `fixtures/llm/` for synthetic ones, `private/llm/` for the case.
+
+**Left for the author:** model and effort after the pilot (default from the
+claude-api skill: the current Opus at medium effort), and the budget.
+
+**Output:** `docs/wp/wp2-research.md`, WP2 linked from `docs/plan.md`.
