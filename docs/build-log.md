@@ -15,7 +15,7 @@ Keep entries free of case-company specifics (ADR 0003); those go in `private/not
 
 | Author time | Agent sessions | LLM spend (pipeline) | Work packages done |
 |---|---|---|---|
-| TODO | 2 | $0 | 1 of 8 (WP0) |
+| TODO | 3 | $0 | 1 of 8 (WP0) |
 
 ---
 
@@ -100,3 +100,30 @@ same-name companies. Matching by website, manager and address was needed.
 **Output:** research notes and the calibrated config (private). Signals get an
 optional `definition` field (what 0 / 0.5 / 1 mean), shown to the agent in WP2.
 The example config and a test were updated. The leak-term list grew from 5 to 15 terms.
+
+---
+
+## 2026-09-29 · WP1 plan for a remote session · `local`
+
+**Author time:** TODO
+
+**Asked for:** a plan for WP1 as a Markdown file under `docs/`, to be handed to
+a remote session by the author. From now on, one file per WP in `docs/wp/`.
+
+**The agent checked before planning:** both APIs live. The RGE endpoint, row
+count and fields; the register's lookup by SIREN and its filtered search
+(NAF code and headcount band, which makes the second source a paged query
+rather than a scrape).
+
+**Caught:** the register lists **auditors** among a company's officers, as
+legal entities. Linking companies through legal-entity officers without
+filtering them out would have merged unrelated companies through a shared
+audit firm. The plan excludes them and requires a test for it. Also: a
+website shared by many companies (a certifier's profile page) must not link
+them, and name keywords must match whole words.
+
+**The agent proposed:** group headcount as the sum of band midpoints, a
+`near_band` flag, a pre-score weighted with the rubric weights, and synthetic
+fixtures from the start. Open for the author's review in the PR.
+
+**Output:** `docs/wp/wp1-sourcing.md`, linked from `docs/plan.md`.

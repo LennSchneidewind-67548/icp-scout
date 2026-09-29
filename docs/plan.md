@@ -6,7 +6,7 @@ Rule of thumb: if the pipeline runs late, cut app polish, never the insights.
 | WP | What | Budget | Done when |
 |---|---|---|---|
 | 0 | Setup, case-company research (product, pricing, French presence, competitors) into `private/research/` and `private/icp.yaml` | 1.5h | Rubric weights argued from research, not guessed |
-| 1 | Sourcing: RGE pull grouped by SIRET, SIRENE join, **roll-up of sister companies to group level** (same manager, address, phone or website) before the size filter, **second source** for installers without RGE (company register, installer NAF codes and an energy name), pre-filter, funnel counts | 5.5h | `icp-scout source` writes the market table; the funnel is reportable |
+| [1](wp/wp1-sourcing.md) | Sourcing: RGE pull grouped by SIRET, SIRENE join, **roll-up of sister companies to group level** (same manager, address, phone or website) before the size filter, **second source** for installers without RGE (company register, installer NAF codes and an energy name), pre-filter, funnel counts | 5.5h | `icp-scout source` writes the market table; the funnel is reportable |
 | 2 | Agent research on the shortlist (~150-200): signals with evidence, recordings, cost ledger | 5h | Every shortlisted company has signals + evidence; cost per lead is known |
 | 3 | Rubric score, tiers, rationale text | 1.5h | Top 50 with score, tier and a one-line why |
 | 4 | Insights: regional clusters, product-mix patterns, size vs score, what separates A from C | 3h | 4-6 findings, each with one chart |
