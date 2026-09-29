@@ -15,7 +15,7 @@ Keep entries free of case-company specifics (ADR 0003); those go in `private/not
 
 | Author time | Agent sessions | LLM spend (pipeline) | Work packages done |
 |---|---|---|---|
-| TODO | 3 | $0 | 1 of 8 (WP0) |
+| TODO | 5 | $0 | 1 of 8 (WP0); WP1 in review |
 
 ---
 
@@ -145,3 +145,55 @@ versioned. Network access for the two data hosts still has to be allowed in the
 environment settings by the author.
 
 **Output:** `.claude/settings.json`, `scripts/remote-setup.sh`.
+
+---
+
+## 2026-09-29 · WP1: sourcing · `remote`
+
+**Author time:** TODO
+
+**Asked for:** implement `docs/wp/wp1-sourcing.md`, following its session rules.
+Built against the example config and synthetic fixtures only; `private/` was
+not visible.
+
+**The agent checked live before building:** both APIs reachable from the
+sandbox (the register through a flaky proxy). The register refuses
+`page * per_page` above 10,000; the person filters (`nom_personne`,
+`prenoms_personne`, `date_naissance_personne_min/max`) exist and work, and
+unknown parameters get a 400; officer names come as `"NAME (USAGE NAME)"`.
+
+**Caught while building:**
+- httpx drops a URL's own query string when `params` is passed, so following
+  the registry's `next` link silently lost the filter and cursor and looped
+  until the process was killed. Now the cursor is passed as params, and a
+  repeated cursor raises.
+- A person search ending on 29 February of a non-leap year got a 400.
+- Physical-person auditors appear among officers too, not only audit firms;
+  both are excluded from linking.
+- A company whose RGE qualification lapsed can come back through the second
+  source (installer NAF code, energy word in the name). Kept, with a test.
+- The remote image's `python3` is 3.11; the project needs 3.12, so the setup
+  hook could not have installed it. It now builds `.venv` with python3.12.
+
+**The agent decided, for the author to review in the PR:**
+- Manager key = surname + *first* given name + birth month (the register
+  lists first names inconsistently).
+- Manager expansion only adds construction trades (NAF 43.*) and holdings
+  (64.20Z, 70.10Z): a manager's property or restaurant company would
+  inflate the group's headcount.
+- `near_band` as specified: with a 30-300 band, half the width is 135, so
+  every smaller company is "near". On a live sample of 500 companies, near-band
+  groups outnumbered in-band ones nearly two to one. At full scale they should not reach
+  the shortlist, but the "in or near the segment" funnel stage is inflated.
+- The pre-score saturates: about 2.4% of companies score 1.0, so the shortlist
+  is decided by the tie-break (largest group first).
+- One in three active certified companies has no headcount band (`NN`,
+  mostly non-employers) and drops out as "headcount unknown".
+
+**Output:** `icp-scout source` / `icp-scout funnel`, `group.py`, `prefilter.py`,
+`funnel.py`, a cached rate-limited HTTP client, new optional config keys,
+synthetic fixtures with their generator, 33 tests. The full pull was not run
+here (about 2 lookups/s through the sandbox proxy); it is left for the author.
+The sandbox clone had no git remote. The author gave the repository, the agent
+pushed the branch; the sandbox has no GitHub CLI, so the author opens the PR
+from the drafted description.

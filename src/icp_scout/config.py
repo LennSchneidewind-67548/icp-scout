@@ -14,9 +14,30 @@ class Vendor(BaseModel):
     pitch: str
 
 
+class SecondSource(BaseModel):
+    """Installers outside the RGE registry, found in the company register."""
+
+    naf_codes: list[str] = []
+    # Whole words, matched case- and accent-insensitively against the company name.
+    name_keywords: list[str] = []
+    # Lowest INSEE headcount band code searched (e.g. "11" = 10-19 staff).
+    min_headcount_band: str = "11"
+
+
 class Market(BaseModel):
     country: str
     rge_domains: list[str] = Field(min_length=1)
+    # Product line -> the RGE domains that prove it. Empty: each domain is its own line.
+    product_lines: dict[str, list[str]] = {}
+    # None or no NAF codes: the register is only used to enrich RGE companies.
+    second_source: SecondSource | None = None
+
+    @model_validator(mode="after")
+    def _lines_use_known_domains(self) -> "Market":
+        unknown = {d for ds in self.product_lines.values() for d in ds} - set(self.rge_domains)
+        if unknown:
+            raise ValueError(f"product_lines use domains not in rge_domains: {sorted(unknown)}")
+        return self
 
 
 class Segment(BaseModel):
@@ -38,6 +59,10 @@ class Signal(BaseModel):
     definition: str | None = None
 
 
+class Prefilter(BaseModel):
+    shortlist_size: int = Field(default=175, gt=0)
+
+
 class Tiers(BaseModel):
     A: float
     B: float
@@ -56,6 +81,7 @@ class IcpConfig(BaseModel):
     signals: list[Signal] = Field(min_length=1)
     tiers: Tiers
     outreach: Outreach
+    prefilter: Prefilter = Prefilter()
 
     @model_validator(mode="after")
     def _unique_signals(self) -> "IcpConfig":
