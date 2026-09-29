@@ -51,3 +51,10 @@ have been committed. Fixed before the first commit. Push of the CI workflow
 was rejected (missing `workflow` token scope); author re-authenticated.
 
 **Output:** repo, docs, ADRs 0001-0004, config loader with tests, CI green.
+
+**Follow-up, same session:** the author asked for a slide on the AI-assisted
+workflow; the agent agreed on the condition that it shows the author's
+decisions, not the tools, and set up this log. Then a CI leak check was
+added: the case-specific terms are a GitHub secret and every commit and commit
+message in history is checked against it, printing paths only. It was tested
+both ways (passes on the real history, fails on a term that is present).

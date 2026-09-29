@@ -13,7 +13,9 @@ budgets are in `docs/plan.md`.
 - **Never commit case-company content** (ADR 0003). The company name, the
   real ICP config, research, the scored list and the deck stay in `private/`.
   No company-specific strings in code, tests, fixtures, docs or commit
-  messages. That includes this file.
+  messages. That includes this file. `bash scripts/leak-check.sh` checks
+  all of git history against `private/leak-terms.txt`; CI runs it on every
+  push with the `LEAK_TERMS` secret. Add new case-specific names to both.
 - Everything specific to a vendor or market comes from the ICP config
   (`config/icp.example.yaml`, or `ICP_SCOUT_CONFIG=private/icp.yaml` for the case).
 - The model never outputs the score; it extracts signals with evidence (ADR 0002).
