@@ -15,7 +15,7 @@ Keep entries free of case-company specifics (ADR 0003); those go in `private/not
 
 | Author time | Agent sessions | LLM spend (pipeline) | Work packages done |
 |---|---|---|---|
-| TODO | 7 | $0 | 1 of 8 (WP0); WP1 merged, WP2 in review |
+| TODO | 8 | ~$2.04 | 1 of 8 (WP0); WP1 and WP2 merged, pilot done |
 
 ---
 
@@ -271,3 +271,55 @@ intended. Whether the API accepts the strict schema, and what a lead really
 costs, is for the author's 5-lead pilot.
 
 **Output:** branch `wp2-research`, PR opened.
+
+---
+
+## 2026-09-29 · WP2 pilot · `local`
+
+**Author time:** TODO
+
+**Asked for:** merge the WP2 PR and run the pilot. Then, from the author: a
+$15 cap on API spend for the whole project, $3 for the pilot, and "if there's
+any way to cheaply compare the output of both configs, run both and put the
+findings in the presentation".
+
+**The author caught:** the agent had written a $60 budget into the private
+config that was never agreed. It is now $3, and the agent records spend
+figures as the author's decision (memory).
+
+**The agent proposed, the author chose:** ways to cut cost (the Pro plan
+instead of the API, a cheaper model, the top 50 only, fewer and shorter
+pages, lower effort, batching). For the pilot: two configs that differ only
+in the model (Sonnet 5.5 vs Opus 5.5), on the same 5 leads, compared in code
+(`icp-scout compare`) with no LLM judge.
+
+**Found by running it:**
+- The full sourcing pull ran for the first time (about 1.5h, 21k register
+  lookups). **Neither reference customer made the shortlist.** One was below
+  the pre-score cut: no website in the registry, so growth and tech maturity
+  score 0. The other isn't in either source. The author chose to research
+  both anyway: `--group` now accepts any group in the market, and a new
+  `market.extra_sirens` adds named companies to sourcing.
+- **The first Sonnet run was invalid.** Every web tool call failed with
+  `invalid_tool_input`: the model called the `_20260209` (dynamic filtering)
+  tools with code-execution-style input. The answers passed validation as
+  honest "not found" answers; "0 searches" in the cost report gave it away.
+  Four diagnostic calls isolated it. The agent now uses the basic tool
+  versions, which were also cheaper in those tests.
+- A live response with search results holds datetimes, and `to_dict()` failed
+  to serialize it after the call was paid. Fixed with `mode="json"`.
+
+**Result (details in `private/pilot/findings.md`):** Opus costs 3.7x Sonnet per
+lead, uses its search and fetch allowance, and finds more (a second website,
+expired job ads, a group-level headcount). Sonnet stops at the first page. Both
+rate both reference customers highly; Opus matched the author's hand score
+for one of them exactly. One disagreement comes from an ambiguous rubric
+definition (does a contact form count as a lead form?).
+
+**Output:** PR #3 (page-size cap, `icp-scout compare`, `extra_sirens`,
+off-shortlist `--group`, basic web tools, JSON-mode serialization). Pilot
+spend about $2.04 of the $3.
+
+**Left for the author:** model and scope for the full run within about $12.96
+(measured: Sonnet on all 175 about $10.50, Opus on the top 50 about $11); the
+rubric definition of a lead form.

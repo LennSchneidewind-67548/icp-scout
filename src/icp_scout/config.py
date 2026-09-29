@@ -31,6 +31,9 @@ class Market(BaseModel):
     product_lines: dict[str, list[str]] = {}
     # None or no NAF codes: the register is only used to enrich RGE companies.
     second_source: SecondSource | None = None
+    # Companies to add by SIREN whatever the filters say (e.g. reference customers
+    # that neither source finds), so they can be researched and scored like the rest.
+    extra_sirens: list[str] = []
 
     @model_validator(mode="after")
     def _lines_use_known_domains(self) -> "Market":
@@ -71,6 +74,8 @@ class Research(BaseModel):
     effort: str = "medium"
     max_searches: int = Field(default=5, ge=0)
     max_fetches: int = Field(default=6, ge=0)
+    # Cap on each fetched page, in tokens. Pages are most of the input cost. None: no cap.
+    max_page_tokens: int | None = Field(default=None, gt=0)
     # Stop starting new leads once this run's live spend passes this.
     budget_usd: float = Field(default=60, gt=0)
     concurrency: int = Field(default=4, ge=1)

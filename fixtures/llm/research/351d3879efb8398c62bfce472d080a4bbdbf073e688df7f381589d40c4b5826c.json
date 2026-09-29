@@ -4,7 +4,7 @@
   "system": [
    {
     "type": "text",
-    "text": "You research one company group for Helio Desk, which sells: Fictional all-in-one software for renewable installers: CRM, system planning and quoting in one place.\n\nYour job is to find evidence for the signals below, not to judge the company. For each signal, record a value in [0, 1] (usually 0, 0.5 or 1) against its definition, with the evidence behind it. A rubric in code turns the values into a score; you never score.\n\nThe target segment is groups of 30-300 staff in total (all companies of the group together).\n\nSignals:\n- `size_fit` (Headcount in the target band): Headcount of the whole group (sister companies with the same manager, address or website count together). 1 = inside the segment band. 0.5 = within half the band's width outside it, or no headcount but indirect evidence (branches, teams). 0 = far outside.\n- `product_mix` (Installs both heat pumps and solar): 1 = installs solar PV and heat pumps. 0.5 = one of them plus an adjacent line (storage, EV chargers, heat-pump water heaters, solar thermal). 0 = a single line.\n- `growth` (Hiring for sales, planning or install roles, or opening sites): 1 = open roles in sales, planning, admin or installation, or a branch or entity opened in the last 24 months. 0.5 = one weak sign. 0 = no evidence.\n- `tech_maturity` (Online configurator, lead forms, a CRM or a competing tool in use): 1 = a lead form or simulator on its own website, or a named CRM or installer tool in use. 0.5 = own website with contact details only. 0 = no own website.\n\nKnown good fits, for calibration (companies like these would get high values):\n- Soleil & Chaleur Installations (fictional)\n- Atelier Thermique du Nord (fictional)\n\nHow to work:\n- You get the group's registry facts first: its companies with their SIRENs and registry pages, certified domains, headcount bands, revenue, and the website if the registry lists one. Registry facts count as evidence; cite the company's registry page as the URL.\n- If no website is given, look for it with web_search. Before you use a site, check that it belongs to this group (same name, town or SIREN), not a namesake.\n- Read the pages that matter with web_fetch: home, services or products, careers or recruitment, about, contact or quote request. Also look for the group's job ads. You have at most 5 searches and 6 fetches; stop when you have enough.\n\nRules for evidence:\n- A value above 0 needs at least one piece of evidence. If you find nothing, set value 0 and found false: no evidence is not the same as a weak signal.\n- A quote is copied verbatim from the page in its original language (usually French), one or two sentences. quote_en is its English translation.\n- url is the exact page the quote is on: a search result or page you retrieved in this conversation, or a registry page given to you. Never cite a URL you did not retrieve.\n- rationale_en: one sentence in English on why this value.\n\nWhen you are done, call record_signals once with everything. That call is your answer; do not write the findings as text. In notes_en, tell an SDR what to know before calling (in English): group structure, recent news, a namesake you ruled out.\n",
+    "text": "You research one company group for Helio Desk, which sells: Fictional all-in-one software for renewable installers: CRM, system planning and quoting in one place.\n\nYour job is to find evidence for the signals below, not to judge the company. For each signal, record a value in [0, 1] (usually 0, 0.5 or 1) against its definition, with the evidence behind it. A rubric in code turns the values into a score; you never score.\n\nThe target segment is groups of 30-300 staff in total (all companies of the group together).\n\nSignals:\n- `size_fit` (Headcount in the target band): Headcount of the whole group (sister companies with the same manager, address or website count together). 1 = inside the segment band. 0.5 = within half the band's width outside it, or no headcount but indirect evidence (branches, teams). 0 = far outside.\n- `product_mix` (Installs both heat pumps and solar): 1 = installs solar PV and heat pumps. 0.5 = one of them plus an adjacent line (storage, EV chargers, heat-pump water heaters, solar thermal). 0 = a single line.\n- `growth` (Hiring for sales, planning or install roles, or opening sites): 1 = open roles in sales, planning, admin or installation, or a branch or entity opened in the last 24 months. 0.5 = one weak sign. 0 = no evidence.\n- `tech_maturity` (Online configurator, lead forms, a CRM or a competing tool in use): 1 = a lead form or simulator on its own website, or a named CRM or installer tool in use. 0.5 = own website with contact details only. 0 = no own website.\n\nKnown good fits, for calibration (companies like these would get high values):\n- Soleil & Chaleur Installations (fictional)\n- Atelier Thermique du Nord (fictional)\n\nHow to work:\n- You get the group's registry facts first: its companies with their SIRENs and registry pages, certified domains, headcount bands, revenue, and the website if the registry lists one. Registry facts count as evidence; cite the company's registry page as the URL.\n- If no website is given, look for it with web_search. Before you use a site, check that it belongs to this group (same name, town or SIREN), not a namesake.\n- Read the pages that matter with web_fetch: home, services or products, careers or recruitment, about, contact or quote request. Also look for the group's job ads. You have at most 5 searches and 6 fetches; stop when you have enough.\n\nRules for evidence:\n- A value above 0 needs at least one piece of evidence. If you find nothing, set value 0 and found false: no evidence is not the same as a weak signal.\n- A quote is copied verbatim from the page in its original language (usually French), one or two sentences. quote_en is its English translation.\n- url is the exact page the quote is on: a search result or page you retrieved in this conversation, or a registry page given to you. Never cite a URL you did not retrieve.\n- rationale_en: one sentence in English on why this value.\n- Write everything in English except the quotes, including any text between tool calls.\n\nWhen you are done, call record_signals once with everything. That call is your answer; do not write the findings as text. In notes_en, tell an SDR what to know before calling (in English): group structure, recent news, a namesake you ruled out.\n",
     "cache_control": {
      "type": "ephemeral"
     }
@@ -13,17 +13,17 @@
   "messages": [
    {
     "role": "user",
-    "content": "Research this company group. Registry facts:\n\n{\n \"group_name\": \"VALLON THERMIQUE\",\n \"companies\": [\n  {\n   \"siren\": \"900000060\",\n   \"name\": \"VALLON THERMIQUE\",\n   \"registry_url\": \"https://annuaire-entreprises.data.gouv.fr/entreprise/900000060\"\n  },\n  {\n   \"siren\": \"900000070\",\n   \"name\": \"VALLON PHOTOVOLTAIQUE\",\n   \"registry_url\": \"https://annuaire-entreprises.data.gouv.fr/entreprise/900000070\"\n  },\n  {\n   \"siren\": \"900000080\",\n   \"name\": \"VALLON SERVICES CHAUFFAGE\",\n   \"registry_url\": \"https://annuaire-entreprises.data.gouv.fr/entreprise/900000080\"\n  }\n ],\n \"grouped_because\": \"same manager\",\n \"department\": \"38\",\n \"website_in_registry\": null,\n \"certified_domains\": [\n  \"Panneaux solaires photovoltaïques\",\n  \"Pompe à chaleur : chauffage\"\n ],\n \"product_lines_from_certifications\": [\n  \"heat_pump\",\n  \"solar\"\n ],\n \"headcount_bands_sum\": {\n  \"low\": 30,\n  \"mid\": 43.5,\n  \"high\": 57\n },\n \"revenue_eur\": 3021000,\n \"oldest_company_created\": \"2010-04-01\",\n \"found_via\": \"both\"\n}"
+    "content": "Research this company group. Registry facts:\n\n{\n \"group_name\": \"BRISE MARINE ENERGIES\",\n \"companies\": [\n  {\n   \"siren\": \"900000010\",\n   \"name\": \"BRISE MARINE ENERGIES\",\n   \"registry_url\": \"https://annuaire-entreprises.data.gouv.fr/entreprise/900000010\"\n  }\n ],\n \"grouped_because\": null,\n \"department\": \"29\",\n \"website_in_registry\": \"https://www.brise-marine.example\",\n \"certified_domains\": [\n  \"Chauffage et/ou eau chaude solaire\",\n  \"Panneaux solaires photovoltaïques\",\n  \"Pompe à chaleur : chauffage\"\n ],\n \"product_lines_from_certifications\": [\n  \"heat_pump\",\n  \"solar\"\n ],\n \"headcount_bands_sum\": {\n  \"low\": 50,\n  \"mid\": 74.5,\n  \"high\": 99\n },\n \"revenue_eur\": 1001000,\n \"oldest_company_created\": \"2010-04-01\",\n \"found_via\": \"rge\"\n}"
    }
   ],
   "tools": [
    {
-    "type": "web_search_20260209",
+    "type": "web_search_20250305",
     "name": "web_search",
     "max_uses": 5
    },
    {
-    "type": "web_fetch_20260209",
+    "type": "web_fetch_20250910",
     "name": "web_fetch",
     "max_uses": 6
    },
@@ -325,7 +325,7 @@
   "max_tokens": 64000
  },
  "response": {
-  "id": "msg_synthetic_0001",
+  "id": "msg_synthetic_0000",
   "type": "message",
   "role": "assistant",
   "model": "claude-opus-5-5",
@@ -336,116 +336,71 @@
     "signature": "synthetic-signature"
    },
    {
+    "type": "text",
+    "text": "I'll start with the website the registry lists."
+   },
+   {
     "type": "server_tool_use",
-    "id": "srvtoolu_v1",
-    "name": "web_search",
+    "id": "srvtoolu_b1",
+    "name": "web_fetch",
     "input": {
-     "query": "Vallon Thermique Grenoble pompe a chaleur"
+     "url": "https://www.brise-marine.example"
     }
    },
    {
-    "type": "web_search_tool_result",
-    "tool_use_id": "srvtoolu_v1",
-    "content": [
-     {
-      "type": "web_search_result",
-      "url": "https://annuaire-fictif.example/vallon-thermique-38000",
-      "title": "Vallon Thermique - annuaire",
-      "encrypted_content": "c3ludGhldGlj",
-      "page_age": null
-     },
-     {
-      "type": "web_search_result",
-      "url": "https://vallon-thermique-lyon.example",
-      "title": "Vallon Thermique Lyon",
-      "encrypted_content": "c3ludGhldGlj",
-      "page_age": null
+    "type": "web_fetch_tool_result",
+    "tool_use_id": "srvtoolu_b1",
+    "content": {
+     "type": "web_fetch_result",
+     "url": "https://www.brise-marine.example",
+     "retrieved_at": "2026-09-29T12:00:00Z",
+     "content": {
+      "type": "document",
+      "title": "Brise Marine Energies",
+      "citations": null,
+      "source": {
+       "type": "text",
+       "media_type": "text/plain",
+       "data": "Brise Marine Energies, installateur RGE a Quimper depuis 2010. Pompes a chaleur air-eau et panneaux solaires photovoltaiques pour particuliers et professionnels. Demandez votre devis gratuit en ligne : simulateur d'economies d'energie. Une equipe de 70 techniciens et conseillers."
+      }
      }
-    ]
+    }
    },
    {
-    "type": "tool_use",
-    "id": "toolu_v2",
-    "name": "record_signals",
+    "type": "server_tool_use",
+    "id": "srvtoolu_b2",
+    "name": "web_search",
     "input": {
-     "website": null,
-     "signals": {
-      "size_fit": {
-       "value": 0.5,
-       "found": true,
-       "rationale_en": "Three companies of 10-19 staff each: about 30-57 together, at the lower edge of the band.",
-       "evidence": [
-        {
-         "quote": "Tranche d'effectif salarie : 10 a 19 salaries",
-         "quote_en": "Headcount band: 10 to 19 employees",
-         "url": "https://annuaire-entreprises.data.gouv.fr/entreprise/900000060"
-        }
-       ]
-      },
-      "product_mix": {
-       "value": 1,
-       "found": true,
-       "rationale_en": "The group is certified for both heat pumps and solar PV.",
-       "evidence": [
-        {
-         "quote": "Pompe a chaleur : chauffage ; Panneaux solaires photovoltaiques",
-         "quote_en": "Heat pump: heating; solar PV panels",
-         "url": "https://annuaire-entreprises.data.gouv.fr/entreprise/900000060"
-        }
-       ]
-      },
-      "growth": {
-       "value": 0,
-       "found": false,
-       "rationale_en": "No job ads or new sites found.",
-       "evidence": []
-      },
-      "tech_maturity": {
-       "value": 0,
-       "found": false,
-       "rationale_en": "No own website found.",
-       "evidence": []
-      }
-     },
-     "facts": {
-      "product_lines": [
-       "heat_pump",
-       "solar"
-      ],
-      "headcount_stated": null,
-      "open_roles": [],
-      "tools_seen": []
-     },
-     "notes_en": "Three companies with one manager; no web presence found. A namesake in another region was ruled out."
+     "query": "Brise Marine Energies recrutement Quimper"
     }
    }
   ],
-  "stop_reason": "tool_use",
+  "stop_reason": "pause_turn",
   "stop_sequence": null,
   "stop_details": null,
   "usage": {
-   "input_tokens": 2600,
+   "input_tokens": 1850,
    "cache_creation_input_tokens": 2400,
    "cache_read_input_tokens": 0,
-   "output_tokens": 1100,
+   "output_tokens": 310,
    "server_tool_use": {
-    "web_search_requests": 1,
-    "web_fetch_requests": 0
+    "web_search_requests": 0,
+    "web_fetch_requests": 1
    },
    "service_tier": "standard"
   }
  },
  "usage": {
-  "input_tokens": 2600,
+  "input_tokens": 1850,
   "cache_creation_input_tokens": 2400,
   "cache_read_input_tokens": 0,
-  "output_tokens": 1100,
+  "output_tokens": 310,
   "server_tool_use": {
-   "web_search_requests": 1,
-   "web_fetch_requests": 0
+   "web_search_requests": 0,
+   "web_fetch_requests": 1
   },
   "service_tier": "standard"
  },
- "cost_usd": 0.0544,
+ "cost_usd": 0.0256,
  "recorded_at": "2026-09-29T12:00:00+00:00"
 }

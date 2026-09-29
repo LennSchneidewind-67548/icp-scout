@@ -128,5 +128,6 @@ class _Stream:
     def get_final_message(self):
         return self
 
-    def to_dict(self):
+    def to_dict(self, mode="python"):
+        assert mode == "json", "a live response holds datetimes: use to_dict(mode='json')"
         return json.loads(json.dumps(self.message))

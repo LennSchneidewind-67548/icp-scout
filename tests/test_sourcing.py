@@ -278,3 +278,19 @@ def test_source_offline_end_to_end(tmp_path, capsys):
 def test_source_offline_fails_on_a_cache_miss(tmp_path):
     with pytest.raises(SystemExit, match="--offline"):
         cli.main(["--data-dir", str(tmp_path), "source", "--offline"])
+
+
+def test_extra_sirens_are_added_whatever_the_filters_say(tmp_path):
+    icp = config.load(ROOT / "config" / "icp.example.yaml")
+    icp.market.extra_sirens = [SIRENS["plomb"], SIRENS["brise"], SIRENS["missing"]]
+    fake = FakeApis()
+    funnel = sourcing.run(icp, tmp_path, today=TODAY, rate_per_s=0, log=lambda _: None,
+                          transport=httpx.MockTransport(fake))  # fmt: skip
+    companies = pd.read_parquet(tmp_path / "companies.parquet").set_index("siren")
+    assert companies.loc[SIRENS["plomb"], "via"] == "config"
+    assert companies.loc[SIRENS["plomb"], "source"] == "register"
+    assert companies.loc[SIRENS["brise"], "via"] == "rge"  # already found: left as it was
+    stage = next(s for s in funnel.stages if s.id == "config_source")
+    assert stage.detail["added"] == 1
+    market = pd.read_parquet(tmp_path / "market.parquet")
+    assert market["members"].map(lambda m: SIRENS["plomb"] in m).any()

@@ -83,16 +83,18 @@ def _one(icp: IcpConfig, llm: LLM, lead: dict) -> dict:
 
 
 def shortlist(data_dir: Path, group_ids: list[str] | None, limit: int | None) -> list[dict]:
+    """The shortlisted groups by pre-score, or the named groups (shortlisted or not)."""
     path = data_dir / "market.parquet"
     if not path.exists():
         raise FileNotFoundError(f"{path} not found: run `icp-scout source` first")
-    market = pd.read_parquet(path)
-    rows = market[market["shortlisted"]].sort_values("pre_score", ascending=False, kind="stable")
+    market = pd.read_parquet(path).sort_values("pre_score", ascending=False, kind="stable")
+    rows = market[market["shortlisted"]]
     if group_ids:
-        missing = set(group_ids) - set(rows["group_id"])
+        # Named groups may come from off the shortlist (e.g. a reference customer).
+        missing = set(group_ids) - set(market["group_id"])
         if missing:
-            raise ValueError(f"not on the shortlist: {', '.join(sorted(missing))}")
-        rows = rows[rows["group_id"].isin(group_ids)]
+            raise ValueError(f"not in the market: {', '.join(sorted(missing))}")
+        rows = market[market["group_id"].isin(group_ids)]
     if limit is not None:
         rows = rows.head(limit)
     return [_row(r) for r in rows.to_dict("records")]
@@ -191,3 +193,65 @@ def _statuses(data_dir: Path) -> dict[str, dict]:
         r = json.loads(path.read_text(encoding="utf-8"))
         out[r["group_id"]] = r
     return out
+
+
+# `icp-scout compare`
+
+
+def compare(dir_a: str | Path, dir_b: str | Path) -> str:
+    """Two research runs over the same leads (e.g. two models), side by side: cost,
+    signals found, flags, and where the values disagree. No model call."""
+    runs = {}
+    for d in (Path(dir_a), Path(dir_b)):
+        path = d / "signals.parquet"
+        if not path.exists():
+            raise FileNotFoundError(f"{path} not found: run `icp-scout research` there first")
+        runs[d.name] = (pd.read_parquet(path), read_ledger(d / "ledger.jsonl"))
+    (a, (sa, la)), (b, (sb, lb)) = runs.items()
+    both = sorted(set(sa["group_id"]) & set(sb["group_id"]))
+    lines = [f"{len(both)} leads researched in both {a} and {b}", ""]
+
+    width = max(len(a), len(b), 6)
+    lines.append(f"{'':<22}{a:>{width}}  {b:>{width}}")
+    rows = [_run_stats(s[s["group_id"].isin(both)], led, both) for s, led in ((sa, la), (sb, lb))]
+    for label in rows[0]:
+        lines.append(f"{label:<22}{rows[0][label]:>{width}}  {rows[1][label]:>{width}}")
+
+    ok_a = sa[sa["group_id"].isin(both) & (sa["status"] == "ok")]
+    ok_b = sb[sb["group_id"].isin(both) & (sb["status"] == "ok")]
+    joined = ok_a.merge(ok_b, on=["group_id", "signal"], suffixes=("_a", "_b"))
+    lines += ["", "Agreement per signal (leads both researched without failure)"]
+    for signal, g in joined.groupby("signal", sort=False):
+        same = (g["value_a"] == g["value_b"]).mean()
+        diff = (g["value_a"] - g["value_b"]).abs().mean()
+        lines.append(f"  {signal:<20}same value {same:>5.0%}   mean |difference| {diff:.2f}")
+    differ = joined[joined["value_a"] != joined["value_b"]]
+    if len(differ):
+        lines += ["", f"Disagreements ({a} vs {b}): read the evidence for these"]
+        for r in differ.itertuples():
+            lines.append(f"  {r.group_id} {r.name_a[:30]:<30} {r.signal:<16}"
+                         f"{r.value_a:g} vs {r.value_b:g}")  # fmt: skip
+    return "\n".join(lines)
+
+
+def _run_stats(signals: pd.DataFrame, ledger: list[dict], leads: list[str]) -> dict[str, str]:
+    calls = pd.DataFrame(ledger).drop_duplicates("key") if ledger else pd.DataFrame()
+    calls = calls[calls["lead"].isin(leads)] if len(calls) else calls
+    per_lead = calls.groupby("lead")["usd"].sum() if len(calls) else pd.Series(dtype=float)
+    status = signals.drop_duplicates("group_id")["status"]
+    flagged = signals[signals["flags"].map(len) > 0]["group_id"].nunique()
+    tokens = calls[["input_tokens", "cache_write_tokens", "cache_read_tokens"]].sum().sum()
+    return {
+        "model": ", ".join(sorted(calls["model"].unique())) if len(calls) else "?",
+        "cost per lead (mean)": f"${per_lead.mean():.3f}" if len(per_lead) else "?",
+        "cost, these leads": f"${per_lead.sum():.2f}",
+        "prompt tokens / lead": f"{tokens / max(len(per_lead), 1):,.0f}",
+        "output tokens / lead": f"{calls['output_tokens'].sum() / max(len(per_lead), 1):,.0f}"
+        if len(calls) else "?",
+        "searches / lead": f"{calls['web_searches'].sum() / max(len(per_lead), 1):.1f}"
+        if len(calls) else "?",
+        "failed leads": f"{(status == 'failed').sum()}",
+        "flagged leads": f"{flagged}",
+        "signals found": f"{signals['found'].mean():.0%}",
+        "mean value": f"{signals['value'].mean():.2f}",
+    }  # fmt: skip

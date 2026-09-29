@@ -254,3 +254,47 @@ def test_a_case_config_cannot_record_into_the_committed_fixtures(data_dir, tmp_p
     with pytest.raises(SystemExit, match="private/llm"):
         cli.main(["--config", str(case), "--data-dir", str(data_dir), "research",
                   "--recordings", str(RECORDINGS)])  # fmt: skip
+
+
+def test_compare_two_runs(data_dir, tmp_path, capsys, icp):
+    """The same leads under two models: agreement, disagreements, cost per run."""
+    ids = [s.id for s in icp.signals]
+
+    def run(model, growth):
+        answer = good_answer(ids)
+        answer["signals"]["growth"]["value"] = growth
+        msg = make_fixtures.message(1, [make_fixtures.record("r", answer)], "tool_use",
+                                    {"input": 1000, "output": 100})  # fmt: skip
+        out = tmp_path / model
+        out.mkdir()
+        (out / "market.parquet").write_bytes((data_dir / "market.parquet").read_bytes())
+        research_cfg = icp.research.model_copy(update={"model": model})
+        research.run(icp.model_copy(update={"research": research_cfg}), out, limit=2,
+                     recordings_dir=tmp_path / "rec", client=ScriptedClient(lambda p: msg),
+                     log=lambda _: None)  # fmt: skip
+        return out
+
+    cli.main(["compare", str(run("claude-sonnet-5-5", 1)), str(run("claude-opus-5-5", 0.5))])
+    report = capsys.readouterr().out
+    assert "2 leads researched in both" in report
+    assert "claude-sonnet-5-5" in report and "claude-opus-5-5" in report
+    assert "growth              same value    0%" in report
+    assert "size_fit            same value  100%" in report
+    assert report.count("1 vs 0.5") == 2
+
+
+def test_page_cap_goes_on_the_fetch_tool_only_when_set(icp):
+    fetch = next(t for t in agent.tools(icp) if t["name"] == "web_fetch")
+    assert "max_content_tokens" not in fetch  # unset: the example recordings stay valid
+    capped = icp.research.model_copy(update={"max_page_tokens": 6000})
+    fetch = next(t for t in agent.tools(icp.model_copy(update={"research": capped}))
+                 if t["name"] == "web_fetch")  # fmt: skip
+    assert fetch["max_content_tokens"] == 6000
+
+
+def test_named_groups_may_come_from_off_the_shortlist(data_dir):
+    market = pd.read_parquet(data_dir / "market.parquet")
+    off = market.loc[~market["shortlisted"], "group_id"].iloc[0]
+    assert research.shortlist(data_dir, [off], None)[0]["group_id"] == off
+    with pytest.raises(ValueError, match="not in the market"):
+        research.shortlist(data_dir, ["g000000000"], None)

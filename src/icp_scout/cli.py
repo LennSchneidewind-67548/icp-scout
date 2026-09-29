@@ -45,6 +45,9 @@ def main(argv: list[str] | None = None) -> None:
     )
     research.add_argument("--budget-usd", type=float, help="default: research.budget_usd")
     sub.add_parser("cost", help="cost per researched lead, from the ledger")
+    compare = sub.add_parser("compare", help="compare two research runs (e.g. two models)")
+    compare.add_argument("run_a", help="data dir of the first run")
+    compare.add_argument("run_b", help="data dir of the second run")
     args = parser.parse_args(argv)
     load_env()
 
@@ -109,6 +112,13 @@ def main(argv: list[str] | None = None) -> None:
         from icp_scout.research import cost_report
 
         print(cost_report(args.data_dir))
+    elif args.command == "compare":
+        from icp_scout.research import compare
+
+        try:
+            print(compare(args.run_a, args.run_b))
+        except FileNotFoundError as e:
+            sys.exit(str(e))
 
 
 def load_env(path: str | Path = ".env") -> None:
