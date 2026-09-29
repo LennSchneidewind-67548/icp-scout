@@ -127,3 +127,21 @@ them, and name keywords must match whole words.
 fixtures from the start. Open for the author's review in the PR.
 
 **Output:** `docs/wp/wp1-sourcing.md`, linked from `docs/plan.md`.
+
+---
+
+## 2026-09-29 · Remote session setup · `local`
+
+**Author time:** TODO
+
+**Asked for:** how to hand `docs/wp/wp1-sourcing.md` to a remote session, then
+the environment setup for it.
+
+**The agent proposed:** a `SessionStart` hook in `.claude/settings.json` that
+runs `scripts/remote-setup.sh` (`pip install -e ".[dev]"`, like CI) and only
+does so when `CLAUDE_CODE_REMOTE=true`, so local sessions keep using `.venv`.
+Kept in the repo rather than in the web environment's setup script, so it is
+versioned. Network access for the two data hosts still has to be allowed in the
+environment settings by the author.
+
+**Output:** `.claude/settings.json`, `scripts/remote-setup.sh`.
