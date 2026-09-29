@@ -14,6 +14,7 @@ from pathlib import Path
 
 import pandas as pd
 
+from icp_scout.claude_code import ClaudeCode, UsageLimit
 from icp_scout.config import IcpConfig
 from icp_scout.enrich import agent
 from icp_scout.llm import LLM, RecordingMiss, read_ledger, write_json
@@ -31,13 +32,23 @@ def run(
     budget_usd: float | None = None,
     group_ids: list[str] | None = None,
     client=None,
+    runner=None,
     log=lambda msg: print(msg, file=sys.stderr),
 ) -> list[dict]:
+    """`client` fakes the API, `runner` the CLI (tests)."""
     data_dir = Path(data_dir)
     leads = shortlist(data_dir, group_ids, limit)
     budget = budget_usd if budget_usd is not None else icp.research.budget_usd
-    llm = LLM(recordings_dir, mode, data_dir / "ledger.jsonl", client=client)
-    log(f"Researching {len(leads)} groups ({mode}, {icp.research.model}, budget ${budget:g}) ...")
+    r, ledger = icp.research, data_dir / "ledger.jsonl"
+    if r.backend == "claude-code":
+        extra = {"runner": runner} if runner else {}
+        llm = ClaudeCode(recordings_dir, mode, ledger, max_utilization=r.max_utilization, **extra)
+        caps = ", ".join(f"{w} {u:.0%}" for w, u in r.max_utilization.items())
+        how = f"claude-code on the subscription, usage caps {caps}"
+    else:
+        llm = LLM(recordings_dir, mode, ledger, client=client)
+        how = f"budget ${budget:g}"
+    log(f"Researching {len(leads)} groups ({mode}, {r.model}, {how}) ...")
 
     results, todo = [], iter(leads)
     stopped = False
@@ -57,7 +68,14 @@ def run(
                 break
             done, running = wait(running, return_when=FIRST_COMPLETED)
             for future in done:
-                out = future.result()  # RecordingMiss propagates: --offline fails loudly
+                try:
+                    out = future.result()  # RecordingMiss propagates: --offline fails loudly
+                except UsageLimit as e:
+                    # Not recorded: the next run picks the lead up again.
+                    if not stopped:
+                        log(f"Usage limit: {e}; no new leads started. Re-run later to resume.")
+                    stopped = True
+                    continue
                 write_json(data_dir / "research" / f"{out['group_id']}.json", out)
                 results.append(out)
                 log(f"  {out['group_id']} {out['name']}: {out['status']}"
@@ -71,10 +89,12 @@ def run(
     return results
 
 
-def _one(icp: IcpConfig, llm: LLM, lead: dict) -> dict:
+def _one(icp: IcpConfig, llm: LLM | ClaudeCode, lead: dict) -> dict:
     try:
+        if isinstance(llm, ClaudeCode):
+            return agent.research_claude_code(icp, llm, lead)
         return agent.research(icp, llm, lead)
-    except RecordingMiss:
+    except (RecordingMiss, UsageLimit):
         raise
     except Exception as e:  # noqa: BLE001 - an API error fails this lead, not the run
         return {"group_id": lead["group_id"], "name": lead["name"], "model": icp.research.model,
@@ -170,6 +190,7 @@ def cost_report(data_dir: str | Path) -> str:
             f"{per_lead['searches'].mean():.1f} searches, {per_lead['fetches'].mean():.1f} fetches"
         ),
         f"Cache hit rate     {hit:.0%} of prompt tokens read from cache",
+        *_notional(unique),
         (
             f"This ledger        {len(live):,} live calls (${live['usd'].sum():,.2f}), "
             f"{len(calls) - len(live):,} replayed"
@@ -185,6 +206,21 @@ def cost_report(data_dir: str | Path) -> str:
             "citing a URL the agent never retrieved)"
         )
     return "\n".join(lines)
+
+
+def _notional(calls: pd.DataFrame) -> list[str]:
+    """claude-code runs cost no API money; the CLI's list-price estimate says what
+    they would have cost."""
+    if "notional_usd" not in calls or calls["notional_usd"].isna().all():
+        return []
+    cc = calls[calls["notional_usd"].notna()]
+    per_lead = cc.groupby("lead")["notional_usd"].sum()
+    line = (
+        f"Subscription runs  {len(per_lead):,} leads via claude-code: $0 of API money; "
+        f"at list price ${per_lead.sum():,.2f} (${per_lead.mean():.3f} per lead, the CLI's "
+        "estimate, which includes its helper model)"
+    )
+    return [line]
 
 
 def _statuses(data_dir: Path) -> dict[str, dict]:

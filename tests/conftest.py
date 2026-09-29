@@ -131,3 +131,22 @@ class _Stream:
     def to_dict(self, mode="python"):
         assert mode == "json", "a live response holds datetimes: use to_dict(mode='json')"
         return json.loads(json.dumps(self.message))
+
+
+@pytest.fixture(scope="module")
+def market_dir(tmp_path_factory):
+    """data/ after `icp-scout source` on the source fixtures."""
+    import sys
+
+    sys.path.insert(0, str(ROOT / "fixtures" / "llm"))
+    import make_fixtures  # imports this module, so not at the top
+
+    data_dir = tmp_path_factory.mktemp("data")
+    make_fixtures.market(data_dir)
+    return data_dir
+
+
+@pytest.fixture
+def data_dir(market_dir, tmp_path):
+    (tmp_path / "market.parquet").write_bytes((market_dir / "market.parquet").read_bytes())
+    return tmp_path
