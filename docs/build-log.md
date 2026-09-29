@@ -194,5 +194,6 @@ unknown parameters get a 400; officer names come as `"NAME (USAGE NAME)"`.
 `funnel.py`, a cached rate-limited HTTP client, new optional config keys,
 synthetic fixtures with their generator, 33 tests. The full pull was not run
 here (about 2 lookups/s through the sandbox proxy); it is left for the author.
-The sandbox clone had no git remote, so the branch could not be pushed and no PR
-was opened; the commit was handed over as a patch with a drafted PR description.
+The sandbox clone had no git remote. The author gave the repository, the agent
+pushed the branch; the sandbox has no GitHub CLI, so the author opens the PR
+from the drafted description.
