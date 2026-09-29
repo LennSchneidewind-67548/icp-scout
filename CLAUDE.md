@@ -21,6 +21,9 @@ budgets are in `docs/plan.md`.
   Load the claude-api skill before writing `llm.py`.
 - Time budget is ~20h total. Insights and the deck matter more than app polish.
 - The author does not read French: every French text gets an English translation next to it.
+- At the end of every session (local or remote), add an entry to
+  `docs/build-log.md`: mode, what the agent proposed, what the author
+  decided, rejected or caught, and the output. Leave author time as TODO.
 
 ## Commands
 
