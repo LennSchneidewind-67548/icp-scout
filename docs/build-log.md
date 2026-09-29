@@ -323,3 +323,38 @@ spend about $2.04 of the $3.
 **Left for the author:** model and scope for the full run within about $12.96
 (measured: Sonnet on all 175 about $10.50, Opus on the top 50 about $11); the
 rubric definition of a lead form.
+
+---
+
+## 2026-09-29 · WP2 full run on the subscription · `local`
+
+**Author time:** TODO
+
+**Asked for:** the Opus config for the full run, but on the author's Pro plan
+instead of the API, with the pilot as the only API cost evidence. Merge PR #3.
+The agent should decide the open rubric question itself.
+
+**The agent decided:** a plain contact form counts 0.5 for tech maturity; a
+quote form that asks about the project, or a simulator, counts 1. Nearly every
+site has a contact form, so counting it doesn't tell leads apart.
+
+**The agent built:** a `claude-code` research backend: one `claude -p` call
+per lead, with the same prompt, schema, checks, recordings and ledger. Guards:
+the API key never reaches the CLI, and a run that reports an API key source is
+killed before its first model call.
+
+**The agent caught:** the subscription's 7-day usage window resets on the
+presentation morning, so a run that used it up would leave no Claude for the
+remaining work packages. The guard has a cap per window: 90% of the 5-hour
+window, 70% of the 7-day window. It also found that the CLI's web search
+returns only links and its fetch returns a summary, so the prompt asks for
+verbatim passages. Search and fetch limits went back to 5/6, since the pilot's
+3/3 was only there to save API money.
+
+**Result:** 52 leads (top 50 + both references), 0 failed, 1 flagged, $0 of
+API money (list-price estimate $8.91). Weekly usage went from 38% to 44%.
+Against the API pilot, the only value changes on tech maturity come from the
+new rule. The scores barely separate inside the top 50 (41 A, 11 B, 0 C);
+that's an input for WP3. Details in `private/pilot/findings.md`.
+
+**Output:** branch `wp2-claude-code`, PR.
