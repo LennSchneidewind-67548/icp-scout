@@ -358,3 +358,36 @@ new rule. The scores barely separate inside the top 50 (41 A, 11 B, 0 C);
 that's an input for WP3. Details in `private/pilot/findings.md`.
 
 **Output:** branch `wp2-claude-code`, PR.
+
+---
+
+## 2026-09-30 · WP2 wide run on the subscription · `local`
+
+**Author time:** TODO
+
+**Asked for:** research the rest of the 175-lead shortlist on the Pro plan,
+using up to 90% of a fresh 5-hour window, with the caps unchanged and no API
+use. The agent's score, not the pre-score, should pick the top 50. Then a first
+re-rank, analysis only.
+
+**The agent did:** checked the caps (five_hour 0.9, seven_day 0.7) and ran the
+research in the background. It watched the log for failures instead of polling,
+because this session shares the same window. It then scored every researched
+lead with the rubric weights in a scratch script. `score.py` is still only a
+docstring, so the pipeline is unchanged.
+
+**The agent caught:** `icp-scout cost` reports 120 leads where the run reports
+118 of 175. The difference is the two references off the shortlist, not a
+double count. The guard stopped at 92%, not 90%, because leads already
+running finish after the cap is hit.
+
+**Result:** 118 of 175 researched (66 new), 0 failed, 1 flagged (the same one
+as before), $0 of API money. The 5-hour window went from 5% to 92%, the 7-day
+window from 45% to 52%. 57 leads are left, about one more 5-hour window. In the
+re-rank, 21 of the agent's top 50 had pre-rank 51-118, and the pre-score barely
+predicts the agent's score (Spearman -0.14). One reference ranks 17, the other
+79, outside the top 50. The rubric saturates: 11 distinct scores, 86 of 120 in
+tier A, 53 leads at 9.55 or above for 50 slots, so a tie-break decides the cut.
+This goes into WP3. Details in `private/pilot/findings.md`.
+
+**Output:** `data/` and `private/` updated (not committed); this entry.
