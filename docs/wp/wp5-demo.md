@@ -131,3 +131,29 @@ part of the path.
 
 - The research replay is in, as the Lead tab's second half.
 - Sliders run 0-5 in steps of 1.
+
+## Built (2026-10-01, local session)
+
+Steps 1-5 done; step 6 half done, step 7 left to the author.
+
+- `src/icp_scout/demo.py` and `app/streamlit_app.py` as planned, 13 tests in
+  `tests/test_demo.py` (two of them `AppTest`), synthetic data dir in
+  `conftest.py`.
+- **The map risk happened.** 18,000 points as SVG froze the browser tab. The grey
+  market layer is now counted per 0.15° cell (about 2,500 squares); in-segment
+  and researched groups stay single points. Points more than 3 interquartile
+  ranges from the median (127 overseas groups for the case) are left off and
+  counted in the subtitle, or the map shrinks mainland France to a dot.
+- **Changed from the plan:** `queue_moves` returns the names, not counts, so the
+  Queue tab can list which leads entered and left; `map_frame` takes the config
+  for region names; `queue_table` holds the Queue tab's columns. The replay is
+  an `st.fragment`, so its buttons don't re-run the page with the map.
+- **`.streamlit/config.toml`:** the server listens on localhost only (Streamlit's
+  default is every interface, which would put the case data on the venue's
+  network), usage stats off, light theme to match the charts. `demo.load_env`
+  reads only the `ICP_SCOUT_*` lines of `.env`, so the app never holds an API key.
+- **Checked:** with the case data the config weights reproduce `scored.parquet`;
+  the browser loads nothing outside localhost. Not yet checked with Wi-Fi off.
+- **Finding for the talk:** the top 15 leads score 10.0 (every signal at its
+  maximum), so no weight setting moves them. The sliders move leads at the
+  top-50 cut: product mix 0 and growth 5 swaps 8 leads.
