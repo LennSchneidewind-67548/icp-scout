@@ -515,3 +515,36 @@ the SDRs. The agent checked the second point: the registry lacked a website for
 sister company's site, so the 40 need a manual look).
 
 **Output:** this entry; `private/pipeline-explained.md` (not committed).
+
+---
+
+## 2026-10-01 · WP4 built: insights code, charts, write-up · `local`
+
+**Author time:** TODO
+
+**Asked for:** steps 3-5 of the WP4 plan for the six kept findings.
+
+**The agent proposed:** `insights.py` with one function per finding, plus the
+appendix finding; `icp-scout insights` writes a table and a Vega-Lite spec per
+finding; the optional config key `market.line_labels` for short product-line
+names in charts. Charts follow the dataviz skill: palettes run through its
+validator, then each chart rendered and looked at. That caught bars missing on
+the log scale, random jitter that changed per render, and a size chart that
+needed growth highlighted and n per band. Then `private/insights.md`: per
+finding the headline, numbers, chart, what it changes for the SDRs, the caveat,
+a suggested deck order and open checks.
+
+**The agent caught:** the 40 "different website" cases needed reading before
+F7 could claim them. From the agent's notes: 29 are broken, redirected, typo'd
+or parked registry entries, 10 are a sister company's site, 1 is unclear. So the
+claim became 45 of 177 (25%) without a working website from open data, not the
+raw 32%. Also: the roll-up put 22 groups in the segment but none in the queue;
+the two references sit at pre-score rank 677, outside any shortlist; 39% of the
+segment is heat-pump-only and was never researched (a scope decision for the
+author).
+
+**The author decided:** commit and push after the plan and after step 3.
+
+**Output:** `src/icp_scout/insights.py`, `tests/test_insights.py` (105 tests
+pass), the CLI command and config key on branch `wp4-plan`;
+`private/insights.md` and `data/insights/` (not committed); this entry.
