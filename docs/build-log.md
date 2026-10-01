@@ -575,3 +575,29 @@ single-line groups (9.1 and 7.3); with the case weights they are 8.2 and 6.4.
 
 **Output:** decisions in `docs/wp/wp4-insights.md` and `private/insights.md`
 (not committed); this entry; WP4 merged into main.
+
+---
+
+## 2026-10-01 · WP5 planned: the Streamlit demo · `local`
+
+**Author time:** TODO
+
+**Asked for:** plan WP5 into `docs/wp/`.
+
+**The agent proposed:** four tabs (market map, queue, lead evidence, the WP4
+charts) over the pipeline's existing outputs, with weight sliders that re-run
+`score.score` and report how many leads enter or leave the top 50. Logic in a
+tested `demo.py`, the app file only lays out widgets. An Altair point map on
+lat/lon instead of a tile map, so the demo runs with the network off. The app
+runs locally during a screen share, never hosted (ADR 0003). A timed click path
+in `private/demo-script.md` and a screen recording as a fallback.
+
+**Left open for the author:** a live replay of one lead's recorded research
+(proposed as a stretch, cut first); the slider range.
+
+**Output:** `docs/wp/wp5-demo.md`, link in `docs/plan.md`, this entry.
+
+**Then the author decided:** the research replay is in (budget now 3h), and the sliders run 0-5 in steps of 1.
+The agent planned the replay from the ledger, which maps each lead to its
+recording key, and the transcript's tool calls. It shows URLs only, not page
+excerpts, because those are French with no translation.
