@@ -391,3 +391,29 @@ tier A, 53 leads at 9.55 or above for 50 slots, so a tie-break decides the cut.
 This goes into WP3. Details in `private/pilot/findings.md`.
 
 **Output:** `data/` and `private/` updated (not committed); this entry.
+
+---
+
+## 2026-09-30 · WP2 finished: last leads and full re-rank · `local`
+
+**Author time:** TODO
+
+**Asked for:** research the rest of the shortlist and say what comes next.
+
+**The agent did:** ran the last 5 leads after the 5-hour window reset, with
+the caps unchanged; the rest replayed from recordings. It then reran the
+previous session's scratch re-rank on the full set. `score.py` is still only a
+docstring.
+
+**The agent caught:** the run logs don't record plan usage, so the usage for
+this batch is unmeasured rather than estimated.
+
+**Result:** 175 of 175 researched (plus both references), 0 failed, 1 flagged
+(unchanged), $0 of API money, list-price estimate $0.171 per lead. In the
+re-rank, 22 of the agent's top 50 had pre-rank 51-175, 13 of them from the
+last 57 leads. Spearman between pre-rank and score is -0.07. The rubric
+saturates further: 30 leads at the maximum, 73 at or near it for 50 slots,
+so the pre-rank tie-break decides 20 places. One reference ranks 113th.
+Details in `private/pilot/findings.md`.
+
+**Output:** `data/` and `private/` updated (not committed); this entry.
