@@ -30,6 +30,9 @@ class Market(BaseModel):
     rge_domains: list[str] = Field(min_length=1)
     # Product line -> the RGE domains that prove it. Empty: each domain is its own line.
     product_lines: dict[str, list[str]] = {}
+    # Short names for charts (WP4), per product line or, without product_lines, per
+    # domain. Missing: the line's own name.
+    line_labels: dict[str, str] = {}
     # None or no NAF codes: the register is only used to enrich RGE companies.
     second_source: SecondSource | None = None
     # Companies to add by SIREN whatever the filters say (e.g. reference customers

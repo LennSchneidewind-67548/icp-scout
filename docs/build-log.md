@@ -456,3 +456,122 @@ regrade), 96 A / 74 B / 7 C. 89 tests pass. Details in
 
 **Output:** WP3 code, tests and docs on branch `wp3-scoring`; `data/` and
 `private/` updated (not committed); this entry.
+
+---
+
+## 2026-10-01 · WP4 planned: insights · `local`
+
+**Author time:** TODO
+
+**Asked for:** a plan for WP4 in `docs/`.
+
+**The agent proposed:** `docs/wp/wp4-insights.md`: seven candidate findings
+(funnel and roll-up, pre-score vs agent score, what separates the tiers, size
+vs score, regional clusters, product mix, tech maturity), each tied to a
+population and an SDR decision; compute all, keep the 4-6 that hold.
+`insights.py` as pure functions with Altair/Vega-Lite specs, so the app and
+the deck share one chart source.
+
+**The agent caught:** the researched set was chosen by the pre-score, so its
+patterns can't be read as market patterns; and a tier comparison partly
+restates the rubric weights, so it has to lead with what the weights don't
+force.
+
+**The author decided:** approved the plan; picks the findings after the
+numbers are computed.
+
+**Output:** `docs/wp/wp4-insights.md`, WP4 row in `docs/plan.md` linked; this entry.
+
+---
+
+## 2026-10-01 · WP4 step 1: candidate findings computed · `local`
+
+**Author time:** TODO
+
+**Asked for:** start WP4; then a plain explainer of the whole pipeline with a
+rolling example, since the author was losing track of how the stages fit.
+
+**The agent proposed:** a scratch script computing all seven candidates
+(F1-F7) on the case data, with a recommendation: keep F1, F2, F3 merged with
+F4 as "size predicts hiring", F5, F6, and F7 optionally; F4 as planned goes to
+the appendix. Then `private/pipeline-explained.md`: one real group followed
+from registry row to queue place, all five kinds of score side by side, a
+glossary and a file map.
+
+**The agent caught:** the first pre-score quartile cut was an artifact (the
+pre-score has only 3 values in the shortlist, so ties were split by score
+order); the pre-signals for size and growth are 1 for every shortlisted group.
+The planned F4 (registry vs agent headcount) can't test the registry: the
+regrade is told to fall back to the registry midpoint, hence the 1.01 median
+ratio. Growth rises with headcount (0.46 at 30-60 staff, 0.85 at 100-200),
+which the weights don't force. "Near band" in practice means any known size
+under 30, and no near-band group can reach the shortlist cut.
+
+**The author decided:** keep F1, F2, F3, F5, F6 and F7; F4 goes to the
+appendix. F7 stays because it shows the agent's value twice over: it grades
+lead handling the pre-score can't see, and it finds the working website for
+the SDRs. The agent checked the second point: the registry lacked a website for
+16 of 177 researched groups and listed a different one for 40 more (some are a
+sister company's site, so the 40 need a manual look).
+
+**Output:** this entry; `private/pipeline-explained.md` (not committed).
+
+---
+
+## 2026-10-01 · WP4 built: insights code, charts, write-up · `local`
+
+**Author time:** TODO
+
+**Asked for:** steps 3-5 of the WP4 plan for the six kept findings.
+
+**The agent proposed:** `insights.py` with one function per finding, plus the
+appendix finding; `icp-scout insights` writes a table and a Vega-Lite spec per
+finding; the optional config key `market.line_labels` for short product-line
+names in charts. Charts follow the dataviz skill: palettes run through its
+validator, then each chart rendered and looked at. That caught bars missing on
+the log scale, random jitter that changed per render, and a size chart that
+needed growth highlighted and n per band. Then `private/insights.md`: per
+finding the headline, numbers, chart, what it changes for the SDRs, the caveat,
+a suggested deck order and open checks.
+
+**The agent caught:** the 40 "different website" cases needed reading before
+F7 could claim them. From the agent's notes: 29 are broken, redirected, typo'd
+or parked registry entries, 10 are a sister company's site, 1 is unclear. So the
+claim became 45 of 177 (25%) without a working website from open data, not the
+raw 32%. Also: the roll-up put 22 groups in the segment but none in the queue;
+the two references sit at pre-score rank 677, outside any shortlist; 39% of the
+segment is heat-pump-only and was never researched (a scope decision for the
+author).
+
+**The author decided:** commit and push after the plan and after step 3.
+
+**Output:** `src/icp_scout/insights.py`, `tests/test_insights.py` (105 tests
+pass), the CLI command and config key on branch `wp4-plan`;
+`private/insights.md` and `data/insights/` (not committed); this entry.
+
+---
+
+## 2026-10-01 · WP4 closed: open checks decided, merged · `local`
+
+**Author time:** TODO
+
+**Asked for:** skip the registry link spot-checks; list the arguments for and
+against groups certified for a single product line and decide; state in the
+deck that costs are based on the pilot; record the decisions, open a PR into
+main and merge.
+
+**The agent decided:** single-line groups are in the ICP, as a second research
+wave behind the current queue, rubric unchanged. For: the brief allows them,
+they are the largest slice of the segment, the product covers their daily
+work, and a pre-filter rule is the open-data ranking F2 argues against.
+Against: a weaker opener than the combined quote, many are trade generalists,
+and the researched groups without the second line mostly scored B or C. The
+product-mix weight already puts them behind multi-line installers. Costs in the
+write-up now use the API pilot's measured cost per lead instead of the CLI's
+estimate.
+
+**The agent caught:** its own first draft overstated the score ceilings for
+single-line groups (9.1 and 7.3); with the case weights they are 8.2 and 6.4.
+
+**Output:** decisions in `docs/wp/wp4-insights.md` and `private/insights.md`
+(not committed); this entry; WP4 merged into main.
