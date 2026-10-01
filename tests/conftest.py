@@ -150,3 +150,117 @@ def market_dir(tmp_path_factory):
 def data_dir(market_dir, tmp_path):
     (tmp_path / "market.parquet").write_bytes((market_dir / "market.parquet").read_bytes())
     return tmp_path
+
+
+# WP5: a small data/ for the demo, every file the app reads.
+
+DEMO_IDS = ["size_fit", "product_mix", "growth", "tech_maturity"]
+# group_id: (name, signal values in DEMO_IDS order or None if not researched, lat, lon,
+# in segment). Config weights 3/3/2/2 put g2 first; size and product mix only put g1 first.
+DEMO_GROUPS = {
+    "g1": ("ALPHA SOLAIRE", [1, 1, 0, 0], 48.1, -1.7, True),
+    "g2": ("BETA THERMIQUE", [0.5, 0.5, 1, 1], 45.8, 4.8, True),
+    "g3": ("GAMMA ENERGIES", [1, 0, 1, 0], 43.6, 1.4, True),
+    "g4": ("DELTA CLIM", None, 47.2, -1.6, True),
+    "g5": ("EPSILON ELEC", None, 49.4, 1.1, False),
+    "g6": ("ZETA OUTRE-MER", None, -21.1, 55.5, False),  # far off: not drawn
+}
+DEMO_KEY = "f" * 64  # the recording key of g1's research run
+
+
+def demo_signal_rows() -> list[dict]:
+    rows = []
+    for gid, (name, values, *_rest) in DEMO_GROUPS.items():
+        for sid, v in zip(DEMO_IDS, values or [], strict=False):
+            found = v > 0
+            ev = [{"quote": f"Texte {sid}", "quote_en": f"Text {sid}",
+                   "url": f"https://{gid}.example/"}] if found else []  # fmt: skip
+            rows.append({"group_id": gid, "name": name, "status": "ok", "signal": sid,
+                         "value": float(v), "found": found, "rationale_en": f"Why {sid}",
+                         "evidence": ev, "flags": [], "website": f"https://{gid}.example",
+                         "notes_en": f"Notes on {name}", "reason": None})  # fmt: skip
+    return rows
+
+
+def demo_transcript() -> list[dict]:
+    """g1's research run in the shape of the claude-code stream (French page text,
+    English in the comments)."""
+
+    def assistant(*blocks):
+        return {"type": "assistant", "message": {"content": list(blocks)}}
+
+    def result(tid, text):
+        return {"type": "user", "message": {"content": [
+            {"type": "tool_result", "tool_use_id": tid, "content": text}]}}  # fmt: skip
+
+    record = {"website": "https://g1.example", "signals": {
+        sid: {"value": 1.0, "found": True, "rationale_en": f"Why {sid}",
+              "evidence": [{"quote": "Une equipe de 100 personnes",  # A team of 100 people
+                            "quote_en": "A team of 100 people", "url": "https://g1.example/"}]}
+        for sid in DEMO_IDS}, "facts": {}, "notes_en": ""}  # fmt: skip
+    return [
+        {"type": "system", "subtype": "init", "apiKeySource": "none"},
+        assistant(
+            {"type": "text", "text": "Starting with the website."},
+            {
+                "type": "tool_use",
+                "id": "t1",
+                "name": "WebFetch",
+                "input": {"url": "https://g1.example/", "prompt": "Copy verbatim"},
+            },
+        ),
+        result("t1", "Une equipe de 100 personnes"),  # A team of 100 people
+        assistant(
+            {
+                "type": "tool_use",
+                "id": "t2",
+                "name": "WebSearch",
+                "input": {"query": "ALPHA SOLAIRE recrutement"},
+            }
+        ),  # recruitment
+        result("t2", "Pas de resultat"),  # No result
+        assistant({"type": "tool_use", "id": "t3", "name": "StructuredOutput", "input": record}),
+        {"type": "result", "subtype": "success", "usage": {}, "total_cost_usd": 0.12},
+    ]
+
+
+@pytest.fixture(scope="module")
+def demo_dir(tmp_path_factory):
+    import altair as alt
+    import pandas as pd
+
+    from icp_scout import score
+
+    root = tmp_path_factory.mktemp("demo")
+    d = root / "data"
+    (d / "regrade").mkdir(parents=True)
+    (d / "research").mkdir()
+    (d / "insights").mkdir()
+    pd.DataFrame([
+        {"group_id": g, "name": name, "members": [g[1:]], "member_names": [name],
+         "lat": lat, "lon": lon, "region": "84" if lon > 2 else "53", "in_segment": seg,
+         "shortlisted": values is not None, "headcount_mid": 100.0, "pre_score": 0.5}
+        for g, (name, values, lat, lon, seg) in DEMO_GROUPS.items()
+    ]).to_parquet(d / "market.parquet", index=False)  # fmt: skip
+    pd.DataFrame(demo_signal_rows()).to_parquet(d / "signals.parquet", index=False)
+    (d / "regrade" / "g1.json").write_text(json.dumps({"group_id": "g1", "status": "ok",
+        "result": {"headcount": 100, "headcount_basis_en": "The site says 100.",
+                   "grades": {}, "phrases": {"size_fit": "~100 staff"}}}), encoding="utf-8")  # fmt: skip
+    (d / "research" / "g1.json").write_text(json.dumps({"group_id": "g1", "status": "ok",
+        "result": {"facts": {"headcount_stated": 100, "open_roles": [], "product_lines": [],
+                             "tools_seen": []}}}), encoding="utf-8")  # fmt: skip
+    (d / "funnel.json").write_text(json.dumps({"stages": []}), encoding="utf-8")
+    spec = alt.Chart(pd.DataFrame({"x": [1], "y": [2]})).mark_bar().encode(x="x", y="y")
+    (d / "insights" / "f1_funnel.vl.json").write_text(spec.to_json(), encoding="utf-8")
+    ledger = {"lead": "g1", "purpose": "research", "key": DEMO_KEY, "backend": "claude-code",
+              "model": "claude-opus-5-5", "input_tokens": 10, "cache_write_tokens": 100,
+              "cache_read_tokens": 1000, "output_tokens": 50, "usd": 0.0,
+              "notional_usd": 0.12}  # fmt: skip
+    (d / "ledger.jsonl").write_text(json.dumps(ledger) + "\n", encoding="utf-8")
+    rec = root / "recordings" / "research"
+    rec.mkdir(parents=True)
+    transcript = demo_transcript()
+    (rec / f"{DEMO_KEY}.json").write_text(json.dumps({"request": {}, "transcript": transcript,
+        "result": transcript[-1], "notional_usd": 0.12}), encoding="utf-8")  # fmt: skip
+    score.run(config.load(ROOT / "config" / "icp.example.yaml"), d)
+    return d

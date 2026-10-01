@@ -575,3 +575,59 @@ single-line groups (9.1 and 7.3); with the case weights they are 8.2 and 6.4.
 
 **Output:** decisions in `docs/wp/wp4-insights.md` and `private/insights.md`
 (not committed); this entry; WP4 merged into main.
+
+---
+
+## 2026-10-01 · WP5 planned: the Streamlit demo · `local`
+
+**Author time:** TODO
+
+**Asked for:** plan WP5 into `docs/wp/`.
+
+**The agent proposed:** four tabs (market map, queue, lead evidence, the WP4
+charts) over the pipeline's existing outputs, with weight sliders that re-run
+`score.score` and report how many leads enter or leave the top 50. Logic in a
+tested `demo.py`, the app file only lays out widgets. An Altair point map on
+lat/lon instead of a tile map, so the demo runs with the network off. The app
+runs locally during a screen share, never hosted (ADR 0003). A timed click path
+in `private/demo-script.md` and a screen recording as a fallback.
+
+**Left open for the author:** a live replay of one lead's recorded research
+(proposed as a stretch, cut first); the slider range.
+
+**Output:** `docs/wp/wp5-demo.md`, link in `docs/plan.md`, this entry.
+
+**Then the author decided:** the research replay is in (budget now 3h), and the sliders run 0-5 in steps of 1.
+The agent planned the replay from the ledger, which maps each lead to its
+recording key, and the transcript's tool calls. It shows URLs only, not page
+excerpts, because those are French with no translation.
+
+---
+
+## 2026-10-01 · WP5 built: the Streamlit demo · `local`
+
+**Author time:** TODO
+
+**Asked for:** execute `docs/wp/wp5-demo.md`.
+
+**The agent built:** `demo.py` (load, re-rank with new weights, queue moves,
+lead card, research replay from the ledger and the recorded transcript, the
+offline map) and the four-tab app over it; 13 tests on a synthetic data dir,
+two of them `AppTest` runs of the app. It ran the app on the case data in a
+browser and fixed what it saw: overseas groups shrank the map to a dot (now
+left off and counted), 18,000 SVG points froze the tab (the grey layer is now
+counted per grid cell, the planned fallback), and registry evidence was
+labelled "French". It added `.streamlit/config.toml` so the server listens on
+localhost only, since Streamlit's default exposes the app, and the case data,
+on every network interface.
+
+**The agent found:** the top 15 leads score 10.0, so no weights move them; the
+sliders matter at the top-50 cut (product mix 0 and growth 5: 8 in, 8 out).
+Put in the click path as a talking point.
+
+**Left for the author:** the Wi-Fi-off check, one timed run of
+`private/demo-script.md`, the screen recording.
+
+**Output:** `src/icp_scout/demo.py`, `app/streamlit_app.py`,
+`tests/test_demo.py`, `.streamlit/config.toml`, a "Built" section in
+`docs/wp/wp5-demo.md`, `private/demo-script.md` (not committed), this entry.

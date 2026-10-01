@@ -33,4 +33,5 @@ budgets are in `docs/plan.md`.
 source .venv/Scripts/activate
 pytest
 icp-scout show-config
+streamlit run app/streamlit_app.py   # the demo; ICP_SCOUT_RECORDINGS=private/llm for the case
 ```

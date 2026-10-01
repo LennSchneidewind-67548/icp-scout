@@ -1,0 +1,12 @@
+# The demo runs on the author's laptop during a screen share, offline (WP5).
+[server]
+# Only this machine: the case data never reaches the network.
+address = "localhost"
+headless = true
+
+[browser]
+gatherUsageStats = false
+
+[theme]
+# The charts are drawn on the light surface of the WP4 theme.
+base = "light"
