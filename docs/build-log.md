@@ -417,3 +417,42 @@ so the pre-rank tie-break decides 20 places. One reference ranks 113th.
 Details in `private/pilot/findings.md`.
 
 **Output:** `data/` and `private/` updated (not committed); this entry.
+
+---
+
+## 2026-10-01 · WP3: finer signals, score.py, the SDR queue · `local`
+
+**Author time:** TODO
+
+**Asked for:** merge WP2, then plan WP3 before building it; the agent was to
+argue the case for references in the SDR queue.
+
+**The agent proposed:** a written plan (`docs/wp/wp3-scoring.md`): a regrade
+pass over the recorded evidence (growth on five steps, a headcount number,
+a phrase per signal) and a headcount sweet spot in code. It argued for
+references in the queue (strongest known fits, visible calibration) but
+recommended calibration only, since they may be the vendor's customers.
+
+**The author decided:** finer signals rather than a better tie-break; sweet
+spot 60-200; references as calibration, not queued; approved the regrade run.
+
+**The agent caught:** the signal `definition` is part of the research prompt,
+so a finer growth scale there would have invalidated every WP2 recording; it
+went into a new `grades` key. After the run: the scale it wrote puts undated
+postings at 0.5, which cut 18 leads from growth 1, some with many roles on
+their own careers page. The author decided roles on the group's own careers
+page count as current; a second regrade applied it (17 leads up to 1). The
+agent then caught that the first run had graded undated job-board ads as
+current against its own scale; the clearer wording made the second run apply
+the rule, which moved 6 leads out of the queue. The author kept the strict rule: undated
+job-board postings stay non-current.
+
+**Result:** `icp-scout regrade` and `icp-scout score`; config keys
+`segment.sweet_spot`, `edge_value`, `grades`, `reference_sirens`, `queue.size`.
+Two regrades of 177, $0 of API money. After the second: 56 distinct scores
+(was 13), 7 queue places decided by a tie-break (was 20; 0 after the first
+regrade), 96 A / 74 B / 7 C. 89 tests pass. Details in
+`private/pilot/findings.md`.
+
+**Output:** WP3 code, tests and docs on branch `wp3-scoring`; `data/` and
+`private/` updated (not committed); this entry.

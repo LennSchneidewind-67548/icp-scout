@@ -44,6 +44,12 @@ def main(argv: list[str] | None = None) -> None:
         "private/llm for the case)",
     )
     research.add_argument("--budget-usd", type=float, help="default: research.budget_usd")
+    regrade = sub.add_parser("regrade", help="regrade the recorded evidence on the finer scales")
+    regrade.add_argument(
+        "--offline", action="store_true", help="replay recordings only, fail on a miss"
+    )
+    regrade.add_argument("--recordings", help="as for research")
+    sub.add_parser("score", help="score, tier and rank; print the SDR queue")
     sub.add_parser("cost", help="cost per researched lead, from the ledger")
     compare = sub.add_parser("compare", help="compare two research runs (e.g. two models)")
     compare.add_argument("run_a", help="data dir of the first run")
@@ -80,24 +86,8 @@ def main(argv: list[str] | None = None) -> None:
         if args.offline and args.refresh:
             sys.exit("--offline and --refresh exclude each other")
         icp = config.load(args.config)
-        recordings = (
-            args.recordings
-            or os.environ.get("ICP_SCOUT_RECORDINGS")
-            or research_mod.DEFAULT_RECORDINGS
-        )
         mode = "replay" if args.offline else "refresh" if args.refresh else "record"
-        config_path = Path(args.config or os.environ.get("ICP_SCOUT_CONFIG") or config.DEFAULT_PATH)
-        committed = Path(recordings).resolve().is_relative_to(Path("fixtures").resolve())
-        if (
-            mode != "replay"
-            and committed
-            and config_path.resolve() != config.DEFAULT_PATH.resolve()
-        ):
-            # ADR 0003: recordings of real companies never go under the committed fixtures/.
-            sys.exit(
-                f"{recordings} is committed: record the case with --recordings private/llm "
-                "(or set ICP_SCOUT_RECORDINGS)"
-            )
+        recordings = recordings_dir(args, mode)
         try:
             research_mod.run(
                 icp, args.data_dir, limit=args.limit, mode=mode, recordings_dir=recordings,
@@ -108,6 +98,29 @@ def main(argv: list[str] | None = None) -> None:
         except (FileNotFoundError, ValueError) as e:
             sys.exit(str(e))
         print(research_mod.cost_report(args.data_dir))
+    elif args.command == "regrade":
+        from icp_scout.enrich import regrade as regrade_mod
+        from icp_scout.llm import RecordingMiss
+
+        icp = config.load(args.config)
+        mode = "replay" if args.offline else "record"
+        try:
+            regrade_mod.run(
+                icp, args.data_dir, mode=mode, recordings_dir=recordings_dir(args, mode)
+            )
+        except RecordingMiss as e:
+            sys.exit(f"--offline: {e}")
+        except FileNotFoundError as e:
+            sys.exit(str(e))
+    elif args.command == "score":
+        from icp_scout import score
+
+        icp = config.load(args.config)
+        try:
+            table = score.run(icp, args.data_dir)
+        except FileNotFoundError as e:
+            sys.exit(str(e))
+        print(score.report(icp, table))
     elif args.command == "cost":
         from icp_scout.research import cost_report
 
@@ -119,6 +132,22 @@ def main(argv: list[str] | None = None) -> None:
             print(compare(args.run_a, args.run_b))
         except FileNotFoundError as e:
             sys.exit(str(e))
+
+
+def recordings_dir(args, mode: str) -> str:
+    """--recordings, else $ICP_SCOUT_RECORDINGS, else the committed fixtures."""
+    from icp_scout.research import DEFAULT_RECORDINGS
+
+    recordings = args.recordings or os.environ.get("ICP_SCOUT_RECORDINGS") or DEFAULT_RECORDINGS
+    config_path = Path(args.config or os.environ.get("ICP_SCOUT_CONFIG") or config.DEFAULT_PATH)
+    committed = Path(recordings).resolve().is_relative_to(Path("fixtures").resolve())
+    if mode != "replay" and committed and config_path.resolve() != config.DEFAULT_PATH.resolve():
+        # ADR 0003: recordings of real companies never go under the committed fixtures/.
+        sys.exit(
+            f"{recordings} is committed: record the case with --recordings private/llm "
+            "(or set ICP_SCOUT_RECORDINGS)"
+        )
+    return str(recordings)
 
 
 def load_env(path: str | Path = ".env") -> None:
