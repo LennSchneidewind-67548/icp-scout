@@ -32,6 +32,10 @@ market:
 segment:
   headcount_min: 30
   headcount_max: 300
+  # Inside the sweet spot size_fit stays 1; it falls linearly to edge_value at
+  # the band edges. Pricing is per seat, so value grows with the office team.
+  sweet_spot: [60, 200]
+  edge_value: 0.6
 
 # Companies known to fit well. The agent is shown them as calibration anchors.
 reference_customers:
@@ -63,6 +67,15 @@ signals:
     definition: >-
       1 = open roles in sales, planning, admin or installation, or a branch or
       entity opened in the last 24 months. 0.5 = one weak sign. 0 = no evidence.
+    # The finer scale the regrade pass uses on the recorded evidence (WP3).
+    grades: >-
+      1 = two or more current openings in sales, planning, admin or
+      installation, or a branch or entity opened in the last 24 months with a
+      date. 0.75 = one current opening in those roles, or an undated "recent"
+      opening plus a second sign. 0.5 = openings only in other trades (e.g.
+      roofer, stove fitter), undated or unverifiable postings, or an undated
+      branch opening. 0.25 = a generic "we're hiring" with no roles, or
+      postings older than 12 months. 0 = no evidence.
   - id: tech_maturity
     label: Online configurator, lead forms, a CRM or a competing tool in use
     weight: 2
@@ -72,6 +85,10 @@ signals:
       installer tool in use. 0.5 = own website with contact details or a plain
       contact form (name, email, message) only, whatever its title.
       0 = no own website.
+
+# The SDR queue: the top N leads, references excluded.
+queue:
+  size: 50
 
 # The rule-based pre-score (no LLM) picks this many groups for agent research.
 prefilter:

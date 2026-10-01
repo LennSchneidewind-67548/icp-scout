@@ -417,3 +417,36 @@ so the pre-rank tie-break decides 20 places. One reference ranks 113th.
 Details in `private/pilot/findings.md`.
 
 **Output:** `data/` and `private/` updated (not committed); this entry.
+
+---
+
+## 2026-10-01 · WP3: finer signals, score.py, the SDR queue · `local`
+
+**Author time:** TODO
+
+**Asked for:** merge WP2, then plan WP3 before building it; the agent was to
+argue the case for references in the SDR queue.
+
+**The agent proposed:** a written plan (`docs/wp/wp3-scoring.md`): a regrade
+pass over the recorded evidence (growth on five steps, a headcount number,
+a phrase per signal) and a headcount sweet spot in code. It argued for
+references in the queue (strongest known fits, visible calibration) but
+recommended calibration only, since they may be the vendor's customers.
+
+**The author decided:** finer signals rather than a better tie-break; sweet
+spot 60-200; references as calibration, not queued; approved the regrade run.
+
+**The agent caught:** the signal `definition` is part of the research prompt,
+so a finer growth scale there would have invalidated every WP2 recording; it
+went into a new `grades` key. After the run: the scale it wrote puts undated
+postings at 0.5, which cut 18 leads from growth 1, some with many roles on
+their own careers page. Left for the author to decide.
+
+**Result:** `icp-scout regrade` and `icp-scout score`; config keys
+`segment.sweet_spot`, `edge_value`, `grades`, `reference_sirens`, `queue.size`.
+177 of 177 regraded, $0 of API money. 55 distinct scores (was 13), 0 queue places
+decided by a tie-break (was 20), 89 A / 81 B / 7 C. 89 tests pass. Details in
+`private/pilot/findings.md`.
+
+**Output:** WP3 code, tests and docs on branch `wp3-scoring`; `data/` and
+`private/` updated (not committed); this entry.

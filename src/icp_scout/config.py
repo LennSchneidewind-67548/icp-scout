@@ -47,11 +47,21 @@ class Market(BaseModel):
 class Segment(BaseModel):
     headcount_min: int
     headcount_max: int
+    # Headcount the vendor fits best (WP3). Inside it the size signal is 1; it falls
+    # linearly to `edge_value` at the band edges. None: the agent's value stands.
+    sweet_spot: tuple[int, int] | None = None
+    edge_value: float = Field(default=0.6, ge=0, le=1)
+    # The signal the sweet spot grades.
+    size_signal: str = "size_fit"
 
     @model_validator(mode="after")
     def _ordered(self) -> "Segment":
         if self.headcount_min > self.headcount_max:
             raise ValueError("headcount_min is above headcount_max")
+        if self.sweet_spot:
+            lo, hi = self.sweet_spot
+            if not self.headcount_min <= lo <= hi <= self.headcount_max:
+                raise ValueError("sweet_spot must lie inside headcount_min..headcount_max")
         return self
 
 
@@ -61,6 +71,10 @@ class Signal(BaseModel):
     weight: float = Field(gt=0)
     # What 0, 0.5 and 1 mean. The agent is shown it, so extraction stays consistent.
     definition: str | None = None
+    # A finer scale than `definition` (WP3). The regrade pass grades the recorded
+    # evidence against it. Kept apart from `definition`, which is part of the
+    # research prompt: changing that would invalidate every research recording.
+    grades: str | None = None
 
 
 class Prefilter(BaseModel):
@@ -94,6 +108,12 @@ class Tiers(BaseModel):
     B: float
 
 
+class Queue(BaseModel):
+    """The SDR hand-off (WP3)."""
+
+    size: int = Field(default=50, gt=0)
+
+
 class Outreach(BaseModel):
     language: str
     translate_to: str | None = None
@@ -104,17 +124,23 @@ class IcpConfig(BaseModel):
     market: Market
     segment: Segment
     reference_customers: list[str] = []
+    # A group with any of these SIRENs is a reference: scored and ranked as
+    # calibration, never put in the SDR queue.
+    reference_sirens: list[str] = []
     signals: list[Signal] = Field(min_length=1)
     tiers: Tiers
     outreach: Outreach
     prefilter: Prefilter = Prefilter()
     research: Research = Research()
+    queue: Queue = Queue()
 
     @model_validator(mode="after")
     def _unique_signals(self) -> "IcpConfig":
         ids = [s.id for s in self.signals]
         if len(ids) != len(set(ids)):
             raise ValueError("signal ids must be unique")
+        if self.segment.sweet_spot and self.segment.size_signal not in ids:
+            raise ValueError(f"segment.size_signal {self.segment.size_signal!r} is not a signal")
         return self
 
 
