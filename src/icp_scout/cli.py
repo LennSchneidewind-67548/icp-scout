@@ -51,6 +51,7 @@ def main(argv: list[str] | None = None) -> None:
     regrade.add_argument("--recordings", help="as for research")
     sub.add_parser("score", help="score, tier and rank; print the SDR queue")
     sub.add_parser("cost", help="cost per researched lead, from the ledger")
+    sub.add_parser("insights", help="the findings: tables and chart specs to data/insights/")
     compare = sub.add_parser("compare", help="compare two research runs (e.g. two models)")
     compare.add_argument("run_a", help="data dir of the first run")
     compare.add_argument("run_b", help="data dir of the second run")
@@ -121,6 +122,16 @@ def main(argv: list[str] | None = None) -> None:
         except FileNotFoundError as e:
             sys.exit(str(e))
         print(score.report(icp, table))
+    elif args.command == "insights":
+        from icp_scout import insights
+
+        icp = config.load(args.config)
+        try:
+            findings = insights.run(icp, args.data_dir)
+        except FileNotFoundError as e:
+            sys.exit(str(e))
+        print(insights.report(findings))
+        print(f"\nWritten to {Path(args.data_dir) / 'insights'}/")
     elif args.command == "cost":
         from icp_scout.research import cost_report
 
