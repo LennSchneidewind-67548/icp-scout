@@ -507,7 +507,11 @@ ratio. Growth rises with headcount (0.46 at 30-60 staff, 0.85 at 100-200),
 which the weights don't force. "Near band" in practice means any known size
 under 30, and no near-band group can reach the shortlist cut.
 
-**The author decided:** pending; picks the findings after reading the
-explainer.
+**The author decided:** keep F1, F2, F3, F5, F6 and F7; F4 goes to the
+appendix. F7 stays because it shows the agent's value twice over: it grades
+lead handling the pre-score can't see, and it finds the working website for
+the SDRs. The agent checked the second point: the registry lacked a website for
+16 of 177 researched groups and listed a different one for 40 more (some are a
+sister company's site, so the 40 need a manual look).
 
 **Output:** this entry; `private/pipeline-explained.md` (not committed).

@@ -39,6 +39,12 @@ A finding is kept when the difference shows in plain counts, survives dropping
 the references, and changes a decision. Otherwise it becomes one line in the
 appendix.
 
+**Decided (author, 2026-10-01):** keep F1, F2, F3, F5, F6, F7. F4 goes to
+the appendix: the regrade falls back to the registry midpoint, so the two
+headcounts can't disagree much. F3 takes the part of F4 the weights don't
+force (growth rises with headcount). F7 covers both scoring (a project quote
+form vs a plain contact form) and enrichment (the website the SDR needs).
+
 ## 2. `insights.py` (code, no model)
 
 - One pure function per finding, `(market, signals, scored, icp) -> DataFrame`,
