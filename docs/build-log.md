@@ -444,7 +444,8 @@ their own careers page. The author decided roles on the group's own careers
 page count as current; a second regrade applied it (17 leads up to 1). The
 agent then caught that the first run had graded undated job-board ads as
 current against its own scale; the clearer wording made the second run apply
-the rule, which moved 6 leads out of the queue. Reported, not changed.
+the rule, which moved 6 leads out of the queue. The author kept the strict rule: undated
+job-board postings stay non-current.
 
 **Result:** `icp-scout regrade` and `icp-scout score`; config keys
 `segment.sweet_spot`, `edge_value`, `grades`, `reference_sirens`, `queue.size`.

@@ -118,3 +118,9 @@ their rank, but never given one of the `queue.size` SDR places.
   0.7 stays in force.
 - The finer growth grade rests on the WP2 evidence. Where the agent recorded
   one quote, the regrade can't find a second; that's an honest limit.
+
+## Decided after the runs (author, 2026-10-01)
+
+- Roles on the group's own careers page count as current, dated or not.
+- Undated postings found only on third-party job boards stay at 0.5: the
+  rubric credits hiring that is dated or listed by the group itself.
