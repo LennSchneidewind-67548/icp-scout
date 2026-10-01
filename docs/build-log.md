@@ -456,3 +456,58 @@ regrade), 96 A / 74 B / 7 C. 89 tests pass. Details in
 
 **Output:** WP3 code, tests and docs on branch `wp3-scoring`; `data/` and
 `private/` updated (not committed); this entry.
+
+---
+
+## 2026-10-01 · WP4 planned: insights · `local`
+
+**Author time:** TODO
+
+**Asked for:** a plan for WP4 in `docs/`.
+
+**The agent proposed:** `docs/wp/wp4-insights.md`: seven candidate findings
+(funnel and roll-up, pre-score vs agent score, what separates the tiers, size
+vs score, regional clusters, product mix, tech maturity), each tied to a
+population and an SDR decision; compute all, keep the 4-6 that hold.
+`insights.py` as pure functions with Altair/Vega-Lite specs, so the app and
+the deck share one chart source.
+
+**The agent caught:** the researched set was chosen by the pre-score, so its
+patterns can't be read as market patterns; and a tier comparison partly
+restates the rubric weights, so it has to lead with what the weights don't
+force.
+
+**The author decided:** approved the plan; picks the findings after the
+numbers are computed.
+
+**Output:** `docs/wp/wp4-insights.md`, WP4 row in `docs/plan.md` linked; this entry.
+
+---
+
+## 2026-10-01 · WP4 step 1: candidate findings computed · `local`
+
+**Author time:** TODO
+
+**Asked for:** start WP4; then a plain explainer of the whole pipeline with a
+rolling example, since the author was losing track of how the stages fit.
+
+**The agent proposed:** a scratch script computing all seven candidates
+(F1-F7) on the case data, with a recommendation: keep F1, F2, F3 merged with
+F4 as "size predicts hiring", F5, F6, and F7 optionally; F4 as planned goes to
+the appendix. Then `private/pipeline-explained.md`: one real group followed
+from registry row to queue place, all five kinds of score side by side, a
+glossary and a file map.
+
+**The agent caught:** the first pre-score quartile cut was an artifact (the
+pre-score has only 3 values in the shortlist, so ties were split by score
+order); the pre-signals for size and growth are 1 for every shortlisted group.
+The planned F4 (registry vs agent headcount) can't test the registry: the
+regrade is told to fall back to the registry midpoint, hence the 1.01 median
+ratio. Growth rises with headcount (0.46 at 30-60 staff, 0.85 at 100-200),
+which the weights don't force. "Near band" in practice means any known size
+under 30, and no near-band group can reach the shortlist cut.
+
+**The author decided:** pending; picks the findings after reading the
+explainer.
+
+**Output:** this entry; `private/pipeline-explained.md` (not committed).
