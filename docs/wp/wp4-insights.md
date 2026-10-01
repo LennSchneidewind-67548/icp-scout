@@ -45,6 +45,14 @@ headcounts can't disagree much. F3 takes the part of F4 the weights don't
 force (growth rises with headcount). F7 covers both scoring (a project quote
 form vs a plain contact form) and enrichment (the website the SDR needs).
 
+**Decided (2026-10-01), after the write-up:** costs in the deck are based on
+the API pilot (cost per lead measured over 5 leads). The registry link
+spot-checks for F7 are skipped (author). Groups certified for a single product
+line are in the ICP as a second research wave (agent, at the author's request):
+the brief allows them, they are the largest slice of the segment, and the
+rubric's product-mix weight already ranks them behind multi-line installers.
+The current queue doesn't change.
+
 ## 2. `insights.py` (code, no model)
 
 - One pure function per finding, `(market, signals, scored, icp) -> DataFrame`,

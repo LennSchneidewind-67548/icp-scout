@@ -548,3 +548,30 @@ author).
 **Output:** `src/icp_scout/insights.py`, `tests/test_insights.py` (105 tests
 pass), the CLI command and config key on branch `wp4-plan`;
 `private/insights.md` and `data/insights/` (not committed); this entry.
+
+---
+
+## 2026-10-01 · WP4 closed: open checks decided, merged · `local`
+
+**Author time:** TODO
+
+**Asked for:** skip the registry link spot-checks; list the arguments for and
+against groups certified for a single product line and decide; state in the
+deck that costs are based on the pilot; record the decisions, open a PR into
+main and merge.
+
+**The agent decided:** single-line groups are in the ICP, as a second research
+wave behind the current queue, rubric unchanged. For: the brief allows them,
+they are the largest slice of the segment, the product covers their daily
+work, and a pre-filter rule is the open-data ranking F2 argues against.
+Against: a weaker opener than the combined quote, many are trade generalists,
+and the researched groups without the second line mostly scored B or C. The
+product-mix weight already puts them behind multi-line installers. Costs in the
+write-up now use the API pilot's measured cost per lead instead of the CLI's
+estimate.
+
+**The agent caught:** its own first draft overstated the score ceilings for
+single-line groups (9.1 and 7.3); with the case weights they are 8.2 and 6.4.
+
+**Output:** decisions in `docs/wp/wp4-insights.md` and `private/insights.md`
+(not committed); this entry; WP4 merged into main.
