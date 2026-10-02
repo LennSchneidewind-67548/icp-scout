@@ -11,7 +11,7 @@ Rule of thumb: if the pipeline runs late, cut app polish, never the insights.
 | [3](wp/wp3-scoring.md) | Rubric score, tiers, rationale text | 1.5h | Top 50 with score, tier and a one-line why |
 | [4](wp/wp4-insights.md) | Insights: regional clusters, product-mix patterns, size vs score, what separates A from C | 3h | 4-6 findings, each with one chart |
 | [5](wp/wp5-demo.md) | Streamlit demo, with a replay of one lead's recorded research | 3h | The 2-3 minute demo runs offline from recordings |
-| 6 | SDR hand-off: HubSpot CSV, French openers with translations | 1h | CSV imports cleanly; openers read well in translation |
+| [6](wp/wp6-handoff.md) | SDR hand-off: HubSpot CSV (company + manager), a French 3-touch sequence per lead with translations | 1.75h | CSV imports cleanly; sequences read well in translation |
 | 7 | Deck + rehearsal | 2.5h | 20 minutes, timed twice |
 
 ## Things to verify early

@@ -15,7 +15,7 @@ Keep entries free of case-company specifics (ADR 0003); those go in `private/not
 
 | Author time | Agent sessions | LLM spend (pipeline) | Work packages done |
 |---|---|---|---|
-| TODO | 8 | ~$2.04 | 1 of 8 (WP0); WP1 and WP2 merged, pilot done |
+| TODO | 9 | ~$2.04 | 1 of 8 (WP0); WP1 and WP2 merged, pilot done |
 
 ---
 
@@ -631,3 +631,27 @@ Put in the click path as a talking point.
 **Output:** `src/icp_scout/demo.py`, `app/streamlit_app.py`,
 `tests/test_demo.py`, `.streamlit/config.toml`, a "Built" section in
 `docs/wp/wp5-demo.md`, `private/demo-script.md` (not committed), this entry.
+
+---
+
+## 2026-10-02 · WP6 planned: the SDR hand-off · `local`
+
+**Author time:** TODO
+
+**Asked for:** plan WP6 into `docs/wp/`.
+
+**The agent proposed:** `icp-scout export` writes a HubSpot import CSV for the 50
+queued leads (score, tier, reason, top evidence as company properties) and one
+French opener per lead with an English translation. The opener is one recorded
+model call per lead, built like the regrade pass on both backends, and opens on
+evidence the agent already recorded. Code checks flag length, *tu* and hooks
+that point at no evidence. Nothing is sent and nothing goes to the HubSpot API.
+
+**The author decided:** the import also carries the company's registered manager
+as a contact (public register data, no invented email). A 3-touch sequence
+(email, follow-up, LinkedIn note) instead of one opener, which adds 45 min to the budget.
+The author will import the case CSV into their own HubSpot account to prove it
+imports, and delete it after the talk.
+
+**Output:** `docs/wp/wp6-handoff.md`, row 6 of `docs/plan.md` linked (1.75h),
+this entry.
