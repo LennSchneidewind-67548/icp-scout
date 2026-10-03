@@ -15,7 +15,7 @@ Keep entries free of case-company specifics (ADR 0003); those go in `private/not
 
 | Author time | Agent sessions | LLM spend (pipeline) | Work packages done |
 |---|---|---|---|
-| ~12 h (estimated from session timestamps, to 2026-10-03) | 9 | ~$2.04 | 1 of 8 (WP0); WP1 and WP2 merged, pilot done |
+| ~12 h (estimated from session timestamps, to 2026-10-03) | 24 | ~$2.04 API (the pilot); everything else on the subscription, $0 (list-price estimate ~$40 for 580 calls) | 7 of 8 (WP0-WP6); WP7, the deck, is left |
 
 ---
 
