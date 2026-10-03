@@ -3,10 +3,83 @@
 # Only this machine: the case data never reaches the network.
 address = "localhost"
 headless = true
+# Serves app/static/: the bundled fonts, so the demo needs no font CDN.
+enableStaticServing = true
 
 [browser]
 gatherUsageStats = false
 
+[client]
+# No "Deploy" button or developer menu on the screen share.
+toolbarMode = "minimal"
+
+# The redesign's token sheet: light, cool-neutral, ink primary. Colour is kept for
+# data: the tiers, and movement in the queue.
 [theme]
-# The charts are drawn on the light surface of the WP4 theme.
 base = "light"
+primaryColor = "#1F2430"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F5F6F8"
+textColor = "#12151C"
+linkColor = "#12151C"
+borderColor = "#DCDFE4"
+dataframeBorderColor = "#ECEEF1"
+dataframeHeaderBackgroundColor = "#F5F6F8"
+showWidgetBorder = true
+baseRadius = "8px"
+baseFontSize = 17
+font = "IBM Plex Sans"
+headingFont = "IBM Plex Sans"
+codeFont = "IBM Plex Mono"
+headingFontSizes = ["40px", "32px", "22px", "20px", "18px", "16px"]
+headingFontWeights = [600, 600, 600, 600, 600, 600]
+metricValueFontSize = "44px"
+metricValueFontWeight = 600
+chartCategoricalColors = ["#0072B2", "#E69F00", "#CC79A7"]
+# Named colours for :green[...] and the badges: green/red = moved up/down,
+# blue/yellow/violet = tier A/B/C.
+greenColor = "#009E73"
+greenTextColor = "#00704F"
+greenBackgroundColor = "#E3F4EE"
+redColor = "#B42318"
+redTextColor = "#B42318"
+redBackgroundColor = "#FBEAE9"
+orangeColor = "#D55E00"
+orangeTextColor = "#B34700"
+orangeBackgroundColor = "#FBEFE7"
+blueColor = "#0072B2"
+blueTextColor = "#005A8C"
+blueBackgroundColor = "#E1EEF7"
+yellowColor = "#E69F00"
+yellowTextColor = "#7A5100"
+yellowBackgroundColor = "#FBEFD6"
+violetColor = "#CC79A7"
+violetTextColor = "#8E3E6E"
+violetBackgroundColor = "#F6E6EF"
+grayTextColor = "#596170"
+grayBackgroundColor = "#F0F1F4"
+
+[[theme.fontFaces]]
+family = "IBM Plex Sans"
+url = "app/static/IBMPlexSans-400.woff2"
+weight = 400
+
+[[theme.fontFaces]]
+family = "IBM Plex Sans"
+url = "app/static/IBMPlexSans-500.woff2"
+weight = 500
+
+[[theme.fontFaces]]
+family = "IBM Plex Sans"
+url = "app/static/IBMPlexSans-600.woff2"
+weight = 600
+
+[[theme.fontFaces]]
+family = "IBM Plex Mono"
+url = "app/static/IBMPlexMono-400.woff2"
+weight = 400
+
+[[theme.fontFaces]]
+family = "IBM Plex Mono"
+url = "app/static/IBMPlexMono-500.woff2"
+weight = 500

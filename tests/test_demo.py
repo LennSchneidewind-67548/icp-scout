@@ -60,6 +60,47 @@ def test_queue_moves(icp, data):
     assert demo.queue_moves(base, new, 3) == ([], [])
 
 
+def test_queue_changes_and_the_moved_view(icp, data):
+    base = demo.rerank(icp, data, demo.config_weights(icp))
+    new = demo.rerank(icp, data, {"size_fit": 3, "product_mix": 3, "growth": 0,
+                                  "tech_maturity": 0})  # fmt: skip
+    entered, left = demo.queue_changes(base, new, 1)
+    assert entered == [("Alpha Solaire", 2, 1)] and left == [("Beta Thermique", 1, 2)]
+    moved = demo.moved_view(new, base, 1)
+    assert dict(zip(moved["name"], moved["move"], strict=True)) == {
+        "ALPHA SOLAIRE": "entered", "BETA THERMIQUE": "left"}  # fmt: skip
+    assert demo.moved_view(base, base, 1).empty
+
+
+def test_moved_label_why_and_contributions():
+    assert [demo.moved_label(c) for c in [3, -2, 0, None]] == ["▲3", "▼2", "–", "–"]
+    assert demo.moved_label(5, "entered") == "NEW"
+    assert demo.why("9.7 A | PV + heat pumps | ~120 staff") == "PV + heat pumps | ~120 staff"
+    assert demo.why("no score prefix") == "no score prefix"
+    pts = demo.contributions({"a": 3, "b": 1}, {"a": 1.0, "b": 0.5})
+    assert pts == {"a": 6.75, "b": 1.125}  # 1 + 7.875 is the score
+
+
+def test_app_spec_moves_the_title_out():
+    spec = {"title": {"text": "Bigger groups hire more", "subtitle": "Researched leads"},
+            "config": {"axis": {"labelFontSize": 12}}, "mark": "bar"}  # fmt: skip
+    out, title, subtitle = demo.app_spec(spec)
+    assert (title, subtitle) == ("Bigger groups hire more", "Researched leads")
+    assert "title" not in out and out["config"]["axis"]["labelFontSize"] == 13
+    assert spec["config"]["axis"]["labelFontSize"] == 12  # the saved spec is untouched
+
+
+def test_run_cost_and_last_run():
+    ledger = [
+        {"at": "2026-09-30T14:02:00+00:00", "purpose": "research", "backend": "api",
+         "usd": 0.5},
+        {"at": "2026-10-01T08:00:00+00:00", "purpose": "regrade", "backend": "claude-code",
+         "usd": 0.0, "notional_usd": 0.25},
+    ]  # fmt: skip
+    assert demo.run_cost(ledger) == 0.75
+    assert demo.last_run(ledger) == "2026-09-30" and demo.last_run([]) is None
+
+
 def test_queue_table_regions_and_columns(icp, data):
     q = demo.queue_table(icp, data, demo.rerank(icp, data, demo.config_weights(icp)))
     assert q.set_index("group_id").loc["g2", "region"] == "Auvergne-Rhône-Alpes"
@@ -68,7 +109,7 @@ def test_queue_table_regions_and_columns(icp, data):
 
 def test_lead_card_puts_quote_en_next_to_every_quote(data):
     card = demo.lead_card(data, "g1")
-    assert card["name"] == "ALPHA SOLAIRE" and card["headcount_source"] == "regrade"
+    assert card["name"] == "Alpha Solaire" and card["headcount_source"] == "regrade"
     assert card["headcount_basis_en"] == "The site says 100."
     assert card["facts"]["headcount_stated"] == 100
     quotes = [e for s in card["signals"] for e in s["evidence"]]
@@ -130,16 +171,55 @@ def app(demo_dir, monkeypatch):
     return AppTest.from_file(APP, default_timeout=30).run()
 
 
-def test_app_renders_every_tab(app):
+def page(app, url_path):
+    """AppTest switches only to file pages; a function page's hash is its url_path's."""
+    from streamlit.util import calc_hash
+
+    app._page_hash = calc_hash(url_path)
+    return app.run()
+
+
+def test_app_renders_every_page(app):
+    assert not app.exception  # Market, the default page
+    assert any("market" in h.value for h in app.header)
+    for p in ["queue", "insights"]:
+        assert not page(app, p).exception, p
+    assert any("Insights" in h.value for h in app.header)
+
+
+def test_app_queue_and_a_lead(app):
+    page(app, "queue")
+    assert app.dataframe[0].value.iloc[0]["name"] == "Beta Thermique"
+    app.session_state["lead"] = "g1"
+    app.run()
     assert not app.exception
-    assert [t.label for t in app.tabs] == ["Market", "Queue", "Lead", "Insights"]
-    assert app.dataframe[0].value.iloc[0]["name"] == "BETA THERMIQUE"
-    assert any("Research replay" in s.value for s in app.subheader)
+    assert any("Alpha Solaire" in m.value for m in app.markdown)  # the lead pane
+    assert len(app.expander) == 6  # the weights, one per signal, facts and notes
+    app.session_state["lead_tab"] = "replay"
+    app.run()
+    assert not app.exception
+    assert "Next step →" in [b.label for b in app.button]
 
 
 def test_app_slider_changes_the_first_row(app):
+    page(app, "queue")
     app.slider(key="w_growth").set_value(0).run()
     app.slider(key="w_tech_maturity").set_value(0).run()
     assert not app.exception
-    assert app.dataframe[0].value.iloc[0]["name"] == "ALPHA SOLAIRE"
-    assert "1 leads entered" not in app.info[0].value  # 3 leads, a queue of 50: none moved
+    assert app.session_state["view"] == "moved"  # a slider move shows what moved
+    app.session_state["view"] = "all"
+    app.run()
+    assert app.dataframe[0].value.iloc[0]["name"] == "Alpha Solaire"
+    # 3 leads, a queue of 50: none entered. The summary shows in the Moved view.
+    app.session_state["view"] = "moved"
+    app.run()
+    assert any("0 entered the top 50" in h.proto.body for h in app.get("html"))
+
+
+def test_display_name():
+    assert demo.display_name("ACME ENERGIE (ACME ENERGIE)") == "Acme Energie"
+    assert demo.display_name("SOCIETE DE TRAVAUX D'ISOLATION (STI)") == (
+        "Societe de Travaux d'Isolation (STI)")  # fmt: skip
+    assert demo.display_name("SARL RWT CLIM 3D") == "SARL RWT Clim 3D"
+    assert demo.display_name("Already Mixed (Case)") == "Already Mixed (Case)"
+    assert demo.display_name(None) == ""

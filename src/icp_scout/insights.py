@@ -398,15 +398,20 @@ FINDINGS = [f1_funnel, f2_prescore, f3_tiers, f5_regions, f6_product_mix, f7_web
 APPENDIX = [f4_size_appendix]
 
 
-# Charts. The reference palette of the dataviz skill, light mode, validated:
-# the blue ordinal ramp (250/450/650), categorical slots 1-5, blue vs orange.
+# Charts. The app's palette (.streamlit/config.toml): greys for context, ink for what
+# the chart is about. The tier colours (blue, amber, pink) mean tiers only, so no chart
+# here uses them for anything else.
 
-INK, INK_2, MUTED = "#0b0b0b", "#52514e", "#898781"
-GRID, AXIS, SURFACE = "#e1e0d9", "#c3c2b7", "#fcfcfb"
-BLUE, ORANGE = "#2a78d6", "#eb6834"
-RAMP = ["#86b6ef", "#2a78d6", "#104281"]
-CATEGORICAL = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#898781"]
-FONT = "system-ui, -apple-system, 'Segoe UI', sans-serif"
+INK, INK_2, MUTED = "#12151C", "#3A4150", "#596170"
+GRID, AXIS, SURFACE = "#ECEEF1", "#DCDFE4", "#FFFFFF"
+# The lightest grey for a mark that must read on white: 2.5:1 and up.
+LIGHT_GREY, MID_GREY, SOFT_GREY = "#C3C8CF", "#7E8592", "#9BA1AC"
+ACCENT = "#1F2430"  # the app's primary colour
+# Context to focus: in segment, researched, queue.
+RAMP = [LIGHT_GREY, MID_GREY, ACCENT]
+# A slate ramp for ordered categories, light to dark.
+SLATES = ["#7E8592", "#525A69", "#1F2430"]
+FONT = "IBM Plex Sans, system-ui, 'Segoe UI', sans-serif"
 WIDTH = 560
 BAR = 20
 
@@ -418,26 +423,28 @@ def theme(chart: alt.TopLevelMixin, title: str, subtitle: str) -> alt.TopLevelMi
         background=SURFACE,
     ).configure(font=FONT).configure_view(stroke=None).configure_axis(
         gridColor=GRID, gridWidth=1, domainColor=AXIS, tickColor=AXIS, labelColor=MUTED,
-        titleColor=INK_2, labelFontSize=12, titleFontSize=12, titleFontWeight="normal",
+        titleColor=INK_2, labelFontSize=13, titleFontSize=13, titleFontWeight="normal",
     ).configure_legend(
-        labelColor=INK_2, titleColor=INK_2, labelFontSize=12, titleFontSize=12, orient="top",
+        labelColor=INK_2, titleColor=INK_2, labelFontSize=13, titleFontSize=13, orient="top",
     )  # fmt: skip
 
 
 def funnel_chart(t: pd.DataFrame) -> alt.TopLevelMixin:
     # A log scale has no zero, so the bars start at 10 (the domain's floor).
-    top = t["count"].max() * 2
+    top = t["count"].max() * 5  # room for the label after the longest bar
     base = alt.Chart(t).encode(
         y=alt.Y("stage:N", sort=list(t["stage"]), title=None,
                 axis=alt.Axis(labelLimit=260, labelColor=INK_2)),
         x=alt.X("count:Q", scale=alt.Scale(type="log", domain=[10, top], nice=False),
-                title="count (log scale)", axis=alt.Axis(format="~s")),
+                title="count (log scale)",
+                axis=alt.Axis(format="~s", grid=False,
+                              values=[10 ** k for k in range(1, len(str(int(top))))])),
         tooltip=["stage", alt.Tooltip("count:Q", format=","), "population"],
     )  # fmt: skip
     bars = base.mark_bar(size=BAR, cornerRadiusEnd=4).encode(
         x2=alt.datum(10),
         color=alt.Color("population:N", scale=alt.Scale(domain=[MARKET, RESEARCHED],
-                        range=[RAMP[1], RAMP[2]]), legend=alt.Legend(title=None)),
+                        range=[MID_GREY, ACCENT]), legend=alt.Legend(title=None)),
     )  # fmt: skip
     labels = base.mark_text(align="left", dx=4, color=INK_2).encode(
         text=alt.Text("count:Q", format=",")
@@ -452,27 +459,33 @@ def jitter(ids: pd.Series) -> pd.Series:
     return ids.map(lambda g: int(hashlib.sha256(g.encode()).hexdigest()[:8], 16) / 16**8)
 
 
+REFERENCE = "reference (calibration)"
+
+
 def prescore_chart(t: pd.DataFrame) -> alt.TopLevelMixin:
-    t = t.assign(kind=t["is_reference"].map({True: "reference", False: "lead"}),
+    t = t.assign(kind=t["is_reference"].map({True: REFERENCE, False: "lead"}),
                  jitter=jitter(t["group_id"]))  # fmt: skip
-    x = alt.X("pre_score:O", title="pre-score (open data only)", sort="descending",
-              axis=alt.Axis(labelAngle=0))  # fmt: skip
-    y = alt.Y("score:Q", title="agent score (1-10)", scale=alt.Scale(domain=[1, 10]))
+    x = alt.X("pre_score:O", title="pre-score (open data only), highest first",
+              sort="descending",
+              axis=alt.Axis(labelAngle=0, labelExpr="format(datum.value, '.2f')"))  # fmt: skip
+    low = max(1, int(t["score"].min()))
+    y = alt.Y("score:Q", title="agent score (1-10)", scale=alt.Scale(domain=[low, 10]))
     dots = alt.Chart(t).mark_circle(size=64, opacity=0.8, stroke=SURFACE, strokeWidth=2).encode(
         x=x, y=y,
         # The jitter fills the middle half of each column.
         xOffset=alt.XOffset("jitter:Q", scale=alt.Scale(domain=[-0.5, 1.5])),
-        color=alt.Color("kind:N", scale=alt.Scale(domain=["lead", "reference"],
-                        range=[BLUE, ORANGE]), legend=alt.Legend(title=None)),
+        color=alt.Color("kind:N", scale=alt.Scale(domain=["lead", REFERENCE],
+                        range=[MID_GREY, SOFT_GREY]), legend=alt.Legend(title=None)),
         tooltip=["name", "pre_score", "score", "tier"],
     )  # fmt: skip
     medians = alt.Chart(t[t["kind"] == "lead"]).mark_tick(
-        color=INK, thickness=2, size=56
+        color=ACCENT, thickness=4, size=64
     ).encode(x=x, y=alt.Y("median(score):Q"), tooltip=[alt.Tooltip("median(score):Q",
              title="median score")])  # fmt: skip
     return theme((dots + medians).properties(width=WIDTH, height=320),
                  "The pre-score finds the segment, not the best leads",
-                 "Researched groups, one dot each; the black tick is the leads' median")  # fmt: skip
+                 "Researched groups, one dot each; the thick bar is the leads' median. "
+                 "References are known customers, scored to check the rubric")  # fmt: skip
 
 
 def signals_by_size_chart(t: pd.DataFrame, free: list[str]) -> alt.TopLevelMixin:
@@ -482,20 +495,21 @@ def signals_by_size_chart(t: pd.DataFrame, free: list[str]) -> alt.TopLevelMixin
                   var_name="signal", value_name="mean")  # fmt: skip
     long["signal"] = long["signal"].map(names)
     # n on the axis: the outer bands are small.
-    band = {b: f"{b} (n={n})" for b, n in zip(t["headcount_band"].astype(str), t["groups"],
-                                                strict=True)}  # fmt: skip
+    band = {b: f"{b}|n={n}" for b, n in zip(t["headcount_band"].astype(str), t["groups"],
+                                            strict=True)}  # fmt: skip
     order = list(band.values())
     long["headcount_band"] = long["headcount_band"].astype(str).map(band)
     focus = names.get("growth")
     domain = [focus, *[n for n in names.values() if n != focus]] if focus else list(names.values())
-    grays = [MUTED, AXIS, "#a8a7a0"]
-    colors = [BLUE, *grays][: len(domain)] if focus else CATEGORICAL[: len(domain)]
+    grays = [MID_GREY, SOFT_GREY, LIGHT_GREY]
+    colors = [ACCENT, *grays][: len(domain)] if focus else SLATES[::-1][: len(domain)]
     base = alt.Chart(long).encode(
         x=alt.X("headcount_band:O", sort=order, title="headcount (agent), staff",
-                axis=alt.Axis(labelAngle=0)),
-        y=alt.Y("mean:Q", title="mean signal value", scale=alt.Scale(domain=[0, 1])),
+                axis=alt.Axis(labelAngle=0, labelExpr="split(datum.label, '|')")),
+        y=alt.Y("mean:Q", title="average value (0 = no, 1 = yes)",
+                scale=alt.Scale(domain=[0, 1])),
         color=alt.Color("signal:N", sort=domain, scale=alt.Scale(domain=domain, range=colors),
-                        legend=alt.Legend(title=None)),
+                        legend=None),  # the lines are labelled at their ends
         tooltip=["headcount_band", "signal", alt.Tooltip("mean:Q", format=".2f"), "groups"],
     )  # fmt: skip
     lines = base.mark_line(strokeWidth=2, strokeCap="round", strokeJoin="round")
@@ -506,7 +520,8 @@ def signals_by_size_chart(t: pd.DataFrame, free: list[str]) -> alt.TopLevelMixin
         .mark_text(align="left", dx=8, color=INK_2)
         .encode(x=alt.X("headcount_band:O", sort=order), y="mean:Q", text="signal:N")
     )
-    return theme((lines + dots + ends).properties(width=WIDTH, height=300),
+    return theme((lines + dots + ends).properties(width=WIDTH - 110, height=300,
+                                                  padding={"right": 110}),
                  "Bigger groups hire more",
                  "Researched leads; signals the size curve doesn't set")  # fmt: skip
 
@@ -535,15 +550,29 @@ def regions_chart(t: pd.DataFrame) -> alt.TopLevelMixin:
 
 
 def mix_chart(t: pd.DataFrame, order: list[str], pops: list[str]) -> alt.TopLevelMixin:
-    order = [o for o in order if o in set(t["mix"])]
+    # One product line is one grey; the combinations darken as the mix grows.
+    one = "one product line"
+    single = {m for m in order if " + " not in m and m != "other" and not m.startswith("unknown")}
+    t = (t.assign(mix=t["mix"].where(~t["mix"].isin(single), one))
+         .groupby(["population", "mix"], as_index=False)[["groups", "share"]].sum())  # fmt: skip
+    present = set(t["mix"])
+    combos = sorted((m for m in order if " + " in m and m in present),
+                    key=lambda m: m.count(" + "))  # fmt: skip
+    rest = [o for o in ("other", *sorted(x for x in present if x.startswith("unknown")))
+            if o in present]  # fmt: skip
+    step = (len(SLATES) - 1) / max(len(combos) - 1, 1)
+    order = ([one] if one in present else []) + combos
+    colors = ([LIGHT_GREY] * (len(order) - len(combos))
+              + [SLATES[round(i * step)] for i in range(len(combos))] + [AXIS] * len(rest))  # fmt: skip
+    order += rest
     t = t.assign(mix_order=t["mix"].map({m: i for i, m in enumerate(order)}))
     chart = alt.Chart(t).mark_bar(size=BAR + 8, stroke=SURFACE, strokeWidth=2).encode(
         y=alt.Y("population:N", sort=pops, title=None, axis=alt.Axis(labelColor=INK_2)),
         x=alt.X("share:Q", stack="normalize", title="share of groups",
                 axis=alt.Axis(format="%")),
-        color=alt.Color("mix:N", sort=order,
-                        scale=alt.Scale(domain=order, range=CATEGORICAL[:len(order)]),
-                        legend=alt.Legend(title=None, columns=3, labelLimit=240)),
+        color=alt.Color("mix:N", sort=order, scale=alt.Scale(domain=order, range=colors),
+                        legend=alt.Legend(title=None, orient="top", columns=2,
+                                          labelLimit=0)),
         order=alt.Order("mix_order:Q"),
         tooltip=["population", "mix", "groups", alt.Tooltip("share:Q", format=".0%")],
     )  # fmt: skip
@@ -558,13 +587,18 @@ def websites_chart(counts: pd.DataFrame) -> alt.TopLevelMixin:
     base = alt.Chart(counts).encode(
         y=alt.Y("website_status:N", sort=order, title=None,
                 axis=alt.Axis(labelLimit=240, labelColor=INK_2)),
-        x=alt.X("groups:Q", title="researched groups"),
+        x=alt.X("groups:Q", title="researched groups", axis=alt.Axis(tickCount=5)),
         tooltip=["website_status", "groups"],
     )  # fmt: skip
-    bars = base.mark_bar(size=BAR, cornerRadiusEnd=4, color=BLUE)
+    bars = base.mark_bar(size=BAR, cornerRadiusEnd=4).encode(
+        color=alt.condition(alt.datum.website_status == SAME, alt.value(LIGHT_GREY),
+                            alt.value(ACCENT))
+    )  # fmt: skip
     labels = base.mark_text(align="left", dx=4, color=INK_2).encode(text="groups:Q")
+    c = counts.set_index("website_status")["groups"]
+    off = (c.get(DIFFERENT, 0) + c.get(FOUND, 0)) / max(c.sum(), 1)
     return theme((bars + labels).properties(width=WIDTH, height=alt.Step(34)),
-                 "The agent's website vs the registry's",
+                 f"For {off:.0%} of leads the registry's website is missing or wrong",
                  "Researched groups: the website the agent used for its evidence")  # fmt: skip
 
 

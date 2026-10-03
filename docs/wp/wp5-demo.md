@@ -157,3 +157,32 @@ Steps 1-5 done; step 6 half done, step 7 left to the author.
 - **Finding for the talk:** the top 15 leads score 10.0 (every signal at its
   maximum), so no weight setting moves them. The sliders move leads at the
   top-50 cut: product mix 0 and growth 5 swaps 8 leads.
+
+## Redesigned (2026-10-02, local session)
+
+The author's Claude Design redesign (five 1920×1080 screens and a token sheet)
+replaces the four tabs:
+
+- **Top navigation, no sidebar:** Market, Queue, Insights (`st.navigation`,
+  `position="top"`). The Lead tab is gone: clicking a queue row splits the page
+  into the queue (left) and the lead (right), with Signals | Research replay.
+- **Market:** the funnel as four big numbers with log-scale bars (researched
+  and queue split by tier) next to the map; the map's legend is HTML above it.
+- **Queue:** the weights sit left of the table they change. A slider move
+  highlights that slider, switches the view to "Moved" and shows a banner of
+  who entered and left the top 50, with ranks before and after. Rows that
+  entered are tinted green, rows that left orange. With a lead open, the
+  weights move into a popover.
+- **Lead:** four metric tiles, the why line, headcount (with a "regraded"
+  badge), then one expander per signal whose label is the score breakdown
+  (value × weight → points). The replay shows all steps, future ones dimmed,
+  and the record step lists each signal with one quote and its English.
+- **Insights:** the six WP4 charts in a 3×2 grid; the chart title becomes the
+  card heading. Their colours stay WP4's, so the deck and the app draw the same
+  charts.
+- **Theme:** `.streamlit/config.toml` carries the token sheet. IBM Plex Sans and
+  Mono (OFL, `app/static/`) are served locally, so the demo stays offline.
+  Tier colours are Okabe-Ito based (A blue, B orange, C reddish purple), and
+  the map uses them too.
+- **Not done from the design:** the tick for a slider's old value, and the
+  region column hidden at 1440 px.
