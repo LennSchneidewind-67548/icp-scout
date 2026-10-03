@@ -14,6 +14,10 @@ Three fictional groups from fixtures/sources/, each exercising one path:
 
 Every company, site and page is made up (`.example` domains). French quotes
 carry their English translation in `quote_en`, and in the comments below.
+
+WP6: the three groups are then scored and exported. The sequences come from
+`SEQUENCES` (French, the English in each `*_en` field); the sample export is
+copied to fixtures/export/.
 """
 
 import shutil
@@ -29,7 +33,7 @@ sys.path.insert(0, str(ROOT / "tests"))
 
 from conftest import TODAY, FakeApis, ScriptedClient
 
-from icp_scout import config, research, sourcing
+from icp_scout import config, export, research, score, sourcing
 from icp_scout.enrich import agent
 from icp_scout.enrich.agent import REGISTRY_URL, TOOL
 from icp_scout.llm import LLM
@@ -272,10 +276,142 @@ def market(data_dir: Path) -> None:
                  transport=transport)  # fmt: skip
 
 
+# WP6: one 3-touch sequence per group, as the model would answer. French copy; the
+# English is in each *_en field.
+
+SEQUENCES = {
+    "Brise Marine Energies": {
+        "hook_evidence": 3,
+        "email_1_subject": "Vos recrutements de techniciens PAC",
+        "email_1_subject_en": "Your heat pump technician hiring",
+        "email_1_body": (
+            "Bonjour,\n\nVous écrivez « Nous recrutons : technicien installateur pompe a "
+            "chaleur ». Chaque nouveau technicien, ce sont plus de devis à chiffrer. Helio Desk réunit CRM, "
+            "dimensionnement et devis au même endroit. Comment vos devis sont-ils faits "
+            "aujourd'hui ?\n\nSi ce n'est pas le sujet, dites-le-moi et je n'écrirai plus."
+        ),
+        "email_1_body_en": (
+            'Hello,\n\nYou write "We are hiring: heat pump installation technician". Every '
+            "new technician means more quotes to price. Helio Desk brings CRM, system sizing and "
+            "quoting into one place. How are your quotes done today?\n\nIf this isn't a "
+            "topic for you, tell me and I won't write again."
+        ),
+        "email_2_body": (
+            "Bonjour,\n\nVous posez du photovoltaïque et des pompes à chaleur : deux "
+            "dimensionnements, un seul devis avec Helio Desk. Un échange de 15 minutes ?"
+            "\n\nUn simple « non » suffit pour ne plus recevoir de message."
+        ),
+        "email_2_body_en": (
+            "Hello,\n\nYou install solar PV and heat pumps: two system sizings, one quote "
+            'with Helio Desk. A 15-minute call?\n\nA simple "no" is enough to stop '
+            "these messages."
+        ),
+        "linkedin": (
+            "Bonjour, je travaille chez Helio Desk, un outil de devis pour installateurs "
+            "PAC et solaire. J'ai vu vos recrutements : ravi d'échanger."
+        ),
+        "linkedin_en": (
+            "Hello, I work at Helio Desk, a quoting tool for heat pump and solar "
+            "installers. I saw your hiring: happy to connect."
+        ),
+    },
+    "Vallon Thermique": {
+        "hook_evidence": 2,
+        "email_1_subject": "Pompes à chaleur et devis",
+        "email_1_subject_en": "Heat pumps and quotes",
+        "email_1_body": (
+            "Bonjour,\n\nVotre entreprise est certifiée RGE pour les pompes à chaleur. "
+            "Helio Desk aide les installateurs à passer de la visite au devis signé plus "
+            "vite. Est-ce un sujet pour vous ?\n\nSi non, dites-le-moi et je n'écrirai plus."
+        ),
+        "email_1_body_en": (
+            "Hello,\n\nYour company is RGE-certified for heat pumps. Helio Desk helps "
+            "installers go from the site visit to a signed quote faster. Is this a topic "
+            "for you?\n\nIf not, tell me and I won't write again."
+        ),
+        "email_2_body": (
+            "Bonjour,\n\nUn devis PAC demande un dimensionnement précis. Helio Desk le "
+            "calcule à partir de la visite. Je vous montre en 15 minutes ?\n\nUn « non » "
+            "suffit pour ne plus recevoir de message."
+        ),
+        "email_2_body_en": (
+            "Hello,\n\nA heat pump quote needs a precise system sizing. Helio Desk works it "
+            'out from the site visit. Shall I show you in 15 minutes?\n\nA "no" is '
+            "enough to stop these messages."
+        ),
+        "linkedin": (
+            "Bonjour, je travaille chez Helio Desk, un outil pour installateurs de pompes à "
+            "chaleur. Ravi d'échanger avec vous."
+        ),
+        "linkedin_en": (
+            "Hello, I work at Helio Desk, a tool for heat pump installers. Happy to connect "
+            "with you."
+        ),
+    },
+    "Cap Horizon Solaire": {
+        "hook_evidence": 2,
+        "email_1_subject": "Votre activité solaire",
+        "email_1_subject_en": "Your solar business",
+        "email_1_body": (
+            "Bonjour,\n\nVous installez des panneaux photovoltaïques. Helio Desk réunit le "
+            "suivi des prospects, l'étude et le devis dans un seul outil. Combien de devis "
+            "faites-vous par mois ?\n\nSi ce n'est pas le sujet, dites-le-moi et je "
+            "n'écrirai plus."
+        ),
+        "email_1_body_en": (
+            "Hello,\n\nYou install solar PV panels. Helio Desk brings lead follow-up, the "
+            "system study and the quote into one tool. How many quotes do you do a month?"
+            "\n\nIf this isn't a topic for you, tell me and I won't write again."
+        ),
+        "email_2_body": (
+            "Bonjour,\n\nVotre simulateur solaire en ligne amène des demandes : Helio "
+            "Desk les range dans un CRM sans ressaisie. Un échange de 15 minutes ?\n\nUn « non » "
+            "suffit pour ne plus recevoir de message."
+        ),
+        "email_2_body_en": (
+            "Hello,\n\nYour online solar simulator brings in requests: Helio Desk files "
+            'them in a CRM with no re-typing. A 15-minute call?\n\nA "no" is enough to stop '
+            "these messages."
+        ),
+        "linkedin": (
+            "Bonjour, je travaille chez Helio Desk, un outil de devis pour installateurs "
+            "solaires. Ravi d'échanger."
+        ),
+        "linkedin_en": (
+            "Hello, I work at Helio Desk, a quoting tool for solar installers. Happy to connect."
+        ),
+    },
+}
+
+
+def sequence_script(params: dict) -> dict:
+    prompt = params["messages"][0]["content"]
+    name = next(n for n in SEQUENCES if f'"company": "{n}"' in prompt)
+    n = list(SEQUENCES).index(name)
+    call = {"type": "tool_use", "id": f"toolu_seq_{n}", "name": export.TOOL,
+            "input": SEQUENCES[name]}  # fmt: skip
+    return message(100 + n, [call], "tool_use", {"input": 2000, "output": 600})
+
+
+def sample_export(icp, data_dir: Path) -> None:
+    """Research (replayed), score and export the three groups; copy the sample export."""
+    research.run(icp, data_dir, mode="replay", recordings_dir=HERE, group_ids=GROUPS,
+                 log=lambda _: None)  # fmt: skip
+    score.run(icp, data_dir)
+    drafts = export.run(icp, data_dir, mode="record", recordings_dir=HERE,
+                        client=ScriptedClient(sequence_script), log=print)  # fmt: skip
+    sample = ROOT / "fixtures" / "export"
+    sample.mkdir(exist_ok=True)
+    for name in ("hubspot_companies.csv", "hubspot_contacts.csv", "sequences.md"):
+        (sample / name).write_bytes((data_dir / "export" / name).read_bytes())
+    print(f"{len(drafts)} sequences, sample export in {sample.relative_to(ROOT)}")
+
+
 def main() -> None:
     icp = config.load(ROOT / "config" / "icp.example.yaml")
     out = HERE / "research"
     shutil.rmtree(out, ignore_errors=True)
+    shutil.rmtree(HERE / "sequence", ignore_errors=True)
     with tempfile.TemporaryDirectory() as tmp:
         market(Path(tmp))
         client = ScriptedClient(script)
@@ -284,6 +420,7 @@ def main() -> None:
         for lead in leads:
             result = agent.research(icp, llm, lead)
             print(lead["group_id"], result["status"], [f["code"] for f in result["flags"]])
+        sample_export(icp, Path(tmp))
     print(f"{len(list(out.glob('*.json')))} recordings in {out.relative_to(ROOT)}")
 
 

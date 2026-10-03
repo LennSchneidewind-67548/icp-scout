@@ -8,8 +8,11 @@ live and the demo work offline.
 """
 
 import json
+import math
 import os
+import re
 from dataclasses import dataclass, field
+from html import escape
 from pathlib import Path
 
 import altair as alt
@@ -98,6 +101,46 @@ def load(data_dir: str | Path) -> DemoData:
     )
 
 
+# Short words the registry spells in capitals that are not acronyms, and legal forms.
+LOWER_WORDS = {"DE", "DU", "DES", "LA", "LE", "LES", "ET", "EN", "AU", "AUX", "SUR"}
+LEGAL_FORMS = {"SA", "SAS", "SASU", "SARL", "EURL", "SCOP", "SNC", "SCI", "GIE", "ETS"}
+
+
+def display_name(raw: str | None) -> str:
+    """A registry name for the screen: "ACME ENERGIE (ACME ENERGIE)" -> "Acme Energie".
+    Drops a bracketed alias that repeats the name and title-cases all-capital names;
+    legal forms, words without a vowel or with a digit, and one-word aliases (often
+    acronyms: "(SLTE)") keep their capitals."""
+    if not raw:
+        return raw or ""
+    name = re.sub(r"\s+", " ", raw).strip()
+    head, *aliases = [x.strip() for x in re.split(r"[()]", name) if x.strip()]
+    aliases = [a for a in dict.fromkeys(aliases) if a.replace(" ", "") != head.replace(" ", "")]
+    if raw != raw.upper():
+        return head + "".join(f" ({a})" for a in aliases)
+
+    def word(m: re.Match) -> str:
+        w = m.group(0)
+        if w in LOWER_WORDS:
+            return w.lower()
+        if (
+            w in LEGAL_FORMS
+            or len(w) <= 2
+            or not re.search(r"[AEIOUYÀ-Ý]", w)
+            or re.search(r"\d", w)
+        ):
+            return w
+        return w.capitalize()
+
+    def title(text: str) -> str:
+        text = re.sub(r"[A-ZÀ-Ý0-9]+", word, text)
+        # "D'EMERAUDE" -> "d'Emeraude"; the first word keeps its capital.
+        text = re.sub(r"(?<=\s)([DL])'", lambda m: m.group(1).lower() + "'", text)
+        return text[0].upper() + text[1:]
+
+    return title(head) + "".join(f" ({a if ' ' not in a else title(a)})" for a in aliases)
+
+
 # Weights and re-ranking
 
 
@@ -140,6 +183,7 @@ def queue_table(icp: IcpConfig, data: DemoData, table: pd.DataFrame) -> pd.DataF
     )
     t.loc[t["is_reference"], "queue"] = "calibration"
     t["queue"] = t["queue"].map(lambda q: "" if q is None else str(q))
+    t["name"] = t["name"].map(display_name)
     cols = ["rank", "rank_change", "name", "score", "tier", "region", "queue", "reason_en",
             "group_id"]  # fmt: skip
     return t[cols]
@@ -155,6 +199,67 @@ def queue_moves(base: pd.DataFrame, new: pd.DataFrame, size: int) -> tuple[list[
     a, b = top(base), top(new)
     names = dict(zip(new["group_id"], new["name"], strict=True))
     return sorted(names[g] for g in b - a), sorted(names[g] for g in a - b)
+
+
+def queue_changes(
+    base: pd.DataFrame, new: pd.DataFrame, size: int
+) -> tuple[list[tuple[str, int, int]], list[tuple[str, int, int]]]:
+    """Like `queue_moves`, with each lead's rank before and after: (name, before, after)."""
+    entered, left = queue_moves(base, new, size)
+    before = dict(zip(base["name"], base["rank"], strict=True))
+    after = dict(zip(new["name"], new["rank"], strict=True))
+    return (
+        sorted(((display_name(n), int(before[n]), int(after[n])) for n in entered),
+               key=lambda x: x[2]),
+        sorted(((display_name(n), int(before[n]), int(after[n])) for n in left),
+               key=lambda x: x[2]),
+    )  # fmt: skip
+
+
+def moved_view(table: pd.DataFrame, base: pd.DataFrame, size: int) -> pd.DataFrame:
+    """The queue's rows whose rank changed, plus the ones that left it; a `move` column
+    says "entered", "left" or "". Best first."""
+    entered, left = queue_moves(base, table, size)
+    q = table["queue_rank"]
+    in_queue = q.notna() & (q <= size)
+    out = table["name"].isin(left)
+    t = table[(in_queue & (table["rank_change"].fillna(0) != 0)) | out].copy()
+    t["move"] = t["name"].map(lambda n: "entered" if n in entered else "left" if n in left else "")
+    return t.sort_values("rank")
+
+
+def moved_label(change, move: str = "") -> str:
+    """The Moved column: NEW for a lead that entered the queue, else ▲3, ▼2 or –."""
+    if move == "entered":
+        return "NEW"
+    if change is None or pd.isna(change) or change == 0:
+        return "–"
+    return f"▲{int(change)}" if change > 0 else f"▼{-int(change)}"
+
+
+def why(reason_en: str | None) -> str:
+    """The reason line without its leading "9.7 A | ", which the table already shows."""
+    return re.sub(r"^\d+(\.\d+)? [A-Z] \| ", "", reason_en or "")
+
+
+def contributions(weights: dict[str, float], values: dict[str, float]) -> dict[str, float]:
+    """Points each signal adds to the base score of 1: 9 x weight x value / total weight."""
+    total = sum(weights.values())
+    return {s: 9 * w * float(values.get(s) or 0) / total for s, w in weights.items()}
+
+
+def run_cost(ledger: list[dict]) -> float:
+    """Every model call of the run at list price: API spend, or the CLI's estimate."""
+    return round(sum(
+        (x.get("notional_usd") if x.get("backend") == "claude-code" else x.get("usd")) or 0
+        for x in ledger
+    ), 2)  # fmt: skip
+
+
+def last_run(ledger: list[dict]) -> str | None:
+    """The date (YYYY-MM-DD) of the last research call, or None."""
+    days = [x["at"][:10] for x in ledger if x.get("purpose") == "research" and x.get("at")]
+    return max(days) if days else None
 
 
 # One lead
@@ -189,7 +294,7 @@ def lead_card(data: DemoData, group_id: str) -> dict:
     first = data.signals[data.signals["group_id"] == group_id].iloc[0]
     return {
         "group_id": group_id,
-        "name": s["name"],
+        "name": display_name(s["name"]),
         "score": float(s["score"]),
         "tier": s["tier"],
         "rank": int(s["rank"]),
@@ -216,6 +321,8 @@ class Step:
     kind: str  # "search", "fetch" or "record"
     text: str  # the query, the URL, or "" for the record
     record: dict | None = None  # the final answer, on the record step
+    aim: str = ""  # what a fetch looked for (the agent's own prompt, English)
+    found: str = ""  # one line on what came back: "8 results: a.fr, b.fr" or "1,200 words"
 
 
 @dataclass
@@ -226,6 +333,43 @@ class Replay:
     tokens: int
     usd: float  # API money, or the CLI's list-price estimate for claude-code runs
     notional: bool  # True when usd is an estimate, not money spent
+
+
+def tool_results(rec: dict) -> dict[str, object]:
+    """tool_use id -> its result's content, from a claude-code transcript or an API
+    recording (the request's earlier turns and the response)."""
+    if "transcript" in rec:
+        msgs = [(m.get("message") or {}).get("content") for m in rec["transcript"]]
+    else:
+        msgs = [m["content"] for m in rec["request"].get("messages", [])]
+        msgs.append(rec["response"]["content"])
+    return {
+        b["tool_use_id"]: b.get("content")
+        for content in msgs
+        if isinstance(content, list)
+        for b in content
+        if isinstance(b, dict) and str(b.get("type", "")).endswith("tool_result")
+        and b.get("tool_use_id")
+    }  # fmt: skip
+
+
+def search_summary(result) -> str:
+    """ "8 results: a.fr, b.fr, c.com" from a search result, or ""."""
+    urls = re.findall(r"""['"]url['"]\s*:\s*['"](https?://[^'"]+)""", str(result or ""))
+    hosts = list(dict.fromkeys(
+        h.removeprefix("www.") for h in (re.sub(r"^https?://", "", u).split("/")[0] for u in urls)
+    ))  # fmt: skip
+    if not urls:
+        return ""
+    return f"{len(urls)} result{'s' if len(urls) != 1 else ''}: " + ", ".join(hosts[:3])
+
+
+def fetch_summary(result) -> str:
+    """ "Read about 1,200 words" from a fetch result, or "" (none, or encrypted)."""
+    if isinstance(result, list):
+        result = " ".join(x.get("text", "") for x in result if isinstance(x, dict))
+    words = len(str(result or "").split()) if isinstance(result, str) else 0
+    return f"Read about {round(words, -1):,} words" if words >= 20 else ""
 
 
 def replay_steps(recordings_dir: str | Path, ledger: list[dict], group_id: str) -> Replay | None:
@@ -260,15 +404,19 @@ def replay_steps(recordings_dir: str | Path, ledger: list[dict], group_id: str) 
             if x["model"] == last["model"] and x["key"] not in seen:
                 seen.add(x["key"])
                 run.append(x)
+    results = tool_results(rec)
     steps = []
     for b in blocks:
         if b.get("type") not in ("tool_use", "server_tool_use"):
             continue
         name, inp = b.get("name"), b.get("input") or {}
+        result = results.get(b.get("id"))
         if name in SEARCH_TOOLS:
-            steps.append(Step("search", inp.get("query", "")))
+            steps.append(Step("search", inp.get("query", ""), found=search_summary(result)))
         elif name in FETCH_TOOLS:
-            steps.append(Step("fetch", inp.get("url", "")))
+            aim = re.split(r"(?<=\.)\s", inp.get("prompt") or "")[0].rstrip(".")
+            aim = aim if len(aim) <= 110 else aim[:108].rsplit(" ", 1)[0] + " …"
+            steps.append(Step("fetch", inp.get("url", ""), aim=aim, found=fetch_summary(result)))
         elif isinstance(inp, dict) and "signals" in inp:
             steps.append(Step("record", "", inp))
     keys = ("input_tokens", "cache_write_tokens", "cache_read_tokens", "output_tokens")
@@ -288,14 +436,18 @@ def replay_steps(recordings_dir: str | Path, ledger: list[dict], group_id: str) 
 MARKET, IN_SEGMENT = "Market", "In segment"
 TIERS = ["Tier A", "Tier B", "Tier C"]
 LAYERS = [MARKET, IN_SEGMENT, *TIERS[::-1]]
-# Grey for context, the WP4 blue ramp for the tiers (darkest = best).
-LAYER_COLORS = [insights.AXIS, insights.MUTED, *insights.RAMP]
+# The app's data colours (Okabe-Ito based): distinct under the common colour-vision
+# deficiencies and in greyscale. Greys for context, one colour per tier.
+MARKET_GREY, SEGMENT_GREY = "#C3C8CF", "#7E8592"
+TIER_COLORS = {"A": "#0072B2", "B": "#E69F00", "C": "#CC79A7"}
+LAYER_COLORS = [MARKET_GREY, SEGMENT_GREY, *(TIER_COLORS[t[-1]] for t in TIERS[::-1])]
 
 
 def map_frame(data: DemoData, icp: IcpConfig) -> pd.DataFrame:
     """One point per located group, drawn back to front: market, in segment, researched."""
     m = data.market[data.market["lat"].notna() & data.market["lon"].notna()]
     t = m[["group_id", "name", "lat", "lon"]].copy()
+    t["name"] = t["name"].map(display_name)
     t["region"] = m["region"].map(lambda c: insights.region_name(c, icp))
     t["layer"] = m["in_segment"].map({True: IN_SEGMENT, False: MARKET})
     s = data.scored.set_index("group_id")
@@ -332,8 +484,8 @@ def map_chart(frame: pd.DataFrame, cell: float = 0.15) -> alt.TopLevelMixin:
     )
     grid = grid.groupby(["lat", "lon"]).size().rename("groups").reset_index()
     grid = grid.assign(label=labels[MARKET], lat=grid["lat"].round(3), lon=grid["lon"].round(3))
-    market = alt.Chart(alt.Data(values=grid.to_dict("records"))).mark_square(
-        filled=True, opacity=0.8, strokeWidth=0
+    market = alt.Chart(alt.Data(values=grid.to_dict("records"))).mark_circle(
+        opacity=0.8, strokeWidth=0
     ).encode(
         longitude="lon:Q",
         latitude="lat:Q",
@@ -357,12 +509,13 @@ def map_chart(frame: pd.DataFrame, cell: float = 0.15) -> alt.TopLevelMixin:
             longitude="lon:Q",
             latitude="lat:Q",
             color=color,
-            size=alt.condition(researched, alt.value(40), alt.value(10)),
-            stroke=alt.condition(researched, alt.value(insights.SURFACE), alt.value(None)),
+            size=alt.condition(researched, alt.value(95), alt.value(12)),
+            stroke=alt.condition(researched, alt.value("#FFFFFF"), alt.value(None)),
+            strokeWidth=alt.value(1.5),
             order=alt.Order("order:Q"),
             tooltip=[
                 alt.Tooltip("name:N", title="Group"),
-                alt.Tooltip("layer:N", title="Layer"),
+                alt.Tooltip("layer:N", title="Status"),
                 alt.Tooltip("score:Q", title="Score", format=".1f"),
                 alt.Tooltip("region:N", title="Region"),
             ],
@@ -374,4 +527,40 @@ def map_chart(frame: pd.DataFrame, cell: float = 0.15) -> alt.TopLevelMixin:
         "Where the market is",
         f"{len(frame):,} groups; in segment highlighted, researched ones by tier"
         + (f"; {off} far-off groups (e.g. overseas) not drawn" if off else ""),
+    )
+
+
+# Charts in the app
+
+
+def app_spec(spec: dict) -> tuple[dict, str, str]:
+    """A saved chart for the app: its title and subtitle taken out (the app shows them
+    as a heading and a caption), the app's font, 13 px labels, white background."""
+    spec = json.loads(json.dumps(spec))
+    t = spec.pop("title", None) or {}
+    title, subtitle = (t, "") if isinstance(t, str) else (t.get("text", ""), t.get("subtitle", ""))
+    if isinstance(subtitle, list):
+        subtitle = " ".join(subtitle)
+    spec["background"] = "#FFFFFF"
+    c = spec.setdefault("config", {})
+    c["font"] = "IBM Plex Sans"
+    for part in ("axis", "legend"):
+        c.setdefault(part, {}).update(labelFontSize=13, titleFontSize=13)
+    c.setdefault("text", {})["fontSize"] = 14
+    return spec, title, subtitle
+
+
+def log_share(top: int):
+    """n -> the bar length on a log scale where `top` is the full bar (the funnel)."""
+    return lambda n: math.log10(n) / math.log10(top) if n > 1 and top > 1 else 0.0
+
+
+def logo_svg(vendor: str) -> str:
+    """The app name for the top bar, as an SVG: "ICP Scout" and "for <vendor>" in grey."""
+    width = 120 + 10 * len(f"for {vendor}")
+    return (
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="32" '
+        f'viewBox="0 0 {width} 32"><text y="23" font-family="IBM Plex Sans, Segoe UI, '
+        'sans-serif"><tspan font-size="20" font-weight="600" fill="#12151C">ICP Scout</tspan>'
+        f'<tspan dx="10" font-size="16" fill="#596170">for {escape(vendor)}</tspan></text></svg>'
     )

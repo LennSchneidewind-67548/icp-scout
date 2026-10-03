@@ -206,6 +206,12 @@ def expand_by_manager(
     return found, stats
 
 
+def lead_key(c) -> tuple:
+    """Largest headcount band, then a certified domain, then the lowest SIREN. `c` is a
+    Company or a row of companies.parquet."""
+    return (band_mid(c.band) or -1, len(c.domains) > 0, -int(c.siren))
+
+
 @dataclass
 class Group:
     group_id: str
@@ -215,10 +221,7 @@ class Group:
     @property
     def lead(self) -> Company:
         """The largest member names the group."""
-        return max(
-            self.members,
-            key=lambda c: (band_mid(c.band) or -1, bool(c.domains), -int(c.siren)),
-        )
+        return max(self.members, key=lead_key)
 
     @property
     def headcount(self) -> dict:

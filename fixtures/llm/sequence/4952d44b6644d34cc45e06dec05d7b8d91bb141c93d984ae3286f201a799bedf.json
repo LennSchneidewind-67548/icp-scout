@@ -1,0 +1,128 @@
+{
+ "request": {
+  "model": "claude-opus-5-5",
+  "system": "You draft a 3-touch outreach sequence to one company for an SDR at Helio Desk, which sells: Fictional all-in-one software for renewable installers: CRM, system planning and quoting in one place.\n\nYou get what a research agent recorded about the company: a one-line reason it fits, its signals with verbatim evidence (quote, translation, URL), facts, and the role of the person you write to. You have no web access. Use only these facts; never invent a number, a name, a project or a claim about the company.\n\nWrite in French. Use the formal \"vous\", never \"tu\". Plain, specific, peer to peer; no hype, no flattery.\n\n- email_1 (day 0): a subject of at most 8 words, and a body of at most 90 words. Open on one evidence item: use its quote's own words (it is in French already), not a paraphrase of the English. Set hook_evidence to that item's n. Link it to one problem Helio Desk solves, then one low-commitment question.\n- email_2 (day 3): a follow-up of at most 60 words on a different signal's angle than email 1.\n- linkedin (day 6): a connection note of at most 300 characters, no link.\n\nEach email starts with a plain greeting without a name and ends with one short opt-out line (the reader can say they don't want more emails); both count toward the limit. No signature: the sending tool adds it. Name Helio Desk at least once in the sequence.\n\nNever mention a score, a tier, a ranking, a rubric or that the company was researched or selected.\n\nEach *_en field is a faithful translation into English of its French field, as blunt as the original.\n\nAnswer with record_sequence (or the structured output) only.",
+  "messages": [
+   {
+    "role": "user",
+    "content": "Draft the sequence for this company. Recorded findings:\n\n{\n \"company\": \"Cap Horizon Solaire\",\n \"why_it_fits_en\": \"installs both heat pumps and solar | online configurator, lead forms, a crm or a competing tool in use | weakest: hiring for sales, planning or install roles, or opening sites\",\n \"signals\": [\n  {\n   \"signal\": \"size_fit\",\n   \"label\": \"Headcount in the target band\",\n   \"rationale_en\": \"The site states 35 staff, inside the band.\"\n  },\n  {\n   \"signal\": \"product_mix\",\n   \"label\": \"Installs both heat pumps and solar\",\n   \"rationale_en\": \"Installs solar PV and heat pumps, plus EV chargers.\"\n  },\n  {\n   \"signal\": \"tech_maturity\",\n   \"label\": \"Online configurator, lead forms, a CRM or a competing tool in use\",\n   \"rationale_en\": \"An online solar simulator.\"\n  }\n ],\n \"evidence\": [\n  {\n   \"n\": 1,\n   \"signal\": \"size_fit\",\n   \"quote\": \"35 collaborateurs a votre service.\",\n   \"quote_en\": \"35 staff at your service.\",\n   \"url\": \"https://www.caphorizon-solaire.example\"\n  },\n  {\n   \"n\": 2,\n   \"signal\": \"product_mix\",\n   \"quote\": \"photovoltaique, pompes a chaleur et bornes de recharge\",\n   \"quote_en\": \"solar PV, heat pumps and EV chargers\",\n   \"url\": \"https://www.caphorizon-solaire.example\"\n  },\n  {\n   \"n\": 3,\n   \"signal\": \"tech_maturity\",\n   \"quote\": \"Simulez votre installation solaire en 2 minutes\",\n   \"quote_en\": \"Simulate your solar installation in 2 minutes\",\n   \"url\": \"https://www.caphorizon-solaire.example/simulateur\"\n  }\n ],\n \"facts\": {\n  \"product_lines\": [\n   \"solar\",\n   \"heat_pump\",\n   \"ev_chargers\"\n  ],\n  \"headcount_stated\": 35,\n  \"open_roles\": [],\n  \"tools_seen\": []\n },\n \"recipient_role\": \"Gérant\"\n}"
+   }
+  ],
+  "tools": [
+   {
+    "name": "record_sequence",
+    "description": "Record the sequence. This is the answer.",
+    "input_schema": {
+     "type": "object",
+     "properties": {
+      "hook_evidence": {
+       "type": "integer",
+       "description": "The n of the evidence item email 1 opens on."
+      },
+      "email_1_subject": {
+       "type": "string",
+       "description": "Subject line, at most 8 words, in French."
+      },
+      "email_1_subject_en": {
+       "type": "string",
+       "description": "The subject, translated to English."
+      },
+      "email_1_body": {
+       "type": "string",
+       "description": "Email 1 (day 0), at most 90 words, in French."
+      },
+      "email_1_body_en": {
+       "type": "string",
+       "description": "The email 1 body, translated to English."
+      },
+      "email_2_body": {
+       "type": "string",
+       "description": "Email 2 (day 3), a follow-up, at most 60 words, in French."
+      },
+      "email_2_body_en": {
+       "type": "string",
+       "description": "The email 2 body, translated to English."
+      },
+      "linkedin": {
+       "type": "string",
+       "description": "LinkedIn connection note (day 6), at most 300 characters, in French."
+      },
+      "linkedin_en": {
+       "type": "string",
+       "description": "The LinkedIn note, translated to English."
+      }
+     },
+     "required": [
+      "hook_evidence",
+      "email_1_subject",
+      "email_1_subject_en",
+      "email_1_body",
+      "email_1_body_en",
+      "email_2_body",
+      "email_2_body_en",
+      "linkedin",
+      "linkedin_en"
+     ],
+     "additionalProperties": false
+    },
+    "strict": true
+   }
+  ],
+  "tool_choice": {
+   "type": "tool",
+   "name": "record_sequence"
+  },
+  "max_tokens": 8000
+ },
+ "response": {
+  "id": "msg_synthetic_0102",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-opus-5-5",
+  "content": [
+   {
+    "type": "tool_use",
+    "id": "toolu_seq_2",
+    "name": "record_sequence",
+    "input": {
+     "hook_evidence": 2,
+     "email_1_subject": "Votre activité solaire",
+     "email_1_subject_en": "Your solar business",
+     "email_1_body": "Bonjour,\n\nVous installez des panneaux photovoltaïques. Helio Desk réunit le suivi des prospects, l'étude et le devis dans un seul outil. Combien de devis faites-vous par mois ?\n\nSi ce n'est pas le sujet, dites-le-moi et je n'écrirai plus.",
+     "email_1_body_en": "Hello,\n\nYou install solar PV panels. Helio Desk brings lead follow-up, the system study and the quote into one tool. How many quotes do you do a month?\n\nIf this isn't a topic for you, tell me and I won't write again.",
+     "email_2_body": "Bonjour,\n\nVotre simulateur solaire en ligne amène des demandes : Helio Desk les range dans un CRM sans ressaisie. Un échange de 15 minutes ?\n\nUn « non » suffit pour ne plus recevoir de message.",
+     "email_2_body_en": "Hello,\n\nYour online solar simulator brings in requests: Helio Desk files them in a CRM with no re-typing. A 15-minute call?\n\nA \"no\" is enough to stop these messages.",
+     "linkedin": "Bonjour, je travaille chez Helio Desk, un outil de devis pour installateurs solaires. Ravi d'échanger.",
+     "linkedin_en": "Hello, I work at Helio Desk, a quoting tool for solar installers. Happy to connect."
+    }
+   }
+  ],
+  "stop_reason": "tool_use",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+   "input_tokens": 2000,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "output_tokens": 600,
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard"
+  }
+ },
+ "usage": {
+  "input_tokens": 2000,
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 0,
+  "output_tokens": 600,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard"
+ },
+ "cost_usd": 0.02,
+ "recorded_at": "2026-10-03T09:01:28+00:00"
+}

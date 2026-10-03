@@ -1,0 +1,34 @@
+﻿"Company name","Company Domain Name","Company phone","Street Address","City","Postal Code","Country/Region","Number of Employees","icp_score","icp_tier","icp_queue_rank","icp_reason","icp_evidence","icp_group_sirens","rge_email","icp_registry_name","seq_1_subject","seq_1_body","seq_2_body","seq_3_linkedin"
+"Brise Marine Energies","brise-marine.example","02 98 00 00 01","4 QUAI DES EMBRUNS","Brest","29200","France","74","10.00","A","1","10.0 A | ~74 staff | installs both heat pumps and solar | hiring for sales, planning or install roles, or opening sites | online configurator, lead forms, a crm or a competing tool in use","Headcount in the target band: «Une equipe de 70 techniciens et conseillers.» (A team of 70 technicians and advisers.) https://www.brise-marine.example
+Installs both heat pumps and solar: «Pompes a chaleur air-eau et panneaux solaires photovoltaiques» (Air-to-water heat pumps and solar PV panels) https://www.brise-marine.example
+Hiring for sales, planning or install roles, or opening sites: «Nous recrutons : technicien installateur pompe a chaleur (CDI, Quimper)» (We are hiring: heat pump installation technician (permanent, Quimper)) https://www.brise-marine.example/recrutement
+Online configurator, lead forms, a CRM or a competing tool in use: «Demandez votre devis gratuit en ligne : simulateur d'economies d'energie.» (Ask for your free quote online: energy savings simulator.) https://www.brise-marine.example","900000010","contact@brise.example","BRISE MARINE ENERGIES","Vos recrutements de techniciens PAC","Bonjour,
+
+Vous écrivez « Nous recrutons : technicien installateur pompe a chaleur ». Chaque nouveau technicien, ce sont plus de devis à chiffrer. Helio Desk réunit CRM, dimensionnement et devis au même endroit. Comment vos devis sont-ils faits aujourd'hui ?
+
+Si ce n'est pas le sujet, dites-le-moi et je n'écrirai plus.","Bonjour,
+
+Vous posez du photovoltaïque et des pompes à chaleur : deux dimensionnements, un seul devis avec Helio Desk. Un échange de 15 minutes ?
+
+Un simple « non » suffit pour ne plus recevoir de message.","Bonjour, je travaille chez Helio Desk, un outil de devis pour installateurs PAC et solaire. J'ai vu vos recrutements : ravi d'échanger."
+"Cap Horizon Solaire","caphorizon-solaire.example","04 90 11 22 33","2 RUE DU SOLEIL","Avignon","84000","France","36","7.34","B","2","7.3 B | installs both heat pumps and solar | online configurator, lead forms, a crm or a competing tool in use | weakest: hiring for sales, planning or install roles, or opening sites","Headcount in the target band: «35 collaborateurs a votre service.» (35 staff at your service.) https://www.caphorizon-solaire.example
+Installs both heat pumps and solar: «photovoltaique, pompes a chaleur et bornes de recharge» (solar PV, heat pumps and EV chargers) https://www.caphorizon-solaire.example
+Online configurator, lead forms, a CRM or a competing tool in use: «Simulez votre installation solaire en 2 minutes» (Simulate your solar installation in 2 minutes) https://www.caphorizon-solaire.example/simulateur","900000110; 900000120","contact@cap.example","CAP HORIZON SOLAIRE","Votre activité solaire","Bonjour,
+
+Vous installez des panneaux photovoltaïques. Helio Desk réunit le suivi des prospects, l'étude et le devis dans un seul outil. Combien de devis faites-vous par mois ?
+
+Si ce n'est pas le sujet, dites-le-moi et je n'écrirai plus.","Bonjour,
+
+Votre simulateur solaire en ligne amène des demandes : Helio Desk les range dans un CRM sans ressaisie. Un échange de 15 minutes ?
+
+Un « non » suffit pour ne plus recevoir de message.","Bonjour, je travaille chez Helio Desk, un outil de devis pour installateurs solaires. Ravi d'échanger."
+"Vallon Thermique","","04 76 00 00 40","5 CHEMIN DU VALLON","Grenoble","38000","France","44","5.05","C","3","5.0 C | installs both heat pumps and solar | weakest: hiring for sales, planning or install roles, or opening sites","Headcount in the target band: «Tranche d'effectif salarie : 10 a 19 salaries» (Headcount band: 10 to 19 employees) https://annuaire-entreprises.data.gouv.fr/entreprise/900000060
+Installs both heat pumps and solar: «Pompe a chaleur : chauffage ; Panneaux solaires photovoltaiques» (Heat pump: heating; solar PV panels) https://annuaire-entreprises.data.gouv.fr/entreprise/900000060","900000060; 900000070; 900000080","contact@vallon_t.example","VALLON THERMIQUE","Pompes à chaleur et devis","Bonjour,
+
+Votre entreprise est certifiée RGE pour les pompes à chaleur. Helio Desk aide les installateurs à passer de la visite au devis signé plus vite. Est-ce un sujet pour vous ?
+
+Si non, dites-le-moi et je n'écrirai plus.","Bonjour,
+
+Un devis PAC demande un dimensionnement précis. Helio Desk le calcule à partir de la visite. Je vous montre en 15 minutes ?
+
+Un « non » suffit pour ne plus recevoir de message.","Bonjour, je travaille chez Helio Desk, un outil pour installateurs de pompes à chaleur. Ravi d'échanger avec vous."
