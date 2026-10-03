@@ -835,3 +835,26 @@ this entry, and the author times above, estimated from the session timestamps.
 The two import screenshots are in `private/deck/`. Case output (not committed):
 `data/export/`; the case data is in the
 author's HubSpot account until after the talk.
+
+---
+
+## 2026-10-03 · WP7 plan · `local`
+
+**Author time:** TODO
+
+**Asked for:** a WP7 plan in `docs/wp/`, including a study of the vendor's
+visual identity to use as a rough direction for the deck, with the slides
+keeping their own clean, minimal look.
+
+**The agent proposed:** a private Slides artifact (the claude.ai type, as
+`docs/requirements.md` asks) with a PDF backup in `private/deck/`. A 25 min
+brand study goes in `private/research/brand.md` and ends in deck tokens (one
+accent, one secondary colour for charts, the fonts), which the author reviews.
+The charts are the WP4 Vega-Lite specs, embedded with the accent applied at
+embed time, so the committed theme stays neutral. A 14-slide storyline follows
+the four grading points, about 18.5 min with the demo. Two timed runs, with a
+cut order. The committed doc names no colours or fonts (ADR 0003).
+
+**The author decided:** the deck and the talk are in English.
+
+**Output:** `docs/wp/wp7-deck.md`, the WP7 link in `docs/plan.md`, this entry.
