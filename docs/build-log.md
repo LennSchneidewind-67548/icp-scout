@@ -15,13 +15,13 @@ Keep entries free of case-company specifics (ADR 0003); those go in `private/not
 
 | Author time | Agent sessions | LLM spend (pipeline) | Work packages done |
 |---|---|---|---|
-| TODO | 9 | ~$2.04 | 1 of 8 (WP0); WP1 and WP2 merged, pilot done |
+| ~12 h (estimated from session timestamps, to 2026-10-03) | 9 | ~$2.04 | 1 of 8 (WP0); WP1 and WP2 merged, pilot done |
 
 ---
 
 ## 2026-09-29 · Kickoff and setup · `voice-dump` → `interview` → `local`
 
-**Author time:** TODO
+**Author time:** ~1 h (09-29 10:14–11:12, voice dump, interview and repo setup; estimated from session timestamps)
 
 **Input.** A spoken brain dump: the case, two goals (win the case, public
 portfolio repo later), the idea of making it company-agnostic, and whether
@@ -63,7 +63,7 @@ both ways (passes on the real history, fails on a term that is present).
 
 ## 2026-09-29 · WP0: case research and rubric calibration · `local`
 
-**Author time:** TODO
+**Author time:** ~45 min (11:16–12:39, including the leftovers; estimated from session timestamps)
 
 **Mode note.** Run locally on purpose: every output is case material in
 `private/`. The agent pointed out that a remote session couldn't see it and
@@ -105,7 +105,7 @@ The example config and a test were updated. The leak-term list grew from 5 to 15
 
 ## 2026-09-29 · WP1 plan for a remote session · `local`
 
-**Author time:** TODO
+**Author time:** ~10 min (12:41–12:49; estimated from session timestamps)
 
 **Asked for:** a plan for WP1 as a Markdown file under `docs/`, to be handed to
 a remote session by the author. From now on, one file per WP in `docs/wp/`.
@@ -132,7 +132,7 @@ fixtures from the start. Open for the author's review in the PR.
 
 ## 2026-09-29 · Remote session setup · `local`
 
-**Author time:** TODO
+**Author time:** ~15 min (12:50–12:57, then the setup in the browser; estimated from session timestamps)
 
 **Asked for:** how to hand `docs/wp/wp1-sourcing.md` to a remote session, then
 the environment setup for it.
@@ -150,7 +150,7 @@ environment settings by the author.
 
 ## 2026-09-29 · WP1: sourcing · `remote`
 
-**Author time:** TODO
+**Author time:** ~10 min (launching the session and the review; estimated)
 
 **Asked for:** implement `docs/wp/wp1-sourcing.md`, following its session rules.
 Built against the example config and synthetic fixtures only; `private/` was
@@ -202,7 +202,7 @@ from the drafted description.
 
 ## 2026-09-29 · WP2 plan · `local`
 
-**Author time:** TODO
+**Author time:** ~10 min (16:30–16:35; estimated from session timestamps)
 
 **Asked for:** a plan for WP2 (agent research) in `docs/`, and how to run
 its implementation in a remote session.
@@ -229,7 +229,7 @@ claude-api skill: the current Opus at medium effort), and the budget.
 
 ## 2026-09-29 · WP2 agent research · `local`
 
-**Author time:** TODO
+**Author time:** ~20 min (16:37–16:53; estimated from session timestamps)
 
 **Asked for:** implement `docs/wp/wp2-research.md`. It was planned as a
 `remote` session; Anthropic was having an incident, so it ran locally
@@ -276,7 +276,7 @@ costs, is for the author's 5-lead pilot.
 
 ## 2026-09-29 · WP2 pilot · `local`
 
-**Author time:** TODO
+**Author time:** ~45 min (16:53–18:14, the budget and the config comparison; estimated from session timestamps)
 
 **Asked for:** merge the WP2 PR and run the pilot. Then, from the author: a
 $15 cap on API spend for the whole project, $3 for the pilot, and "if there's
@@ -328,7 +328,7 @@ rubric definition of a lead form.
 
 ## 2026-09-29 · WP2 full run on the subscription · `local`
 
-**Author time:** TODO
+**Author time:** ~45 min (23:02–23:49; estimated from session timestamps)
 
 **Asked for:** the Opus config for the full run, but on the author's Pro plan
 instead of the API, with the pilot as the only API cost evidence. Merge PR #3.
@@ -363,7 +363,7 @@ that's an input for WP3. Details in `private/pilot/findings.md`.
 
 ## 2026-09-30 · WP2 wide run on the subscription · `local`
 
-**Author time:** TODO
+**Author time:** ~10 min (08:52–09:46, the run was unattended; estimated from session timestamps)
 
 **Asked for:** research the rest of the 175-lead shortlist on the Pro plan,
 using up to 90% of a fresh 5-hour window, with the caps unchanged and no API
@@ -396,7 +396,7 @@ This goes into WP3. Details in `private/pilot/findings.md`.
 
 ## 2026-09-30 · WP2 finished: last leads and full re-rank · `local`
 
-**Author time:** TODO
+**Author time:** ~15 min (two short sessions, 17:13 and 22:32; estimated from session timestamps)
 
 **Asked for:** research the rest of the shortlist and say what comes next.
 
@@ -422,7 +422,7 @@ Details in `private/pilot/findings.md`.
 
 ## 2026-10-01 · WP3: finer signals, score.py, the SDR queue · `local`
 
-**Author time:** TODO
+**Author time:** ~1 h (09:05–10:24, 12 prompts; estimated from session timestamps)
 
 **Asked for:** merge WP2, then plan WP3 before building it; the agent was to
 argue the case for references in the SDR queue.
@@ -461,7 +461,7 @@ regrade), 96 A / 74 B / 7 C. 89 tests pass. Details in
 
 ## 2026-10-01 · WP4 planned: insights · `local`
 
-**Author time:** TODO
+**Author time:** ~10 min (10:28–10:39; estimated from session timestamps)
 
 **Asked for:** a plan for WP4 in `docs/`.
 
@@ -486,7 +486,7 @@ numbers are computed.
 
 ## 2026-10-01 · WP4 step 1: candidate findings computed · `local`
 
-**Author time:** TODO
+**Author time:** ~45 min (10:39–11:32, including reading the pipeline explainer; estimated from session timestamps)
 
 **Asked for:** start WP4; then a plain explainer of the whole pipeline with a
 rolling example, since the author was losing track of how the stages fit.
@@ -520,7 +520,7 @@ sister company's site, so the 40 need a manual look).
 
 ## 2026-10-01 · WP4 built: insights code, charts, write-up · `local`
 
-**Author time:** TODO
+**Author time:** ~30 min (17:04–17:24, choosing the findings; estimated from session timestamps)
 
 **Asked for:** steps 3-5 of the WP4 plan for the six kept findings.
 
@@ -553,7 +553,7 @@ pass), the CLI command and config key on branch `wp4-plan`;
 
 ## 2026-10-01 · WP4 closed: open checks decided, merged · `local`
 
-**Author time:** TODO
+**Author time:** ~20 min (21:12–21:31; estimated from session timestamps)
 
 **Asked for:** skip the registry link spot-checks; list the arguments for and
 against groups certified for a single product line and decide; state in the
@@ -580,7 +580,7 @@ single-line groups (9.1 and 7.3); with the case weights they are 8.2 and 6.4.
 
 ## 2026-10-01 · WP5 planned: the Streamlit demo · `local`
 
-**Author time:** TODO
+**Author time:** ~15 min (21:33–23:26, mostly reading the plan; estimated from session timestamps)
 
 **Asked for:** plan WP5 into `docs/wp/`.
 
@@ -606,7 +606,7 @@ excerpts, because those are French with no translation.
 
 ## 2026-10-01 · WP5 built: the Streamlit demo · `local`
 
-**Author time:** TODO
+**Author time:** ~20 min (23:27–00:04; estimated from session timestamps)
 
 **Asked for:** execute `docs/wp/wp5-demo.md`.
 
