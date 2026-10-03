@@ -1,1 +1,3 @@
 * text=auto eol=lf
+# The sample export is compared byte for byte; the CSV writer ends lines with CRLF.
+fixtures/export/*.csv -text

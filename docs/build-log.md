@@ -636,7 +636,7 @@ Put in the click path as a talking point.
 
 ## 2026-10-02 · WP6 planned: the SDR hand-off · `local`
 
-**Author time:** TODO
+**Author time:** ~10 min (estimated from session timestamps)
 
 **Asked for:** plan WP6 into `docs/wp/`.
 
@@ -655,3 +655,183 @@ imports, and delete it after the talk.
 
 **Output:** `docs/wp/wp6-handoff.md`, row 6 of `docs/plan.md` linked (1.75h),
 this entry.
+
+---
+
+## 2026-10-02 · WP5 redesign implemented · `local`
+
+**Author time:** ~1 h (10:44–12:22, including the Claude Design session; estimated from session timestamps)
+
+**Asked for:** implement the author's Claude Design redesign of the demo
+(five screens and a token sheet), imported through the design MCP.
+
+**The agent proposed:** keep the logic in `demo.py`, tested, and lay out the
+design with Streamlit building blocks only: top navigation, a split
+queue/lead view instead of a Lead tab, segmented controls, a popover for the
+weights while a lead is open, Styler row tints, and the token sheet as the
+theme with the fonts bundled locally. The design's mock company names and the
+vendor name are not copied; the vendor comes from the config at runtime.
+
+**The agent caught:** in the browser on the case data, the open-lead column
+squeezed the controls and the score bar (the controls now sit under the title),
+15 px labels clipped the fixed-width WP4 charts (13 px now), and the
+data-date line was hidden under the sticky top bar (it is a footer now).
+
+**Left for the author:** a look at all five screens on the projector
+resolution, the Wi-Fi-off check again (fonts are now local files).
+
+**Output:** `app/streamlit_app.py`, `app/static/` (IBM Plex, OFL),
+`.streamlit/config.toml`, new helpers in `src/icp_scout/demo.py`
+(`queue_changes`, `moved_view`, `moved_label`, `why`, `contributions`,
+`run_cost`, `last_run`, `app_spec`), `tests/test_demo.py`, a "Redesigned"
+section in `docs/wp/wp5-demo.md`, this entry.
+
+---
+
+## 2026-10-02 · WP5 design review loop · `local`
+
+**Author time:** ~30 min (12:29–16:38, the agent ran mostly unattended; estimated from session timestamps)
+
+**Asked for:** an unbiased design and UI review of the demo in the browser, by
+a fresh agent each round. The agent implements the feedback and repeats it, at
+most three rounds, aiming for only minor feedback.
+
+**The agent proposed:** three fresh reviewer agents, each told only what the
+demo is for and who watches it, driving their own Chrome tab on the case data.
+Between rounds the agent implemented the findings. Polish scores were 5, 6.5
+and 6.5 out of 10. The last round's findings are implemented but were not
+reviewed again.
+
+**Changes:**
+- **Header:** content starts below the top bar, and the toolbar is minimal.
+- **Queue layout:** one layout whether a lead is open or not. The weights sit
+  in an expander above the table. The table and the lead pane are the same
+  height and scroll on their own. The table remounts on a filter change.
+- **Queue columns:** the Queue view shows the queue place (1–50). Score is a
+  number, not a bar. Tier is a coloured letter. Moved only shows once weights
+  change, and only moves of 3 or more get a colour. The caption depends on the
+  filters, notes ties, and has an empty state with "Clear filters".
+- **Names:** registry names are shown title-cased without repeated brackets
+  (`demo.display_name`, applied at display only, because scoring breaks ties
+  by the raw name).
+- **Lead pane:** one header for both views, the formula above the signals, and
+  the facts as a list, not raw JSON. Registry fields are labelled "Registry
+  data", not quoted.
+- **Replay:** each step says what came back (results and hosts, words read).
+  The buttons' states are right after Play and Show all. Empty-state copy has
+  no path.
+- **Colours:** red means moved down, so amber means tier B only. The Insights
+  charts use greys plus ink, so the tier colours mean tiers only.
+- **Insights charts:** two charts per row at one height, and titles that state
+  the finding where they did not. The charts got label and axis fixes.
+
+**The author decided:** ran the round-3 demo and moved on to WP6 without
+further changes; the open points below stay open.
+
+**Left open (reviewer findings not done):**
+- The top 15 leads tie at 10.0. That is a scoring question, not a design one,
+  and the caption now says how ties are broken.
+- The funnel bars stay on a log scale.
+- Fetch steps in the replay could show the quotes they produced.
+- Region options could show counts.
+- The reviewers disagreed on colour: round 2 wanted blue for tiers only,
+  round 3 wanted the tier-A blue as the Insights accent. The tier-only rule
+  was kept.
+- The demo needs `ICP_SCOUT_RECORDINGS=private/llm` for the replay; without
+  it, the replay is empty for every lead.
+
+**Output:** `app/streamlit_app.py`, `.streamlit/config.toml`,
+`src/icp_scout/demo.py` (`display_name`, replay step results),
+`src/icp_scout/insights.py` (palette, chart fixes; `data/insights/`
+regenerated), `tests/test_demo.py`, this entry.
+
+---
+
+## 2026-10-02 · WP6 plan checked against the WP5 redesign · `local`
+
+**Author time:** ~5 min (estimated from session timestamps)
+
+**Asked for:** whether the WP5 redesign affects `docs/wp/wp6-handoff.md`.
+
+**The agent proposed:** the export reads pipeline outputs the redesign did not
+touch, and the `demo_dir` fixture is unchanged. Four points did change: the
+stretch goal named the Lead tab, which is gone; the company name form for the
+CSV and the copy was unset now that the app shows `display_name`; the export
+rank should match the demo's queue place given the 10.0 tie; the demo's weight
+sliders do not reach the CSV.
+
+**The author decided:** use `display_name` in the CSV and the copy, and keep
+the raw name in `icp_registry_name`.
+
+**Output:** `docs/wp/wp6-handoff.md` (name, `icp_registry_name`,
+`icp_queue_rank` taken as stored, config-weights note, a Sequence view in the
+lead pane as the stretch goal, tests, decision), this entry.
+
+---
+
+## 2026-10-02 · WP6 the SDR hand-off · `local`
+
+**Author time:** ~15 min (17:06–17:21; the case run then ran unattended; estimated from session timestamps)
+
+**Asked for:** implement `docs/wp/wp6-handoff.md`.
+
+**The agent proposed and built:** `export.py` and `icp-scout export` as planned,
+8 tests, and a committed sample export of the three fictional groups
+(`fixtures/export/`), which a test replays offline byte for byte. Away from the
+plan: the domain prefers the agent's website over the registry's (they
+disagreed for 13 of 50 case leads, the registry's often a typo); the head
+company comes from `group.lead_key`, factored out of `Group.lead`; the copy has
+no signature (HubSpot adds it). The demo's Sequence view was cut, as the plan
+allows.
+
+**The agent caught:** a missing domain was written as `nan` once it went
+through a DataFrame; 23 of 50 case leads have no contact, mostly because a
+holding manages the head company.
+
+**The author decided:** see the next entry (2026-10-03).
+
+**Output:** `src/icp_scout/export.py`, `src/icp_scout/cli.py`,
+`src/icp_scout/group.py`, `tests/test_export.py`, `fixtures/llm/make_fixtures.py`,
+`fixtures/llm/sequence/`, `fixtures/export/`, the "Built" section of
+`docs/wp/wp6-handoff.md`, this entry. Case output (not committed):
+`data/export/`, `private/llm/sequence/`.
+
+## 2026-10-03 · WP6 the author's checks and the HubSpot import · `local`
+
+**Author time:** ~1 h 45 min (reading and the translator check, then the import 09:57–10:59; estimated from session timestamps)
+
+**Asked for:** what is left to finish WP6, then a step-by-step for the HubSpot
+import.
+
+**The agent proposed:** a contact fallback (first physical-person manager of
+any group member, 6 of the 23) or accepting the gap; the import steps and the
+column mapping.
+
+**The author decided:** no fallback; the 23 leads without a contact import as
+companies only. Read 10 sequences in English and checked 3 French ones in an
+independent translator: both pass. The author asked whether "quote" in the
+translations is right: it is *devis* (a priced estimate) and correct; the
+agent noted most sequences lean on the same combined-quote angle. The author
+declined to give HubSpot the vendor's or any other company's website at
+sign-up, since they don't work there.
+
+**The author caught:** the one-file, two-object import failed on First and Last
+Name for the 23 rows with no contact, because HubSpot rejects a contact with no
+name.
+
+**The agent built:** the plan's fallback, two files.
+`hubspot_companies.csv` (50 companies) is imported first, as one object.
+`hubspot_contacts.csv` (only the 27 contacts, each with its company's domain)
+is imported second, as two objects. The domain maps to the Company's Company
+Domain Name, which matches the existing company and associates the contact. A
+lead with no domain has its contact left out and listed in the run output.
+Tests and the sample export were updated, and the case export was re-made
+offline from the recordings ($0).
+
+**Output:** the import showed 50 companies, 27 contacts associated and 0 errors.
+Changed: `src/icp_scout/export.py`, `tests/test_export.py`,
+`fixtures/llm/make_fixtures.py`, `fixtures/export/`, `docs/wp/wp6-handoff.md`,
+this entry, and the author times above, estimated from the session timestamps.
+The two import screenshots are in `private/deck/`. Case output (not committed):
+`data/export/`; the case data is in the
+author's HubSpot account until after the talk.

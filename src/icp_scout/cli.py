@@ -50,6 +50,11 @@ def main(argv: list[str] | None = None) -> None:
     )
     regrade.add_argument("--recordings", help="as for research")
     sub.add_parser("score", help="score, tier and rank; print the SDR queue")
+    export = sub.add_parser("export", help="the SDR hand-off: HubSpot CSV and outreach sequences")
+    export.add_argument(
+        "--offline", action="store_true", help="replay recordings only, fail on a miss"
+    )
+    export.add_argument("--recordings", help="as for research")
     sub.add_parser("cost", help="cost per researched lead, from the ledger")
     sub.add_parser("insights", help="the findings: tables and chart specs to data/insights/")
     compare = sub.add_parser("compare", help="compare two research runs (e.g. two models)")
@@ -122,6 +127,18 @@ def main(argv: list[str] | None = None) -> None:
         except FileNotFoundError as e:
             sys.exit(str(e))
         print(score.report(icp, table))
+    elif args.command == "export":
+        from icp_scout import export as export_mod
+        from icp_scout.llm import RecordingMiss
+
+        icp = config.load(args.config)
+        mode = "replay" if args.offline else "record"
+        try:
+            export_mod.run(icp, args.data_dir, mode=mode, recordings_dir=recordings_dir(args, mode))
+        except RecordingMiss as e:
+            sys.exit(f"--offline: {e}")
+        except FileNotFoundError as e:
+            sys.exit(str(e))
     elif args.command == "insights":
         from icp_scout import insights
 

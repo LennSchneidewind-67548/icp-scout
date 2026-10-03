@@ -31,14 +31,21 @@ in translation.
 One file, two objects (HubSpot's "one file, multiple objects" import). UTF-8
 with a BOM so Excel shows the accents, comma-separated, quoted cells.
 
-- **Company:** name; Company Domain Name, the dedupe key, taken from the group's own `website` host only, never
+- **Company:** name, as the demo shows it (`demo.display_name`: title-cased, no
+  repeated bracketed alias), because an SDR copies it into an email; Company Domain Name, the dedupe key, taken from the group's own `website` host only, never
   a directory; phone, street, city and postcode of the
   group's head company (largest headcount band, as in `group.py`);
   Country/Region; Number of Employees (`headcount`). The author creates these custom properties
   while mapping the columns: `icp_score`, `icp_tier`, `icp_queue_rank`,
   `icp_reason` (`reason_en`), `icp_evidence` (the top quote per signal, French
   and English and the URL), `icp_group_sirens`, `rge_email` (the public contact
-  email from the RGE registry).
+  email from the RGE registry), `icp_registry_name` (the raw registry name).
+  `icp_queue_rank` is `queue_rank` from `scored.parquet` as stored, never
+  re-ranked, so it carries the WP3 tie-break (signals with evidence, then the
+  raw name) and matches the demo's queue place; the top leads tie at 10.0.
+- **Config weights only:** the export reads the queue as scored with the
+  config weights. The demo's weight sliders are for the talk and do not reach
+  the CSV.
 - **Contact:** the head company's first physical-person manager, from
   `companies.parquet` `managers` (`type_dirigeant == "personne physique"`,
   auditors skipped with `group.is_auditor`): first name, last name, job title
@@ -53,7 +60,7 @@ with a BOM so Excel shows the accents, comma-separated, quoted cells.
 
 ## 2. The sequence: one call per lead
 
-Input: `reason_en`, the signals with `rationale_en` and their evidence
+Input: the company's `display_name`, `reason_en`, the signals with `rationale_en` and their evidence
 (`quote`, `quote_en`, `url`), the agent's `facts`, the vendor `pitch`, the
 manager's role. Output against a strict schema, validated with pydantic as in the regrade pass:
 
@@ -90,8 +97,8 @@ output lists flagged leads, and `sequences.md` marks them.
   `fixtures/`.
 - Config: nothing new. It uses `outreach.language` and `translate_to`, `research.model`
   and `backend`, with low effort (short copy).
-- Stretch, cut first: the demo's Lead tab shows the sequence with its
-  translation.
+- Stretch, cut first: the demo's lead pane gets a third view, Signals |
+  Research replay | Sequence, showing the three touches with their translation.
 
 ## 4. Tests (synthetic, `config/icp.example.yaml`)
 
@@ -100,7 +107,8 @@ as in `tests/test_research.py`:
 
 - The CSV has its header row, one row per queued lead and no references, and a UTF-8 BOM.
   It round-trips through `csv.DictReader` with the accents intact, and the domain is
-  empty for a directory site.
+  empty for a directory site. The name column is `display_name`, the raw name is in
+  `icp_registry_name`, and `icp_queue_rank` equals `queue_rank` for two leads tied on score.
 - A lead with no physical-person manager still gets a company row.
 - `draft` validates a canned answer. `checks` flags an over-long LinkedIn
   note, a "tu" and a `hook_evidence` that points at no evidence item.
@@ -144,7 +152,7 @@ deck. The case data then sits in the author's HubSpot account. Delete the import
 - Personal data: the manager names come from the public company register and stay in
   `data/` and the author's CRM. B2B prospecting relies on legitimate interest, with an
   opt-out line in every email.
-- Time: if late, cut the demo tab, then `email_2` and the LinkedIn note (keep
+- Time: if late, cut the demo's Sequence view, then `email_2` and the LinkedIn note (keep
   email 1). Never cut the CSV.
 
 ## Decided (author, 2026-10-02)
@@ -153,3 +161,60 @@ deck. The case data then sits in the author's HubSpot account. Delete the import
 - A 3-touch sequence (email, follow-up, LinkedIn note) instead of a single
   opener; budget +45 min.
 - The author imports the case CSV into their own HubSpot account to check it.
+- After the WP5 redesign: the CSV and the copy use `display_name`, and the raw
+  name goes in `icp_registry_name`. The stretch goal is a Sequence view in the
+  lead pane, since the Lead tab is gone.
+
+## Built (2026-10-02, local session)
+
+Steps 1-4 done; the stretch (a Sequence view in the demo) is cut.
+
+- `src/icp_scout/export.py` as planned, `icp-scout export [--offline] [--recordings]`,
+  8 tests in `tests/test_export.py` on a copy of the WP5 `demo_dir` plus a synthetic
+  `companies.parquet`.
+- **Sample export committed:** `fixtures/llm/make_fixtures.py` now also replays the
+  three fictional groups' research, scores them and drafts their sequences from a
+  scripted client. The recordings are in `fixtures/llm/sequence/`, the output in
+  `fixtures/export/`. A test replays the whole chain offline and compares the files
+  byte for byte, so a prompt change fails CI until the fixtures are re-made.
+- **Changed from the plan:**
+  - The domain is the agent's `website` host first, the registry's second. In the
+    case queue the two disagreed for 13 of 50 leads, and the registry's were often
+    typos or an older site; the agent had checked the site belongs to the group.
+    Either is dropped when it is a directory (listed by 21+ companies, as in
+    `group.py`). 4 leads have no registry website at all.
+  - The head company uses `group.lead_key`, factored out of `Group.lead`, so the
+    export and the roll-up pick the same company.
+  - The evidence is numbered across signals (`n` from 1) and only found signals
+    are sent; `hook_evidence` points at that `n`. The `reason_en` sent to the
+    model has its leading "score tier |" stripped (`demo.why`).
+  - Each email starts with a plain greeting and has no signature: HubSpot adds
+    the sender's. The opt-out line counts toward the word limit.
+  - The column headers name their object ("Company phone") because one file holds
+    two objects; `sequences.md` maps each column to its HubSpot property.
+  - Registry roles get an English gloss from a small table (`ROLES_EN`, the 15
+    commonest); an unknown role shows without one.
+- **Case run:** 50 of 50 drafted on the subscription backend in about 45 min, $0 API
+  ($2.08 notional). 5 leads are flagged, all for going 1 to 4 words over a limit;
+  no informal address, no score in the copy, every hook points at real evidence.
+  All 50 have a domain.
+- **Open: 23 of 50 leads have no contact.** The head company of 18 is managed only
+  by a legal entity (a holding), whose own managers aren't in `companies.parquet`;
+  for 5, the only physical persons are auditors. Taking the first physical-person
+  manager of any group member would fill 6 of the 23. The other 17 would need a
+  register lookup of the holding.
+- **To watch when reading:** a draft can state a general pain point as if it were
+  a fact about the company (one said quotes "are often redone by hand"). The prompt
+  forbids invented facts, not such claims.
+- **The import (author, 2026-10-03): 50 companies, 27 contacts associated, 0 errors**,
+  but only in two files. The one-file import failed on the 23 rows with no contact,
+  because HubSpot rejects a contact with no name. `icp-scout export` now writes
+  `hubspot_companies.csv` (imported first, one object) and `hubspot_contacts.csv`
+  (the leads with a contact: Company Domain Name, mapped to the Company, plus
+  the contact's columns; imported second, as two objects). The domain matches
+  the existing company and associates the contact. A contact whose company has
+  no domain is left out.
+- **The 23 without a contact stay without one** (author): no fallback.
+- **Author's read:** 10 sequences in English and 3 through an independent translator;
+  both pass. The copy is repetitive across leads: most sequences lean on the same
+  "combined quote (*devis*) with subsidies" angle.
