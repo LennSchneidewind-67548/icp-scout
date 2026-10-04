@@ -24,63 +24,82 @@ icp = config.load()
 DATA_DIR = str(demo.data_dir())
 RECORDINGS = str(demo.recordings_dir())
 
-INK, INK_2, MUTED = "#12151C", "#3A4150", "#596170"
-# Up and down in the queue: green and red, so amber stays tier B's.
-POS, NEG = "#00704F", "#B42318"
-TIER_TINT = {"A": ("#E1EEF7", "#005A8C"), "B": ("#FBEFD6", "#7A5100"),
-             "C": ("#F6E6EF", "#8E3E6E")}  # fmt: skip
-ROW_TINT = {"entered": "#E3F4EE", "left": "#FBEAE9"}
+# The deck's tokens (see .streamlit/config.toml): ink, zinc greys, one accent.
+INK, INK_2, MUTED, LINE = "#1B1D20", "#3F3F46", "#52525B", "#E4E4E7"
+ACCENT, ACCENT_TXT, ACCENT_TINT = "#E04E1B", "#C2410C", "#FCEEE7"
+# Up and down in the queue: green and red, apart from the accent's orange.
+POS, NEG = "#166534", "#B42318"
+# Tier badges, from the accent to grey: (background, text), each AA on its background.
+TIER_TINT = {"A": ("#C2410C", "#FFFFFF"), "B": ("#FCEEE7", "#9A3412"),
+             "C": ("#F0F0EC", "#52525B")}  # fmt: skip
+TIER_TEXT = {"A": "#C2410C", "B": "#B45309", "C": "#71717A"}
+ROW_TINT = {"entered": "#E7F5EC", "left": "#FBEAE9"}
 
 st.html("""<style>
 /* The top bar is 64 px and overlays the page: start below it. */
 .block-container {padding: 5.25rem 3rem 2rem; max-width: none}
-header[data-testid="stHeader"] {border-bottom: 1px solid #ECEEF1}
-[data-testid="stTopNavLink"] p {font-size: 16px; font-weight: 500}
-[data-testid="stTopNavLink"][aria-current="page"] {box-shadow: inset 0 -2px 0 #1F2430;
+header[data-testid="stHeader"] {border-bottom: 1px solid #E4E4E7; background: #FDFDFB}
+[data-testid="stTopNavLink"] p {font-size: 16px; font-weight: 500; color: #52525B}
+[data-testid="stTopNavLink"][aria-current="page"] {box-shadow: inset 0 -2px 0 #E04E1B;
   border-radius: 0}
-[data-testid="stTopNavLink"][aria-current="page"] p {font-weight: 600}
+[data-testid="stTopNavLink"][aria-current="page"] p {font-weight: 600; color: #1B1D20}
+/* The deck's headings: semibold, tight tracking. */
+h1, h2, h3, h4 {letter-spacing: -0.02em}
+/* Cards like the deck's chart panels: white on the off-white page. */
+[class*="st-key-card_"] {background: #FFFFFF; border-radius: 16px}
 /* The table's hover toolbar (search, download) covers the controls above it. */
 [data-testid="stDataFrame"] [data-testid="stElementToolbar"] {display: none}
+.st-key-page_head {border-bottom: 2px solid #1B1D20; padding-bottom: 14px !important;
+  margin-bottom: 4px}
+.st-key-page_head h2 {padding: 0; line-height: 1.1}
+/* Streamlit pulls a heading's next element up by 17 px; here the rule comes next. */
+.st-key-page_head [data-testid="stMarkdownContainer"] {margin-bottom: 0}
+.eyebrow {font-size: 13px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: #C2410C; margin: 0 0 8px}
+.kv a, .facts a {color: #C2410C}
 .fun-head {display: flex; justify-content: space-between; align-items: baseline;
-  font-size: 18px; color: #3A4150}
-.fun-head span + span {font-size: 15px; color: #596170}
-.fun-num {font-size: 44px; line-height: 1.05; font-weight: 600; letter-spacing: -0.02em;
+  font-size: 18px; color: #3F3F46}
+.fun-head span + span {font-size: 15px; color: #71717A}
+.fun-num {font-size: 44px; line-height: 1.05; font-weight: 600; letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums}
-.fun-bar {height: 12px; border-radius: 3px; background: #F0F1F4; overflow: hidden;
+.fun-bar {height: 12px; border-radius: 6px; background: #F0F0EC; overflow: hidden;
   display: flex; margin-top: 8px}
-.fun-conv {font-size: 16px; color: #596170; padding: 8px 0 14px}
-.legend {display: flex; gap: 18px; flex-wrap: wrap; font-size: 15px; color: #3A4150}
+.fun-conv {font-size: 16px; color: #52525B; padding: 8px 0 14px}
+.legend {display: flex; gap: 18px; flex-wrap: wrap; font-size: 15px; color: #3F3F46}
 .legend span {display: flex; align-items: center; gap: 8px}
 .legend i {width: 11px; height: 11px; border-radius: 50%; display: inline-block}
 .step {display: grid; grid-template-columns: 36px 1fr; gap: 0 16px}
 .step .rail {display: flex; flex-direction: column; align-items: center}
 .step .dot {width: 30px; height: 30px; flex: none; border-radius: 50%; display: flex;
   align-items: center; justify-content: center; font-size: 14px; font-weight: 600;
-  border: 1.5px solid #C7CBD2; background: #FFFFFF}
-.step.done .dot {border-color: #1F2430}
-.step.now .dot {background: #1F2430; color: #FFFFFF; border-color: #1F2430}
+  border: 1.5px solid #D4D4D8; background: #FFFFFF}
+.step.done .dot {border-color: #1B1D20}
+.step.now .dot {background: #E04E1B; color: #FFFFFF; border-color: #E04E1B}
 .step.later {opacity: .35}
-.step .line {width: 1.5px; flex: 1; background: #DCDFE4; min-height: 10px}
+.step .line {width: 1.5px; flex: 1; background: #E4E4E7; min-height: 10px}
 .step .body {padding: 2px 0 10px; display: flex; flex-direction: column; gap: 4px;
   min-width: 0}
 .step .head {display: flex; align-items: center; gap: 12px; min-width: 0}
 .step .kind {font-size: 15px; font-weight: 600; width: 62px; flex: none}
-.step code {font-size: 15px; padding: 3px 10px; border-radius: 6px; background: #F5F6F8;
-  color: #12151C; white-space: nowrap; overflow: hidden; text-overflow: ellipsis}
-.step .result {font-size: 15px; color: #596170; padding-left: 74px; white-space: nowrap;
+.step code {font-family: "Geist Mono", monospace; font-size: 14px; padding: 3px 10px;
+  border-radius: 6px; background: #F4F4F1;
+  color: #1B1D20; white-space: nowrap; overflow: hidden; text-overflow: ellipsis}
+.step .result {font-size: 15px; color: #52525B; padding-left: 74px; white-space: nowrap;
   overflow: hidden; text-overflow: ellipsis}
 .kv {display: grid; grid-template-columns: 1fr 1fr 2fr; gap: 16px; margin: 4px 0 8px;
   font-size: 16px}
-.kv-label {font-size: 14px; color: #596170; margin-bottom: 2px}
-.kv-note {font-size: 14px; color: #596170; margin-top: 2px}
+.kv-label {font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  color: #71717A; margin-bottom: 2px}
+.kv-note {font-size: 14px; color: #71717A; margin-top: 2px}
 .facts {display: grid; grid-template-columns: 180px 1fr; gap: 8px 16px; font-size: 15px}
-.facts > div:nth-child(odd) {color: #596170}
-.step .found {margin: 4px 0 0 74px; border: 1px solid #C7CBD2; border-radius: 8px}
+.facts > div:nth-child(odd) {color: #52525B}
+.step .found {margin: 4px 0 0 74px; border: 1px solid #E4E4E7; border-left: 3px solid #E04E1B;
+  border-radius: 0 10px 10px 0; background: #FFFFFF}
 .step .found div {display: grid; grid-template-columns: 220px 48px 1fr; gap: 0 16px;
-  padding: 6px 14px; border-bottom: 1px solid #ECEEF1; font-size: 15px;
+  padding: 6px 14px; border-bottom: 1px solid #EDEDF0; font-size: 15px;
   align-items: baseline}
 .step .found div:last-child {border-bottom: none}
-.step .found em {color: #596170; font-style: normal}
+.step .found em {color: #52525B; font-style: normal}
 </style>""")
 
 
@@ -151,9 +170,13 @@ def stamp() -> str:
     return f"Open data {day(snap)} · agent run {day(demo.last_run(data.ledger))}"
 
 
-def page_head(title: str, caption: str) -> None:
-    st.header(title, anchor=False)
-    st.caption(caption)
+def page_head(eyebrow: str, title: str, caption: str | None = None) -> None:
+    """The deck's slide header: an accent eyebrow, the title, an ink rule."""
+    with st.container(key="page_head", gap=None):
+        st.html(f"<p class='eyebrow'>{escape(eyebrow)}</p>")
+        st.header(title, anchor=False)
+    if caption is not None:
+        st.caption(caption)
 
 
 def bar(segments: list[tuple[float, str]]) -> str:
@@ -188,7 +211,7 @@ def market_page() -> None:
 
     funnel, where = st.columns([0.32, 0.68], gap="large")
     with funnel:
-        st.header("The market", anchor=False)
+        page_head("Open data", "The market")
         st.markdown(f"<p style='font-size:18px;color:{MUTED};margin-bottom:28px'>"
                     f"Installer groups in {escape(icp.market.country)}, built from the "
                     f"certified-installer registry and the company register.<br>"
@@ -203,7 +226,7 @@ def market_page() -> None:
             )
         st.caption("Bar length on a log scale. Colour = tier, as on the map.")
 
-    with where.container(border=True):
+    with where.container(border=True, key="card_map"):
         spec, title, subtitle = demo.app_spec(map_spec(icp, CONFIG_ID, DATA_DIR))
         spec["config"]["legend"]["disable"] = True
         spec["height"] = 640
@@ -282,11 +305,11 @@ def styled(q: pd.DataFrame):
 
     def moved(v: str) -> str:
         big = v == "NEW" or (v[:1] in "▲▼" and int(v[1:]) >= 3)
-        c = "#8A919E" if not big else POS if v.startswith(("▲", "NEW")) else NEG
+        c = "#A1A1AA" if not big else POS if v.startswith(("▲", "NEW")) else NEG
         return f"color: {c}; font-weight: 600"
 
     def tier(t: str) -> str:
-        return f"color: {TIER_TINT[t][1]}; font-weight: 600"
+        return f"color: {TIER_TEXT[t]}; font-weight: 600"
 
     return q.style.apply(row, axis=1).map(moved, subset=["moved"]).map(tier, subset=["tier"])
 
@@ -315,7 +338,7 @@ def moves_html(rows: list[tuple[str, int, int]], head: str, colour: str, show: i
     """The first `show` leads that entered or left, with their rank before -> after."""
     items = "".join(
         f"<div style='display:flex;justify-content:space-between;gap:12px;padding:3px 0;"
-        f"border-bottom:1px solid #ECEEF1'><span style='overflow:hidden;text-overflow:"
+        f"border-bottom:1px solid #EDEDF0'><span style='overflow:hidden;text-overflow:"
         f"ellipsis;white-space:nowrap'>{escape(n)}</span><span style='color:{MUTED};"
         f"white-space:nowrap;font-variant-numeric:tabular-nums'>{a} → {b}</span></div>"
         for n, a, b in rows[:show]
@@ -337,7 +360,7 @@ def queue_page() -> None:
 
     # One layout whether a lead is open or not: title, one row of controls, then the
     # table, with the lead beside it. Opening a lead only narrows the table.
-    st.header("SDR queue", anchor=False)
+    page_head("Research + rubric", "SDR queue")
     caption = st.empty()
     with st.container(horizontal=True, vertical_alignment="center"):
         st.segmented_control("View", list(views), format_func=views.get, key="view",
@@ -354,7 +377,7 @@ def queue_page() -> None:
 
     view = st.session_state["view"]
     if changed and view == "moved":
-        with st.container(border=True):
+        with st.container(border=True, key="card_moves"):
             for col, rows, word, colour in zip(
                 st.columns(2, gap="large"), (entered, left), ("entered", "left"),
                 (POS, NEG), strict=True,
@@ -413,7 +436,7 @@ def queue_page() -> None:
                 st.rerun()
 
     if lead is not None:
-        with pane.container(border=True, height=TABLE_HEIGHT):
+        with pane.container(border=True, height=TABLE_HEIGHT, key="card_lead"):
             lead_pane(lead)
 
 
@@ -626,7 +649,7 @@ def replay_panel(gid: str) -> None:
         st.session_state[key] = total
         st.rerun(scope="fragment")  # so the buttons show the last step's state
     cost = "at list price, run on the subscription" if rp.notional else "API spend"
-    with st.container(border=True):
+    with st.container(border=True, key="card_run"):
         st.markdown(f"Full run &nbsp; **{rp.searches}** search{'es' if rp.searches != 1 else ''}"
                     f" &nbsp; **{rp.fetches}** page{'s' if rp.fetches != 1 else ''} "
                     f"read &nbsp; **{rp.tokens / 1000:.1f}k** tokens &nbsp; **${rp.usd:.2f}** "
@@ -637,7 +660,7 @@ def replay_panel(gid: str) -> None:
 
 
 def insights_page() -> None:
-    page_head("Insights", "Each chart answers one question. Researched leads only where "
+    page_head("Findings", "Insights", "Each chart answers one question. Researched leads only where "
               f"the chart says so. {stamp()}")  # fmt: skip
     specs = [data.insights.get(f.__name__) for f in insights.FINDINGS]
     specs = [s for s in specs if s]
@@ -645,10 +668,10 @@ def insights_page() -> None:
         st.info("No charts yet: run `icp-scout insights` first.")
         return
     for start in range(0, len(specs), 2):
-        for cell, spec in zip(st.columns(2, gap="medium"), specs[start : start + 2]):
+        for i, (cell, spec) in enumerate(zip(st.columns(2, gap="medium"), specs[start : start + 2])):
             spec, title, subtitle = demo.app_spec(spec)
             spec["height"] = 400  # one height, so the cards in a row match
-            with cell.container(border=True, height="stretch"):
+            with cell.container(border=True, height="stretch", key=f"card_{start}_{i}"):
                 st.markdown(f"#### {title}")
                 st.caption(subtitle)
                 st.vega_lite_chart(spec=spec, theme=None, width="stretch")

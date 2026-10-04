@@ -184,5 +184,10 @@ replaces the four tabs:
   Mono (OFL, `app/static/`) are served locally, so the demo stays offline.
   Tier colours are Okabe-Ito based (A blue, B orange, C reddish purple), and
   the map uses them too.
+- **Restyled in WP7 (2026-10-03):** the theme now follows the deck's token
+  sheet, so the demo and the slides look like one talk: Geist (OFL,
+  `app/static/`), one accent, tiers ramped from the accent to grey on the map
+  and in the table. The saved chart specs stay neutral; `demo.app_spec` swaps
+  their palette for the app's when it shows them, as the deck does.
 - **Not done from the design:** the tick for a slider's old value, and the
   region column hidden at 1440 px.

@@ -858,3 +858,137 @@ cut order. The committed doc names no colours or fonts (ADR 0003).
 **The author decided:** the deck and the talk are in English.
 
 **Output:** `docs/wp/wp7-deck.md`, the WP7 link in `docs/plan.md`, this entry.
+
+---
+
+## 2026-10-03 · WP7 deck redesign · `local`
+
+**Author time:** TODO
+
+**Asked for:** the deck looked plain and unformatted. Keep the theme, take
+the layout of an earlier case deck as direction, and check every slide in
+Chrome after each round until no critical flags are left.
+
+**The agent proposed:** keep the colours and the font, and borrow the
+structure: an eyebrow label, a headline with one accent phrase, a rule under
+it, the source on the left of the footer and the page number on the right,
+tinted cards, numbered badges, and callouts for the "trigger" and "opener"
+lines. Tables become div rows with horizontal rules only, because the slide
+runtime draws every cell border. The slides come from one generator script
+(`private/deck/gen_deck.py`), so the markup stays consistent; the speaker
+notes are carried over unchanged. The chart PNGs sit in white cards and were
+not re-rendered.
+
+**The author decided:** colours and font stay; small text additions only
+(eyebrows, accent phrases, callouts); edit the deck in place.
+
+**Caught in the browser checks:** round 0: the limits slide had collapsed,
+"17,986" broke mid-number, the charts sat as white boxes on the off-white
+slide. Round 1: the roll-up connectors ran sideways, the approach cards
+touched (a two-value `gap` isn't supported) and their numbers didn't line up.
+Round 2: a layout with spacers and a number almost as wide as its card
+froze the slide runtime, and the hung renderer then blocked every new tab
+until Chrome was restarted. The fix was a layout that doesn't depend on
+height.
+
+Afterwards, at the author's request, the F6 chart was re-rendered as a
+deck-only variant: one legend row with short names (spelled out in the axis
+title), shares inside the larger segments, and a visible grey for "other".
+
+**Output:** the private deck artifact, updated in place (20 slides), and
+`private/deck/gen_deck.py` and `private/deck/render_f6.py` (not committed).
+This entry.
+
+---
+
+## 2026-10-03 · Demo restyled to match the deck · `local`
+
+**Author time:** TODO
+
+**Asked for:** restyle the Streamlit demo to match the deck's design, and
+check the result in Chrome.
+
+**The agent proposed:** take the deck's token sheet as the app theme: warm
+off-white page, white cards, ink text, zinc greys, one accent, Geist and Geist
+Mono bundled in `app/static/` (OFL, so the demo stays offline; IBM Plex
+removed). Deck devices carried over: an accent eyebrow over each page title,
+a 2 px ink rule under it, pill buttons, uppercase labels in the lead pane, an
+accent bar on the replay's findings. Tiers ramp from the accent (A) through a
+light tint (B) to dark grey (C), on the map, the funnel and the table, so the
+eye lands on tier A as it does on the slides; queue movement stays
+green/red. The saved chart specs stay neutral: `demo.app_spec` swaps their
+palette for the app's at display time, the same move the deck makes.
+
+**The author decided / rejected / caught:** TODO.
+
+**Caught in the browser checks:** bordered containers carry no marker
+attribute, so the cards are keyed (`st-key-card_*`) to style them white; links
+inside `st.html` came out browser-blue; the replay's `<code>` fell back to
+the system monospace; the new header pushed the table about 50 px down until
+the eyebrow and title shared one gapless container; Streamlit's -17 px margin
+under a heading put the rule on the title's baseline. The app test looks for
+the page title in `st.header`, so the title stays a real header. The Chrome
+window kept dropping to the background, which made screenshots time out, so
+it was brought to the front by hand.
+
+**Not changed:** references on the pre-score chart keep their light grey (the
+deck colours them for that one slide only).
+
+**Output:** `.streamlit/config.toml`, `app/streamlit_app.py`, `app/static/`,
+`src/icp_scout/demo.py` (`APP_PALETTE`, tier colours), a palette test in
+`tests/test_demo.py`, a note in `docs/wp/wp5-demo.md`, this entry.
+
+---
+
+## 2026-10-04 · Talk script in German · `local`
+
+**Author time:** TODO
+
+**Asked for:** the script for presenting the case study. The talk is in
+German; the slides stay in English.
+
+**The agent proposed:** a slide-by-slide script built from the live deck (15
+slides plus appendix) and its speaker notes, not from the older storyline.
+Each slide gets what's on screen, the text to say in spoken German, a
+transition line and a running clock (18:45 planned, demo ends at 10:15). The
+demo beats follow the demo script. Added: a cut plan if the clock runs over,
+an appendix-by-question table, likely questions with short answers,
+pronunciation for the French names and a pre-start checklist. Numbers are
+rounded for speaking. The "~$270 for the segment" on the market slide and the
+"~$231" on the last slide are bridged in the text (175 already researched).
+
+**Caught while writing:** two drafted answers didn't match the repo (hours
+and contacts) and were corrected against the build log and the WP6 notes. The
+lead #1 email states a general pain point as a fact; the script gives an
+answer for when someone asks.
+
+**The author decided / rejected / caught:** TODO.
+
+**Output:** `private/deck/script-de.md` (not committed), this entry.
+
+## 2026-10-04 · Rehearsal runs 1 and 2, feedback · `local`
+
+**Author time:** TODO
+
+**Input:** speech-to-text transcripts of the first two timed rehearsals
+(22:35 and 21:28, demo included, target 20:00).
+
+**The agent proposed:** checked both runs line by line against the talk
+script and the insight numbers. Found: ~2 min of cuttable words (funnel
+numbers said twice, a skipped slide still talked over, a long demo
+explanation, fillers), factual slips (a currency, a cadence, which filter
+excluded a product segment, contacts overclaimed), and the script's key lines
+that neither run said. Proposed a run-3 checklist. Added two names to the
+pronunciation table and filled the durations in the demo script's timed run.
+
+**The author decided:** move the regions finding to the appendix (the
+deck is now 14 slides plus 5 appendix slides; script, clock and generator
+updated). The talk is an online call, so the pre-start checklist was
+rewritten for screen sharing: one browser window with the deck and the demo
+as tabs, shared as a window. The old "Wi-Fi off" step was dropped, since the
+call needs the network; the demo still runs offline from recordings.
+
+**The author rejected / caught:** TODO.
+
+**Output:** transcripts and feedback in `private/deck/rehearsal/`, the
+updated deck artifact and talk script (not committed), this entry.

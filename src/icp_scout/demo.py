@@ -436,10 +436,11 @@ def replay_steps(recordings_dir: str | Path, ledger: list[dict], group_id: str) 
 MARKET, IN_SEGMENT = "Market", "In segment"
 TIERS = ["Tier A", "Tier B", "Tier C"]
 LAYERS = [MARKET, IN_SEGMENT, *TIERS[::-1]]
-# The app's data colours (Okabe-Ito based): distinct under the common colour-vision
-# deficiencies and in greyscale. Greys for context, one colour per tier.
-MARKET_GREY, SEGMENT_GREY = "#C3C8CF", "#7E8592"
-TIER_COLORS = {"A": "#0072B2", "B": "#E69F00", "C": "#CC79A7"}
+# The app's data colours, from the deck's token sheet: zinc greys for context, then the
+# tiers from grey to the accent, so the eye lands on tier A as on the slides. The steps
+# differ in lightness too, so they hold in greyscale.
+MARKET_GREY, SEGMENT_GREY = "#C8C8CE", "#8E8E96"
+TIER_COLORS = {"A": "#E04E1B", "B": "#F2A07B", "C": "#52525B"}
 LAYER_COLORS = [MARKET_GREY, SEGMENT_GREY, *(TIER_COLORS[t[-1]] for t in TIERS[::-1])]
 
 
@@ -533,17 +534,33 @@ def map_chart(frame: pd.DataFrame, cell: float = 0.15) -> alt.TopLevelMixin:
 # Charts in the app
 
 
+# The saved specs keep the neutral palette (insights.py); the app swaps it for the deck's
+# at display time, as the deck does, so both show the same colours.
+APP_PALETTE = {
+    insights.INK: "#1B1D20", insights.INK_2: "#3F3F46", insights.MUTED: "#52525B",
+    insights.GRID: "#F0F0F2", insights.AXIS: "#E4E4E7", insights.LIGHT_GREY: MARKET_GREY,
+    insights.MID_GREY: SEGMENT_GREY, insights.SOFT_GREY: "#A1A1AA",
+    insights.ACCENT: TIER_COLORS["A"], insights.SLATES[1]: "#52525B",
+}  # fmt: skip
+
+
+def _restyle(text: str) -> str:
+    return re.sub("|".join(APP_PALETTE), lambda m: APP_PALETTE[m.group(0)], text)
+
+
 def app_spec(spec: dict) -> tuple[dict, str, str]:
     """A saved chart for the app: its title and subtitle taken out (the app shows them
-    as a heading and a caption), the app's font, 13 px labels, white background."""
+    as a heading and a caption), the deck's palette and font, 13 px labels, white
+    background."""
     spec = json.loads(json.dumps(spec))
     t = spec.pop("title", None) or {}
     title, subtitle = (t, "") if isinstance(t, str) else (t.get("text", ""), t.get("subtitle", ""))
     if isinstance(subtitle, list):
         subtitle = " ".join(subtitle)
+    spec = json.loads(_restyle(json.dumps(spec)))
     spec["background"] = "#FFFFFF"
     c = spec.setdefault("config", {})
-    c["font"] = "IBM Plex Sans"
+    c["font"] = "Geist"
     for part in ("axis", "legend"):
         c.setdefault(part, {}).update(labelFontSize=13, titleFontSize=13)
     c.setdefault("text", {})["fontSize"] = 14
@@ -560,7 +577,8 @@ def logo_svg(vendor: str) -> str:
     width = 120 + 10 * len(f"for {vendor}")
     return (
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="32" '
-        f'viewBox="0 0 {width} 32"><text y="23" font-family="IBM Plex Sans, Segoe UI, '
-        'sans-serif"><tspan font-size="20" font-weight="600" fill="#12151C">ICP Scout</tspan>'
-        f'<tspan dx="10" font-size="16" fill="#596170">for {escape(vendor)}</tspan></text></svg>'
+        f'viewBox="0 0 {width} 32"><text y="23" font-family="Geist, Segoe UI, '
+        'sans-serif"><tspan font-size="20" font-weight="600" fill="#1B1D20" '
+        'letter-spacing="-0.4">ICP Scout</tspan>'
+        f'<tspan dx="10" font-size="16" fill="#71717A">for {escape(vendor)}</tspan></text></svg>'
     )
