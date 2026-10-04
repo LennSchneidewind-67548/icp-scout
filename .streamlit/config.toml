@@ -13,73 +13,66 @@ gatherUsageStats = false
 # No "Deploy" button or developer menu on the screen share.
 toolbarMode = "minimal"
 
-# The redesign's token sheet: light, cool-neutral, ink primary. Colour is kept for
-# data: the tiers, and movement in the queue.
+# The deck's token sheet, so the demo and the slides look like one talk: warm
+# off-white, ink, zinc greys, one orange accent used sparingly, Geist. Colour is kept
+# for data: the tiers (accent to grey), and movement in the queue (green/red).
 [theme]
 base = "light"
-primaryColor = "#1F2430"
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#F5F6F8"
-textColor = "#12151C"
-linkColor = "#12151C"
-borderColor = "#DCDFE4"
-dataframeBorderColor = "#ECEEF1"
-dataframeHeaderBackgroundColor = "#F5F6F8"
+primaryColor = "#E04E1B"
+backgroundColor = "#FDFDFB"
+secondaryBackgroundColor = "#F4F4F1"
+textColor = "#1B1D20"
+linkColor = "#C2410C"
+borderColor = "#E4E4E7"
+dataframeBorderColor = "#EDEDF0"
+dataframeHeaderBackgroundColor = "#F4F4F1"
 showWidgetBorder = true
-baseRadius = "8px"
+baseRadius = "10px"
+buttonRadius = "full"
 baseFontSize = 17
-font = "IBM Plex Sans"
-headingFont = "IBM Plex Sans"
-codeFont = "IBM Plex Mono"
-headingFontSizes = ["40px", "32px", "22px", "20px", "18px", "16px"]
+font = "Geist"
+headingFont = "Geist"
+codeFont = "Geist Mono"
+headingFontSizes = ["44px", "32px", "22px", "20px", "18px", "16px"]
 headingFontWeights = [600, 600, 600, 600, 600, 600]
 metricValueFontSize = "44px"
 metricValueFontWeight = 600
-chartCategoricalColors = ["#0072B2", "#E69F00", "#CC79A7"]
+chartCategoricalColors = ["#E04E1B", "#52525B", "#A1A1AA"]
 # Named colours for :green[...] and the badges: green/red = moved up/down,
-# blue/yellow/violet = tier A/B/C.
-greenColor = "#009E73"
-greenTextColor = "#00704F"
-greenBackgroundColor = "#E3F4EE"
+# orange = the accent, gray = notes.
+greenColor = "#15803D"
+greenTextColor = "#166534"
+greenBackgroundColor = "#E7F5EC"
 redColor = "#B42318"
 redTextColor = "#B42318"
 redBackgroundColor = "#FBEAE9"
-orangeColor = "#D55E00"
-orangeTextColor = "#B34700"
-orangeBackgroundColor = "#FBEFE7"
-blueColor = "#0072B2"
-blueTextColor = "#005A8C"
-blueBackgroundColor = "#E1EEF7"
-yellowColor = "#E69F00"
-yellowTextColor = "#7A5100"
-yellowBackgroundColor = "#FBEFD6"
-violetColor = "#CC79A7"
-violetTextColor = "#8E3E6E"
-violetBackgroundColor = "#F6E6EF"
-grayTextColor = "#596170"
-grayBackgroundColor = "#F0F1F4"
+orangeColor = "#E04E1B"
+orangeTextColor = "#C2410C"
+orangeBackgroundColor = "#FCEEE7"
+grayTextColor = "#52525B"
+grayBackgroundColor = "#F0F0EC"
 
 [[theme.fontFaces]]
-family = "IBM Plex Sans"
-url = "app/static/IBMPlexSans-400.woff2"
+family = "Geist"
+url = "app/static/Geist-400.woff2"
 weight = 400
 
 [[theme.fontFaces]]
-family = "IBM Plex Sans"
-url = "app/static/IBMPlexSans-500.woff2"
+family = "Geist"
+url = "app/static/Geist-500.woff2"
 weight = 500
 
 [[theme.fontFaces]]
-family = "IBM Plex Sans"
-url = "app/static/IBMPlexSans-600.woff2"
+family = "Geist"
+url = "app/static/Geist-600.woff2"
 weight = 600
 
 [[theme.fontFaces]]
-family = "IBM Plex Mono"
-url = "app/static/IBMPlexMono-400.woff2"
+family = "Geist Mono"
+url = "app/static/GeistMono-400.woff2"
 weight = 400
 
 [[theme.fontFaces]]
-family = "IBM Plex Mono"
-url = "app/static/IBMPlexMono-500.woff2"
+family = "Geist Mono"
+url = "app/static/GeistMono-500.woff2"
 weight = 500

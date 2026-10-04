@@ -6,7 +6,7 @@ import pandas as pd
 import pytest
 from conftest import ROOT
 
-from icp_scout import demo
+from icp_scout import demo, insights
 
 APP = str(ROOT / "app" / "streamlit_app.py")
 API_RECORDING = "30bd58ab584f8212a771c1f81928c12faf016448befbc7ebe17a38762757602a"
@@ -88,6 +88,15 @@ def test_app_spec_moves_the_title_out():
     assert (title, subtitle) == ("Bigger groups hire more", "Researched leads")
     assert "title" not in out and out["config"]["axis"]["labelFontSize"] == 13
     assert spec["config"]["axis"]["labelFontSize"] == 12  # the saved spec is untouched
+
+
+def test_app_spec_swaps_the_neutral_palette():
+    spec = {"mark": {"type": "bar", "color": insights.ACCENT},
+            "encoding": {"color": {"scale": {"range": [insights.MID_GREY, insights.ACCENT]}}}}  # fmt: skip
+    out, _, _ = demo.app_spec(spec)
+    assert out["mark"]["color"] == demo.TIER_COLORS["A"]
+    assert out["encoding"]["color"]["scale"]["range"] == [demo.SEGMENT_GREY, demo.TIER_COLORS["A"]]
+    assert spec["mark"]["color"] == insights.ACCENT  # the saved spec is untouched
 
 
 def test_run_cost_and_last_run():

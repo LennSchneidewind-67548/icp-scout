@@ -398,15 +398,15 @@ FINDINGS = [f1_funnel, f2_prescore, f3_tiers, f5_regions, f6_product_mix, f7_web
 APPENDIX = [f4_size_appendix]
 
 
-# Charts. The app's palette (.streamlit/config.toml): greys for context, ink for what
-# the chart is about. The tier colours (blue, amber, pink) mean tiers only, so no chart
-# here uses them for anything else.
+# Charts. A neutral palette: greys for context, ink for what the chart is about. The
+# saved specs keep it; the app and the deck swap it for their own token sheet when they
+# show a chart (demo.app_spec), so these hex values are keys, not the final look.
 
 INK, INK_2, MUTED = "#12151C", "#3A4150", "#596170"
 GRID, AXIS, SURFACE = "#ECEEF1", "#DCDFE4", "#FFFFFF"
 # The lightest grey for a mark that must read on white: 2.5:1 and up.
 LIGHT_GREY, MID_GREY, SOFT_GREY = "#C3C8CF", "#7E8592", "#9BA1AC"
-ACCENT = "#1F2430"  # the app's primary colour
+ACCENT = "#1F2430"  # the focus colour; the app shows it as its accent
 # Context to focus: in segment, researched, queue.
 RAMP = [LIGHT_GREY, MID_GREY, ACCENT]
 # A slate ramp for ordered categories, light to dark.
