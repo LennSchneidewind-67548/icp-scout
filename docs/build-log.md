@@ -992,3 +992,22 @@ call needs the network; the demo still runs offline from recordings.
 
 **Output:** transcripts and feedback in `private/deck/rehearsal/`, the
 updated deck artifact and talk script (not committed), this entry.
+
+## 2026-10-05 · Conductor pipeline config · `local`
+
+**Author time:** TODO
+
+**The agent proposed:** a `## Pipeline` section in CLAUDE.md for the
+conductor plugin: the verify command (ruff, pytest, leak check, the same as
+CI), the Streamlit review build, plans under `docs/wp/<feature>/`, a commit
+style, part rules taken from the existing rules and ADRs, and what counts as
+a visual decision. It flagged that the leak check is skipped in worktrees
+(no `private/`), and that CLAUDE.md's activate path is still the Windows one.
+
+**The author decided:** review only after phases with browser checks; the
+review build runs on the case data; the draft went in as proposed.
+
+**The author rejected / caught:** TODO.
+
+**Output:** the Pipeline section in CLAUDE.md, `.conductor/` in
+`.gitignore`, this entry.
