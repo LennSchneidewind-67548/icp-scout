@@ -13,3 +13,6 @@ __pycache__/
 *.egg-info/
 dist/
 .streamlit/secrets.toml
+
+# Conductor plugin state
+.conductor/
