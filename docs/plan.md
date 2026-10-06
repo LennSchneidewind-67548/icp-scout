@@ -30,7 +30,7 @@ Rule of thumb: if the pipeline runs late, cut app polish, never the insights.
 
 ## After the presentation
 
-The release is planned in [wp/public-release/PLAN.md](wp/public-release/PLAN.md), which replaces the bullets below. The LinkedIn bullet mentions funnel numbers, which that plan rules out.
+The release is planned in [wp/public-release/PLAN.md](wp/public-release/PLAN.md), which replaces the bullets below. It shipped: the repo went public on 2026-10-06. The LinkedIn bullet mentions funnel numbers, which that plan rules out.
 
 - Swap in synthetic fixtures, check `git log` for anything case-specific, make the repo public.
 - LinkedIn post: the problem, the funnel numbers, cost per lead, link to the repo.
