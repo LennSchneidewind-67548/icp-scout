@@ -210,6 +210,21 @@ def test_app_queue_and_a_lead(app):
     assert "Next step →" in [b.label for b in app.button]
 
 
+def test_app_lead_deep_link_opens_once(app):
+    app.query_params["lead"] = "g1"
+    page(app, "queue")
+    assert not app.exception
+    assert any("Alpha Solaire" in m.value for m in app.markdown)  # the lead pane
+    assert "lead" not in app.query_params  # consumed, so the close button still closes it
+
+
+def test_app_lead_deep_link_ignores_an_unknown_id(app):
+    app.query_params["lead"] = "nope"
+    page(app, "queue")
+    assert not app.exception
+    assert app.session_state["lead"] is None
+
+
 def test_app_slider_changes_the_first_row(app):
     page(app, "queue")
     app.slider(key="w_growth").set_value(0).run()

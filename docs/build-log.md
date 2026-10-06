@@ -1063,3 +1063,20 @@ image, which the author reviews in part B.
 **The author decided / rejected / caught:** TODO.
 
 **Output:** `docs/wp/public-release/P1.md`, this entry.
+
+## 2026-10-06 · Public release P1 part A · `remote`
+
+**Author time:** TODO
+
+**Asked for:** the example dataset generator and the `?lead=` deep link
+(P1 steps 1 and 2).
+
+**The agent proposed:** `fixtures/demo/make_demo.py`, which builds a 6,000-group
+fictional market on top of the fixture market and the three recorded leads and
+runs the real score and insights steps; and a 6-line `?lead=` parameter on the
+queue page that opens a lead once and is then dropped. Both come with tests.
+
+**The author decided / rejected / caught:** TODO.
+
+**Output:** `fixtures/demo/make_demo.py`, `tests/test_example_data.py`, the
+queue-page change in `app/streamlit_app.py` with two AppTests, this entry.
