@@ -16,7 +16,7 @@ Keep entries free of case-company specifics (ADR 0003); those go in `private/not
 | Scope | Author time | Agent sessions | LLM spend (pipeline) | Work packages done |
 |---|---|---|---|---|
 | The case, to the presentation (2026-09-29 to 2026-10-04) | ~14.5 h (estimated; see the entries) | 29 | ~$2.04 API (the pilot); everything else on the subscription, $0 (list-price estimate ~$40 for 580 calls) | 8 of 8 (WP0-WP7) |
-| The public release (2026-10-05 to the flip) | TODO | TODO | $0: no pipeline calls; the example data replays the recordings | P1-P2 |
+| The public release (2026-10-05 to 2026-10-06, the flip) | ~2 h (estimated; see the entries) | 10 | $0: no pipeline calls; the example data replays the recordings | P1-P2 |
 
 ---
 
@@ -1157,7 +1157,7 @@ empty wiki.
 
 ## 2026-10-06 · Public release P2 part A · `local`
 
-**Author time:** TODO
+**Author time:** ~5 min (review, 14:53-14:58; estimated from session timestamps)
 
 **Asked for:** the GitHub-text leak check and the closed-out build log (P2
 steps 2 and 3).
@@ -1169,7 +1169,29 @@ public; the author's build-log answers written in, author times estimated
 from session timestamps, a two-row Totals table, and the process numbers in
 the README and the case study moved to the case row.
 
-**The author decided / rejected / caught:** TODO.
+**The author decided:** took it as proposed.
 
 **Output:** `scripts/leak-check-github.sh`, `tests/test_leak_check_github.py`,
 CLAUDE.md, `docs/build-log.md`, `README.md`, `docs/case-study.md`.
+
+## 2026-10-06 · Public release P2: going public · `local`
+
+**Author time:** ~13 min (14:58-15:11; estimated from session timestamps)
+
+**Asked for:** P2 steps 4 to 8: the LinkedIn texts, the leak sweep, the branch
+and settings clean-up, the flip, and the checks after it.
+
+**The agent proposed:** both LinkedIn texts, written in `private/linkedin/`
+(gitignored); the leak grep over them was clean. The sweep passed: 15 terms
+over 76 commits, including the PR heads. The GitHub text check passed: 22 PRs,
+0 issues, 2 comments. It deleted 10 merged branches, turned the wiki and
+projects off, turned delete-branch-on-merge on and set 10 topics. The author
+uploaded the social preview, and GitHub reports a custom Open Graph image. It
+made the repo public on 2026-10-06 after the author's explicit yes. Logged
+out, the repo page and all three README images return 200, the CI badge reads
+"passing", and the README and the case study render correctly.
+
+**The author decided:** made the repo public after the clean sweep; took the
+LinkedIn texts as drafted; the post is held until the hiring process ends.
+
+**Output:** the public repo, this entry, the release Totals row.
