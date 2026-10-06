@@ -390,3 +390,13 @@ None. N1-N4 are answered under Decisions.
   queue shot does not scroll the lead pane: the name, score, tier and breakdown fit, but
   the French quote's text falls just below the fold at 1440x900 (its "As quoted / English"
   header shows); a scroll that shows the quote hides the name.
+
+## Deviations found while building P2
+
+- [Rule 2] The release Totals row's date cell reads "to the flip" instead of a date, so
+  the row has the planned two TODO cells and nothing else.
+- [Rule 2] The estimated author times use the session files' real prompts, which are
+  sparse (the coordinator session holds 11). The windows are tied to entries through PR
+  merge times (#14 to #21), so the 2026-10-06 times are rough, from ~5 to ~25 min.
+- [Rule 2] The case author time is ~14.5 h: the entries to 2026-10-03 add up to ~11.8 h,
+  plus five 30-minute estimates from the author for 2026-10-03 and 2026-10-04.
