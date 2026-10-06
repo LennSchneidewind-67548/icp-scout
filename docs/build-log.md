@@ -1108,3 +1108,13 @@ deviation note in the plan, this entry.
 **The author decided / rejected / caught:** TODO.
 
 **Output:** `README.md`, `docs/README.md`, `docs/case-study.md`, small edits to CLAUDE.md, `docs/requirements.md`, `docs/plan.md`, `docs/assets/README.md`, this entry. Author time: TODO.
+
+## 2026-10-06 · Public release P1 fix, pipeline image layout · `remote`
+
+**Asked for:** fix the pipeline image after the author saw it on GitHub: uneven title heights, loose spacing, a tiny label, and an unbalanced scoring strip.
+
+**The agent proposed:** one-line stage titles ("Registries", "Research" instead of the two-line ones), arrows centred on the title row, a large `icp-scout` title with a one-line pitch, tighter vertical spacing, and a re-render checked at 880 px wide.
+
+**The author decided / rejected / caught:** TODO.
+
+**Output:** `docs/assets/src/pipeline.html`, `docs/assets/pipeline.png`, this entry. Author time: TODO.
