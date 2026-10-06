@@ -371,4 +371,15 @@ None. N1-N4 are answered under Decisions.
 
 ## Deviations
 
-None yet.
+### Deviations found while building P1
+
+- [Rule 1] Part A: the generator's funnel reasons that carry numbers ("dropped 1 expired",
+  "+2 with NAF ...", "41 companies rolled up") are rewritten with the new counts instead of
+  kept word for word, so no stage text contradicts its count. Ids, labels and order are kept.
+- [Rule 2] Part A: the 34 real fixture groups are moved onto real French cities (the three
+  recorded leads where their recordings say: Quimper, Grenoble, Avignon). The fixtures
+  place them at one fake point, which would show as a clump on the map.
+- [Rule 2] Part A: the test that every evidence URL ends in `.example` also allows the
+  public registry host that the recorded Vallon lead cites; that recording is fixed.
+- [Rule 3] Part A: pseudo-word names draw two or three syllables; two alone give 520 names,
+  too few for 6,000 groups.
