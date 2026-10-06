@@ -22,31 +22,28 @@ From the repo root:
 ## Re-take the screenshots
 
 ```sh
-python fixtures/demo/make_demo.py
+.venv/bin/python fixtures/demo/make_demo.py
 ICP_SCOUT_CONFIG=config/icp.example.yaml ICP_SCOUT_DATA=data/example ICP_SCOUT_RECORDINGS=fixtures/llm \
-  streamlit run app/streamlit_app.py --server.port 8502 --server.headless true
+  .venv/bin/streamlit run app/streamlit_app.py --server.port 8502 --server.headless true
 ```
 
-Then, in a second shell, take both at 1440x900 and 2x:
+Then, in a second shell, take both at 1440x900 and 2x with `src/shoot.py`:
 
 ```sh
-CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-"$CHROME" --headless --window-size=1440,900 --force-device-scale-factor=2 --hide-scrollbars \
-  --virtual-time-budget=10000 --screenshot="$PWD/docs/assets/demo-queue.png" \
-  "http://localhost:8502/queue?lead=g900000010"
-"$CHROME" --headless --window-size=1440,900 --force-device-scale-factor=2 --hide-scrollbars \
-  --virtual-time-budget=10000 --screenshot="$PWD/docs/assets/demo-market.png" \
-  "http://localhost:8502/"
+.venv/bin/python docs/assets/src/shoot.py "http://localhost:8502/queue?lead=g900000010" docs/assets/demo-queue.png
+.venv/bin/python docs/assets/src/shoot.py "http://localhost:8502/" docs/assets/demo-market.png
 ```
 
-Some Chrome versions capture only the loading skeleton (a blank page) this way,
-because Streamlit renders over a websocket after the page loads. If the PNG is
-blank, drive Chrome through the DevTools protocol instead: open the page, wait
-about 14 seconds, then call `Page.captureScreenshot`. For the Queue shot, also
-scroll the lead pane down by 300 px so the French quote and its English show.
+Why a script and not `chrome --screenshot`: Streamlit renders over a websocket
+after the page loads, so plain headless `--screenshot` can capture only the
+loading skeleton (a blank page). `shoot.py` drives Chrome through the DevTools
+protocol, waits 14 s, then captures. It needs only `websockets`, which the venv
+already has. Options: `--scale` (default 2), `--wait` (seconds, default 14), and
+`--scroll N` to scroll the lead pane down N px (default 0; the queue shot uses 0,
+so the lead's name, score and breakdown show).
 
-Each screenshot must be 1 MB or less; if one is larger, retake it at
-`--force-device-scale-factor=1.5` and note it here. (Both are under 400 KB at 2x.)
+Each screenshot must be 1 MB or less; if one is larger, retake it with
+`--scale 1.5` and note it here. (Both are under 400 KB at 2x.)
 
 ## Check before committing an image
 

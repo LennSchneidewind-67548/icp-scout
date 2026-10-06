@@ -385,7 +385,8 @@ None. N1-N4 are answered under Decisions.
   too few for 6,000 groups.
 - [Rule 3] Part B: headless Chrome's `--screenshot` with `--virtual-time-budget` captures
   the Streamlit loading skeleton (a blank page): the app renders over a websocket. The two
-  demo screenshots were taken through the DevTools protocol instead (wait 14 s, then
-  `Page.captureScreenshot`), same size and scale. The queue shot scrolls the lead pane by
-  300 px so the French quote and its English fit in 1440x900; the lead's name row is above
-  the fold, the selected row in the queue shows which lead it is. No dependency was added.
+  demo screenshots are taken through the DevTools protocol instead (`docs/assets/src/shoot.py`,
+  wait 14 s, then `Page.captureScreenshot`), same size and scale, no new dependency. The
+  queue shot does not scroll the lead pane: the name, score, tier and breakdown fit, but
+  the French quote's text falls just below the fold at 1440x900 (its "As quoted / English"
+  header shows); a scroll that shows the quote hides the name.
