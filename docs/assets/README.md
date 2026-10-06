@@ -6,6 +6,7 @@ comes from `private/`.
 | Image | Source | What it shows |
 |---|---|---|
 | `pipeline.png` (2560x1280) | `src/pipeline.html` | The six stages, the scoring and the tiers. |
+| `social.png` (2400x1254) | `src/social.html` | The social preview card: title, pitch, six stage names. Large type only, so it stays readable at 550 px wide. `pipeline.png` stays the README image. |
 | `demo-queue.png` (2880x1800) | the example demo | The Queue with a lead open. |
 | `demo-market.png` (2880x1800) | the example demo | The Market page: funnel and map. |
 
@@ -17,6 +18,17 @@ From the repo root:
 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless \
   --window-size=1280,640 --force-device-scale-factor=2 --hide-scrollbars \
   --screenshot="$PWD/docs/assets/pipeline.png" "file://$PWD/docs/assets/src/pipeline.html"
+```
+
+## Re-render the social preview
+
+The repo's social preview (upload it in the repo settings). It is 1200x627 CSS
+px at 2x; keep it under 1 MB.
+
+```sh
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless \
+  --window-size=1200,627 --force-device-scale-factor=2 --hide-scrollbars \
+  --screenshot="$PWD/docs/assets/social.png" "file://$PWD/docs/assets/src/social.html"
 ```
 
 ## Re-take the screenshots

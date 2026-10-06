@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>icp-scout social preview</title>
+<style>
+  @font-face { font-family: "Geist"; font-weight: 400; src: url("../../../app/static/Geist-400.woff2") format("woff2"); }
+  @font-face { font-family: "Geist"; font-weight: 600; src: url("../../../app/static/Geist-600.woff2") format("woff2"); }
+  @font-face { font-family: "Geist Mono"; font-weight: 500; src: url("../../../app/static/GeistMono-500.woff2") format("woff2"); }
+
+  /* Tokens copied from .streamlit/config.toml (the demo's theme). */
+  :root { --bg: #FDFDFB; --ink: #1B1D20; --ink-2: #52525B; --mark: #A1A1AA; --border: #E4E4E7; --accent: #E04E1B; }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1200px; height: 627px; overflow: hidden; }
+  body {
+    background: var(--bg); color: var(--ink); font-family: "Geist", sans-serif;
+    position: relative; padding: 72px 72px 0;
+  }
+  h1 { font-family: "Geist Mono", monospace; font-weight: 500; font-size: 104px; line-height: 1; letter-spacing: -0.02em; }
+  .pitch { margin-top: 28px; font-size: 38px; line-height: 1.25; color: var(--ink-2); max-width: 1000px; }
+  .flow {
+    position: absolute; left: 72px; right: 72px; bottom: 72px;
+    border-top: 1px solid var(--border); padding-top: 36px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .stage { font-size: 34px; font-weight: 600; line-height: 1.15; }
+  .stage.llm { color: var(--accent); }
+  .arrow { color: var(--mark); font-size: 30px; }
+</style>
+</head>
+<body>
+  <h1>icp-scout</h1>
+  <p class="pitch">Maps a market from open data, researches a shortlist, scores it, hands SDRs a ranked queue.</p>
+  <div class="flow">
+    <div class="stage">Registries</div><div class="arrow">→</div>
+    <div class="stage">Market<br>table</div><div class="arrow">→</div>
+    <div class="stage">Pre-filter</div><div class="arrow">→</div>
+    <div class="stage llm">Research</div><div class="arrow">→</div>
+    <div class="stage">Rubric<br>score</div><div class="arrow">→</div>
+    <div class="stage llm">SDR<br>hand-off</div>
+  </div>
+</body>
+</html>
