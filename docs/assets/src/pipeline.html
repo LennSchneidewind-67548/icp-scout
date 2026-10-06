@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>icp-scout pipeline</title>
+<style>
+  @font-face { font-family: "Geist"; font-weight: 400; src: url("../../../app/static/Geist-400.woff2") format("woff2"); }
+  @font-face { font-family: "Geist"; font-weight: 500; src: url("../../../app/static/Geist-500.woff2") format("woff2"); }
+  @font-face { font-family: "Geist"; font-weight: 600; src: url("../../../app/static/Geist-600.woff2") format("woff2"); }
+  @font-face { font-family: "Geist Mono"; font-weight: 400; src: url("../../../app/static/GeistMono-400.woff2") format("woff2"); }
+  @font-face { font-family: "Geist Mono"; font-weight: 500; src: url("../../../app/static/GeistMono-500.woff2") format("woff2"); }
+
+  /* Tokens copied from .streamlit/config.toml (the demo's theme). */
+  :root {
+    --bg: #FDFDFB;
+    --ink: #1B1D20;
+    --ink-2: #52525B;
+    --mark: #A1A1AA;
+    --border: #E4E4E7;
+    --accent: #E04E1B;
+    --accent-bg: #FCEEE7;
+    --gray-bg: #F0F0EC;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1280px; height: 640px; overflow: hidden; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: "Geist", sans-serif; font-weight: 400;
+    position: relative;
+  }
+  .label {
+    position: absolute; left: 56px; top: 44px;
+    font-family: "Geist Mono", monospace; font-weight: 500; font-size: 20px;
+    color: var(--ink-2);
+  }
+  .flow {
+    position: absolute; left: 56px; right: 56px; top: 130px;
+    display: flex; align-items: flex-start; justify-content: space-between;
+  }
+  .stage { width: 156px; }
+  .stage h2 { font-size: 24px; font-weight: 600; line-height: 1.2; height: 58px; margin-bottom: 10px; }
+  .stage p { font-size: 17px; color: var(--ink-2); line-height: 1.35; height: 46px; margin-bottom: 18px; }
+  .arrow { color: var(--mark); font-size: 28px; line-height: 1; margin-top: 14px; }
+  .badge {
+    display: inline-block; font-size: 14px; font-weight: 500; letter-spacing: 0.02em;
+    padding: 4px 12px; border-radius: 999px;
+    background: var(--gray-bg); color: var(--ink-2);
+  }
+  .badge.llm { background: var(--accent-bg); color: var(--accent); }
+
+  .scoring {
+    position: absolute; left: 56px; right: 56px; top: 360px;
+    border-top: 1px solid var(--border); padding-top: 44px;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; width: 420px; }
+  .chip {
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 8px 14px; font-size: 18px; font-weight: 500; white-space: nowrap;
+  }
+  .chip span { font-family: "Geist Mono", monospace; font-weight: 400; color: var(--ink-2); margin-left: 4px; }
+  .formula { font-family: "Geist Mono", monospace; font-weight: 500; font-size: 22px; color: var(--accent); white-space: nowrap; }
+  .tiers { display: flex; gap: 10px; }
+  .tier {
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 16px; font-family: "Geist Mono", monospace; font-weight: 500; font-size: 19px; white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+  <div class="label">icp-scout</div>
+
+  <div class="flow">
+    <div class="stage"><h2>Open registries</h2><p>Public registers, no scraping</p><span class="badge">no LLM</span></div>
+    <div class="arrow">&rarr;</div>
+    <div class="stage"><h2>Market table</h2><p>Sister companies rolled up</p><span class="badge">no LLM</span></div>
+    <div class="arrow">&rarr;</div>
+    <div class="stage"><h2>Pre-filter</h2><p>Rules pick the shortlist</p><span class="badge">no LLM</span></div>
+    <div class="arrow">&rarr;</div>
+    <div class="stage"><h2>Agent research</h2><p>Signals with quoted evidence</p><span class="badge llm">LLM</span></div>
+    <div class="arrow">&rarr;</div>
+    <div class="stage"><h2>Rubric score</h2><p>Readable weights, live re-rank</p><span class="badge">no LLM</span></div>
+    <div class="arrow">&rarr;</div>
+    <div class="stage"><h2>SDR hand-off</h2><p>CRM import, drafted openers</p><span class="badge llm">LLM</span></div>
+  </div>
+
+  <!-- Signal names, weights and tier cut-offs: config/icp.example.yaml (signals, tiers). -->
+  <div class="scoring">
+    <div class="chips">
+      <div class="chip">Size fit <span>&times;3</span></div>
+      <div class="chip">Product mix <span>&times;3</span></div>
+      <div class="chip">Growth <span>&times;2</span></div>
+      <div class="chip">Tech maturity <span>&times;2</span></div>
+    </div>
+    <div class="arrow" style="margin-top:0">&rarr;</div>
+    <div class="formula">score = 1 + 9 &times; weighted mean</div>
+    <div class="arrow" style="margin-top:0">&rarr;</div>
+    <div class="tiers">
+      <div class="tier">A &ge; 8</div>
+      <div class="tier">B &ge; 6</div>
+      <div class="tier">C below</div>
+    </div>
+  </div>
+</body>
+</html>
