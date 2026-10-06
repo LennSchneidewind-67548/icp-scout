@@ -1042,3 +1042,24 @@ LinkedIn titles and wrote a new one (V6).
 
 **Output:** `docs/wp/public-release/PLAN.md` (written, then updated with the
 picks in a second PR), this entry.
+
+## 2026-10-06 · Public release P1 plan · `local`
+
+**Author time:** TODO
+
+**Asked for:** the phase plan for P1 of the public release, split into parts
+for one implementer each (conductor `phase-plan 1`).
+
+**The agent proposed:** `docs/wp/public-release/P1.md` in seven steps and
+three parts: (A) the synthetic example dataset and the `?lead=` deep link,
+(B) the pipeline image and the two demo screenshots, (C) the README, the docs
+index with the past-tense notes, and the case study. It merged the README and
+case study into one part, because both draw on the same sources. It added a
+marker file so the generator can't overwrite case data in `data/`,
+synthetic company IDs that can't match a real one, fixed ledger timestamps so
+the screenshots are reproducible, and draft stage notes for the pipeline
+image, which the author reviews in part B.
+
+**The author decided / rejected / caught:** TODO.
+
+**Output:** `docs/wp/public-release/P1.md`, this entry.
