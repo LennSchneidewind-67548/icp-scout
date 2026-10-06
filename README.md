@@ -27,7 +27,7 @@ Six stages. The cost of each is what decides where the model is used.
 
 The demo runs on synthetic data and fictional companies. No API key is needed.
 
-![The queue with one lead open: score breakdown, evidence and an opener](docs/assets/demo-queue.png)
+![The queue with one lead open: its score, tier and the points per signal](docs/assets/demo-queue.png)
 
 *The SDR queue with a lead open. Synthetic data, fictional companies.*
 

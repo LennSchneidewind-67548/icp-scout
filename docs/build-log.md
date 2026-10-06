@@ -1195,3 +1195,23 @@ out, the repo page and all three README images return 200, the CI badge reads
 LinkedIn texts as drafted; the post is held until the hiring process ends.
 
 **Output:** the public repo, this entry, the release Totals row.
+
+## 2026-10-06 · Public release sign-off docs · `local`
+
+**Author time:** TODO
+
+**Asked for:** the docs brought to the as-shipped state after the flip
+(conductor `signoff-docs`).
+
+**The agent proposed:** a status line and an "Outcome" section in the release
+PLAN.md (the PRs per phase, the going-public checks, the known gaps), a status
+line in P1.md and P2.md, the shortened pipeline titles and the queue shot's
+fold noted in PLAN.md, a "shipped" note in `docs/plan.md` and `docs/README.md`,
+and the queue screenshot's alt text and image checklist matched to what the
+screenshot shows. It left the Totals row as it is, since its scope ends at the
+flip.
+
+**The author decided:** TODO
+
+**Output:** `docs/wp/public-release/PLAN.md`, `P1.md`, `P2.md`, `docs/plan.md`,
+`docs/README.md`, `docs/assets/README.md`, `README.md`, this entry.

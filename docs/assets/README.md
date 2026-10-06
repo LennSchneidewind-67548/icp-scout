@@ -51,5 +51,5 @@ Each screenshot must be 1 MB or less; if one is larger, retake it with
 - Every URL on screen ends in `.example`.
 - No name from `private/` appears.
 - The map is drawn and the funnel shows numbers.
-- The lead pane shows the score breakdown and the evidence for it. Any French text on screen has its English next to it.
+- The lead pane shows the score breakdown. At `--scroll 0` the first signal's French quote sits just below the fold (its "As quoted / English" header shows); any French text that is on screen has its English next to it.
 - `bash scripts/leak-check.sh` passes in the main checkout, where `private/leak-terms.txt` exists.

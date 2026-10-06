@@ -4,6 +4,10 @@ Planned 2026-10-06, after the presentation. Two phases (P1, P2). Budget: not
 set by the author; estimate about 2.5 h of author time (picks, reviews, the
 build-log gaps, LinkedIn), the rest agent time.
 
+**Status:** shipped 2026-10-06. The repo is public. P1 was PRs #17-#20, P2 was
+#22 and #23. The LinkedIn post is held until the hiring process ends. See
+"Outcome" at the end.
+
 **Done when:** the repo is public. A visitor who has never heard of the case
 sees, on the README, what the tool does, a pipeline image and two demo
 screenshots, the design choices with links to the ADRs, a run-it section that
@@ -166,12 +170,14 @@ parameter.
     matches the screenshots, so the README and LinkedIn look like one piece.
   - **Content (V2):** top row, the six stages left to right: open registries
     → market table → pre-filter → agent research → rubric score → SDR
-    hand-off. Each has a 3-5 word note and an "LLM" or "no LLM" mark. Bottom
+    hand-off (as shipped, the titles read "Registries" and "Research" for the
+    first and fourth, one line each). Each has a 3-5 word note and an "LLM" or "no LLM" mark. Bottom
     strip, the scoring: four signals × weights → `1 + 9 × weighted mean` →
     tiers A/B/C. No counts. The signal names and the tier cut-offs come from
     `config/icp.example.yaml`, so nothing is case-specific.
 - `docs/assets/demo-queue.png` (Queue with a lead open, via `?lead=`: the
-  score breakdown and a French quote with its English) and
+  score breakdown; as shipped, the French quote and its English sit just below
+  the fold, see Deviations) and
   `docs/assets/demo-market.png` (map and funnel), per V3: the example build
   from section 1 on port 8502 (8501 stays free for the author's case review
   build), 1440×900 at 2x, each ≤ 1 MB. Both go in the README; LinkedIn uses
@@ -391,7 +397,7 @@ None. N1-N4 are answered under Decisions.
   the French quote's text falls just below the fold at 1440x900 (its "As quoted / English"
   header shows); a scroll that shows the quote hides the name.
 
-## Deviations found while building P2
+### Deviations found while building P2
 
 - [Rule 2] The release Totals row's date cell reads "to the flip" instead of a date, so
   the row has the planned two TODO cells and nothing else.
@@ -400,3 +406,30 @@ None. N1-N4 are answered under Decisions.
   merge times (#14 to #21), so the 2026-10-06 times are rough, from ~5 to ~25 min.
 - [Rule 2] The case author time is ~14.5 h: the entries to 2026-10-03 add up to ~11.8 h,
   plus five 30-minute estimates from the author for 2026-10-03 and 2026-10-04.
+- [Rule 2] Signoff: the pipeline image's stage titles were shortened to one line,
+  "Registries" and "Research" instead of "Open registries" and "Agent research", after
+  the author found the image looked off on GitHub (the layout fix, PR #20).
+
+## Outcome (2026-10-06)
+
+Shipped. Everything in "Done when" holds, with the exceptions below.
+
+- **P1** (PRs #17-#20): the example dataset (`fixtures/demo/make_demo.py`) and the
+  `?lead=` link (#17), the pipeline image and the two screenshots (#18), the README,
+  `docs/README.md`, the past-tense notes and `docs/case-study.md` (#19), and a fix to
+  the pipeline image's layout (#20).
+- **P2** (PRs #22, #23): `scripts/leak-check-github.sh` with its test and the build log
+  closed out (#22); the go-public build-log entry and the release Totals row (#23).
+- **Going public:** the leak sweep passed over every commit with the PR heads fetched,
+  and the GitHub-text check passed over the PRs and comments. The 10 merged branches
+  were deleted, the wiki and projects tabs turned off, delete-branch-on-merge turned
+  on, and the 10 ruled topics set. The author uploaded `docs/assets/pipeline.png` as
+  the social preview. The repo was made public on 2026-10-06 with the author's yes.
+  Logged out, the README, its three images, the green badge and the case study render.
+  CI on the public repo passed, and the leak-check job ran with the secret ("Leak check
+  passed").
+- **LinkedIn:** the Project entry text and the post draft are in `private/linkedin/`,
+  not committed. The post is held until the hiring process ends.
+- **Known gaps:** the queue screenshot shows the score breakdown, but the French quote
+  is below the fold (Deviations, P1 part B). The 2026-10-06 author times in the build
+  log are rough, tied to PR merge times (Deviations, P2).
