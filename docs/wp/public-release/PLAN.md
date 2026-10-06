@@ -383,3 +383,10 @@ None. N1-N4 are answered under Decisions.
   public registry host that the recorded Vallon lead cites; that recording is fixed.
 - [Rule 3] Part A: pseudo-word names draw two or three syllables; two alone give 520 names,
   too few for 6,000 groups.
+- [Rule 3] Part B: headless Chrome's `--screenshot` with `--virtual-time-budget` captures
+  the Streamlit loading skeleton (a blank page): the app renders over a websocket. The two
+  demo screenshots are taken through the DevTools protocol instead (`docs/assets/src/shoot.py`,
+  wait 14 s, then `Page.captureScreenshot`), same size and scale, no new dependency. The
+  queue shot does not scroll the lead pane: the name, score, tier and breakdown fit, but
+  the French quote's text falls just below the fold at 1440x900 (its "As quoted / English"
+  header shows); a scroll that shows the quote hides the name.

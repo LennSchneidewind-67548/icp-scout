@@ -1080,3 +1080,21 @@ queue page that opens a lead once and is then dropped. Both come with tests.
 
 **Output:** `fixtures/demo/make_demo.py`, `tests/test_example_data.py`, the
 queue-page change in `app/streamlit_app.py` with two AppTests, this entry.
+
+## 2026-10-06 · Public release P1 part B · `remote`
+
+**Author time:** TODO
+
+**Asked for:** the pipeline image and the two demo screenshots (P1 steps 3 and 4).
+
+**The agent proposed:** `docs/assets/src/pipeline.html` rendered to `pipeline.png`
+in the demo's theme; two screenshots of the example build on port 8502 (Queue
+with a lead open, Market); `docs/assets/README.md` with the re-render commands.
+Plain headless `--screenshot` captured a blank loading page, so the screenshots
+were taken through the DevTools protocol; the Queue shot scrolls the lead pane
+so the French quote and its English are visible.
+
+**The author decided / rejected / caught:** TODO.
+
+**Output:** the three PNGs, the HTML source, `docs/assets/README.md`, a
+deviation note in the plan, this entry.
