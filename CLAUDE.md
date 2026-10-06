@@ -12,10 +12,12 @@ budgets are in `docs/plan.md`. `private/` is not in the public repo.
 
 - **Never commit case-company content** (ADR 0003). The company name, the
   real ICP config, research, the scored list and the deck stay in `private/`.
-  No company-specific strings in code, tests, fixtures, docs or commit
-  messages. That includes this file. `bash scripts/leak-check.sh` checks
+  No company-specific strings in code, tests, fixtures, docs, commit
+  messages, PR text or review comments. That includes this file. `bash scripts/leak-check.sh` checks
   all of git history against `private/leak-terms.txt`; CI runs it on every
   push with the `LEAK_TERMS` secret. Add new case-specific names to both.
+  `bash scripts/leak-check-github.sh` checks PR, issue and comment text the
+  same way; it was run before the repo went public.
 - Everything specific to a vendor or market comes from the ICP config
   (`config/icp.example.yaml`, or `ICP_SCOUT_CONFIG=private/icp.yaml` for the case).
 - The model never outputs the score; it extracts signals with evidence (ADR 0002).
@@ -50,7 +52,7 @@ Used by the conductor plugin (`/conductor:feature`).
   (Done when → Why → numbered sections → Steps and time → Risks → Decided)
 - **Commits:** `<WP or feature> P<n>: <what changed, plain sentence>` (e.g. `WP8 P1: the queue export, with tests`)
 - **Part rules:** never commit case-company content (ADR 0003): nothing from `private/`, no
-  company-specific strings in code, tests, fixtures, docs or commit messages. Vendor or market
+  company-specific strings in code, tests, fixtures, docs, commit messages or PR text. Vendor or market
   specifics come only from the ICP config. The model never outputs the score (ADR 0002). New LLM
   calls are recorded under `fixtures/llm/`. No new dependencies without asking. Every French text
   gets an English translation next to it. Each session adds a `docs/build-log.md` entry (author
