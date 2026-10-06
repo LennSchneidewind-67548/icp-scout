@@ -63,11 +63,42 @@ Locked by the author (interview, 2026-10-06). Later agents treat these as fixed.
   case research. The CLAUDE.md rules apply to every part (leak check, no case
   strings, a `docs/build-log.md` entry per session).
 
+The author's picks on the open visual decisions and the "Needs you" items
+(2026-10-06). Also fixed.
+
+- **V1, pipeline image style:** the demo's theme. The tokens come from
+  `.streamlit/config.toml`: background `#FDFDFB`, ink `#1B1D20`, zinc greys
+  (`#52525B`, `#A1A1AA`, borders `#E4E4E7`), one orange accent `#E04E1B` used
+  sparingly, Geist. The author chose this knowing the theme was derived from
+  the case vendor's brand (see Risks).
+- **V2, pipeline image content:** one 2:1 image. Top: the six stages left to
+  right, each with a 3-5 word note and an "LLM" or "no LLM" mark. Bottom: the
+  scoring strip (four signals × weights → `1 + 9 × weighted mean` → tiers
+  A/B/C). No counts.
+- **V3, demo screens:** two, the Queue with a lead open and the Market page
+  (map and funnel). Both go in the README; LinkedIn uses the Queue one next to
+  the pipeline image.
+- **V4, README opening:** the pitch first, then the framing as an italic note
+  under the pipeline image (texts in Architecture 4).
+- **V5, case study voice:** first person, past tense, plain and short (the
+  build log's tone), about 1,200 words, lessons as bold lead-ins.
+- **V6, LinkedIn Project entry title:** "icp-scout: AI-assisted ICP scoring
+  for GTM teams" (the author's own wording, none of the drafted options).
+- **N1, demo data:** the synthetic example dataset (Architecture 1), about
+  300 lines with its test.
+- **N2, numbers in public texts:** process numbers only (hours, agent
+  sessions, cost per researched lead, test count). No market or score numbers
+  from the case run. Applies to the README, the case study and LinkedIn.
+- **N3, merged remote branches:** delete them before the flip.
+- **N4, the build log's open lines:** the coordinator asks the author for each
+  "author decided / caught" gap in P2; author times are estimated from session
+  timestamps as in PR #10.
+
 ## Architecture
 
 ### 1. A synthetic example dataset for the demo (`fixtures/demo/make_demo.py`)
 
-**Default, pending decision (N1):** the committed fixtures are too thin to
+Picked by the author (N1). The committed fixtures are too thin to
 screenshot. `make_fixtures.market` on `fixtures/sources/` gives 34 groups, 9
 in segment and 3 researched: a near-empty map and a three-row queue. So P1
 adds a generator that writes a full-size, clearly fictional `data/` directory
@@ -126,12 +157,25 @@ parameter.
   LinkedIn. The source is `docs/assets/src/pipeline.html`, a static page with
   the Geist fonts from `app/static/`. It is rendered with headless Chrome
   (`--window-size=1280,640 --force-device-scale-factor=2 --screenshot`). No new
-  dependency, and the image can be re-rendered after a wording change. Its
-  style and content are open (V1, V2).
-- `docs/assets/demo-queue.png` (Queue with a lead open, via `?lead=`) and
-  `docs/assets/demo-market.png` (map and funnel): the example build from
-  section 1 on port 8502 (8501 stays free for the author's case review
-  build), 1440×900 at 2x, each ≤ 1 MB. The screens are open (V3).
+  dependency, and the image can be re-rendered after a wording change.
+  - **Style (V1):** the demo's theme, with the tokens copied from
+    `.streamlit/config.toml`: background `#FDFDFB`, ink `#1B1D20` for text,
+    zinc greys `#52525B` (secondary text), `#A1A1AA` (marks, arrows) and
+    `#E4E4E7` (borders), one accent `#E04E1B` used sparingly (the "LLM" marks
+    and the score formula), Geist and Geist Mono from `app/static/`. It
+    matches the screenshots, so the README and LinkedIn look like one piece.
+  - **Content (V2):** top row, the six stages left to right: open registries
+    → market table → pre-filter → agent research → rubric score → SDR
+    hand-off. Each has a 3-5 word note and an "LLM" or "no LLM" mark. Bottom
+    strip, the scoring: four signals × weights → `1 + 9 × weighted mean` →
+    tiers A/B/C. No counts. The signal names and the tier cut-offs come from
+    `config/icp.example.yaml`, so nothing is case-specific.
+- `docs/assets/demo-queue.png` (Queue with a lead open, via `?lead=`: the
+  score breakdown and a French quote with its English) and
+  `docs/assets/demo-market.png` (map and funnel), per V3: the example build
+  from section 1 on port 8502 (8501 stays free for the author's case review
+  build), 1440×900 at 2x, each ≤ 1 MB. Both go in the README; LinkedIn uses
+  `demo-queue.png` next to the pipeline image.
 - **Check before committing any image:** the vendor shown is the example
   config's fictional vendor, the URLs are `.example`, and no name from
   `private/` appears. Run the leak check with the real terms in the main
@@ -139,13 +183,24 @@ parameter.
 
 ### 4. The README (`README.md`)
 
-Order: name, a one-line pitch and the framing line (V4), the CI badge
+Order (V4: pitch first, framing under the image): name, the one-line pitch,
+the CI badge
 (`https://github.com/LennSchneidewind-67548/icp-scout/actions/workflows/ci.yml/badge.svg`),
-`docs/assets/pipeline.png`, then:
+`docs/assets/pipeline.png`, the framing as an italic note under the image,
+then the sections below. The two texts:
+
+- Pitch: "icp-scout maps a whole market from open data, researches a
+  shortlist with an AI agent, scores it with a rubric you can read, and hands
+  SDRs a ranked queue."
+- Framing note (italic): "*Built as a take-home case for a GTM engineering
+  role. The case company stays private; the example config targets a
+  fictional vendor.*"
+
+The sections:
 
 1. **What it does:** the six stages, one line each, with what each costs (the
    pre-filter makes no LLM call, the agent runs only on the shortlist).
-2. **The demo:** the two screenshots with a one-line caption each, marked
+2. **The demo:** the two screenshots (V3) with a one-line caption each, marked
    synthetic data and fictional companies. Then what to try: open a lead,
    step through the replay, move a weight and watch the queue re-rank.
 3. **Design choices:** ADRs 0001-0004 as one bullet each with the link, plus
@@ -160,14 +215,18 @@ Order: name, a one-line pitch and the framing line (V4), the CI badge
 5. **How it was built:** a Claude Code workflow where the author makes the
    calls. Link `docs/build-log.md` (sessions, what the agent proposed, what the
    author decided or caught), the WP plans, and the ADR 0003 leak check that
-   kept the case company out of git. Process numbers only (N2).
+   kept the case company out of git. Process numbers only (N2): hours, agent
+  sessions, cost per researched lead, test count; no market or score numbers
+  from the case run.
 6. **Repo map** (short) and a link to `docs/README.md`.
 7. **License:** MIT.
 
 ### 5. The case study (`docs/case-study.md`)
 
-First person, past tense, about 1,000-1,500 words, voice and numbers per V5
-and N2. Sections: **The problem** (the brief in general terms, as
+First person, past tense, plain and short in the build log's tone, about
+1,200 words, each lesson as a bold lead-in (V5). Process numbers only: hours,
+agent sessions, cost per researched lead, test count; no market or score
+numbers from the case run (N2). Sections: **The problem** (the brief in general terms, as
 `docs/requirements.md` states it), **The approach** (the whole market from
 open data, then the agent on a shortlist, then the rubric, then the hand-off;
 link the ADRs), **What I learned** (general lessons), **What I'd do next**,
@@ -225,17 +284,23 @@ registries in other countries.
   comments and commit comments, through `gh api --paginate`. It prints only PR
   and issue numbers, never the text, like `leak-check.sh`. It is run once by
   hand, not in CI.
-- **Before the flip (author confirms):** delete the 10 merged remote branches
-  (N3). Set topics with `gh repo edit --add-topic` (ruled list below). Upload
+- **Before the flip:** delete the merged remote branches (N3, decided by the
+  author; 10 at planning time, e.g. `wp1-sourcing`). The coordinator lists
+  them with `git branch -r --merged origin/main` and runs the deletion; their
+  commits are in `main`, and PR refs keep the history visible. Set topics
+  with `gh repo edit --add-topic` (ruled list below). Upload
   `docs/assets/pipeline.png` as the social preview (web UI only: Settings →
   Social preview). Close out the build log: the Totals row (it still says
   "WP7 is left"), author times estimated from session timestamps as in PR
-  #10, and the "author decided / caught" gaps (N4).
+  #10, and the "author decided / caught" gaps, which the coordinator asks the
+  author for one by one, a few lines each (N4). No gap is filled with a guess
+  or with "not recorded".
 - **LinkedIn texts** in `private/linkedin/` (main checkout, never
-  committed): `project-entry.md` (2-3 title options, the description,
-  skills, repo link) and `post-draft.md` (2-3 hooks, one body, image notes).
-  Same numbers rule as the case study (N2). Every option is marked so the
-  author can pick.
+  committed): `project-entry.md` (the title "icp-scout: AI-assisted ICP
+  scoring for GTM teams" (V6), the 2-3 line description, skills, repo link)
+  and `post-draft.md` (2-3 hooks, one body, image notes: `pipeline.png` plus
+  `demo-queue.png`). Process numbers only (N2). The hooks are marked so the
+  author can pick there.
 - **The flip:** the coordinator asks the author, then runs
   `gh repo edit --visibility public --accept-visibility-change-consequences`.
 - **After the flip:** in a logged-out browser window, the README renders,
@@ -249,8 +314,8 @@ registries in other countries.
 
 | Phase | Goal | Depends on | Device check |
 |---|---|---|---|
-| P1 | The repo's public face: the example dataset and `?lead=` link, the pipeline image and two demo screenshots, the new README with badge, `docs/case-study.md`, `docs/README.md`, past-tense notes in CLAUDE.md, requirements and plan. The author can open the README on the PR branch on GitHub and the example demo locally. | The author's picks on V1-V5 and N1, N2 | Browser: the example demo on :8502, and the README and case study rendered on GitHub (branch view) |
-| P2 | Go public: `scripts/leak-check-github.sh`, the full leak sweep (PR refs included), branch cleanup, topics and social preview, the build log closed out, the LinkedIn texts in `private/linkedin/`, then the flip (coordinator, with the author) and the logged-out checks. The author can add the Project entry. | P1 merged; picks on N3, N4, V6 | Browser: the logged-out repo view after the flip; LinkedIn Post Inspector (author) |
+| P1 | The repo's public face: the example dataset and `?lead=` link, the pipeline image and two demo screenshots, the new README with badge, `docs/case-study.md`, `docs/README.md`, past-tense notes in CLAUDE.md, requirements and plan. The author can open the README on the PR branch on GitHub and the example demo locally. | Nothing open (V1-V5, N1, N2 picked) | Browser: the example demo on :8502, and the README and case study rendered on GitHub (branch view) |
+| P2 | Go public: `scripts/leak-check-github.sh`, the full leak sweep (PR refs included), branch cleanup, topics and social preview, the build log closed out, the LinkedIn texts in `private/linkedin/`, then the flip (coordinator, with the author) and the logged-out checks. The author can add the Project entry. | P1 merged; the author's answers to the build-log gaps (N4) and the go-ahead for the flip | Browser: the logged-out repo view after the flip; LinkedIn Post Inspector (author) |
 
 P1 likely splits into four parts, run in order: the example dataset and deep
 link (logic), the visuals (iterating), the README with the docs index and
@@ -259,87 +324,13 @@ the rest of P2 is checks and steps outside git.
 
 ## Open visual decisions
 
-The author picks before P1's visuals part starts. Recommended option first.
-
-- **V1. Style of the pipeline image.**
-  1) The demo's theme: warm off-white, ink, one orange accent, Geist. It
-  matches the screenshots, so README and LinkedIn look like one piece.
-  2) A neutral variant: the same layout in ink and greys with a blue accent.
-  This puts distance from the deck's look, which WP7 built from the case
-  vendor's brand study (see Risks).
-  3) A Mermaid diagram in the README (GitHub renders it) plus a PNG export
-  for LinkedIn. Least work, but it looks generic.
-- **V2. What the pipeline image shows.**
-  1) One 2:1 image. Top: the six stages left to right (open registries →
-  market table → pre-filter → agent research → rubric score → SDR hand-off),
-  each with a 3-5 word note and an "LLM" or "no LLM" mark. Bottom: the scoring
-  strip (four signals × weights → `1 + 9 × weighted mean` → tiers A/B/C). No
-  counts.
-  2) Two images, flow and scoring apart. Clearer, but LinkedIn gets two
-  uploads and the social preview only one.
-  3) Flow only; the scoring stays as text in the README.
-- **V3. Which demo screens.**
-  1) Two: Queue with a lead open (score breakdown, a French quote with its
-  English) and Market (map and funnel). Both go in the README; LinkedIn uses
-  the Queue one next to the pipeline image.
-  2) Only Queue with a lead open.
-  3) Option 1 plus a short GIF of a weight slider re-ranking the queue. This
-  is the demo's best moment, but the author records it by hand with a screen
-  recorder.
-- **V4. The README's opening lines.**
-  1) "icp-scout maps a whole market from open data, researches a shortlist
-  with an AI agent, scores it with a rubric you can read, and hands SDRs a
-  ranked queue. Built as a take-home case for a GTM engineering role; the
-  case company stays private, and the example config targets a fictional
-  vendor."
-  2) Problem first: "Outbound teams buy lists and guess at fit. icp-scout
-  starts from every company in an open registry, …" with the framing line
-  second.
-  3) Framing first: "A take-home case for a GTM engineering role, built as a
-  reusable tool: …"
-- **V5. The case study's voice.**
-  1) First person, past tense, plain and short (the build log's tone), about
-  1,200 words, with lessons as bold lead-ins.
-  2) A shorter piece (~600 words) that links out to the ADRs and the build
-  log for depth.
-  3) Q&A format ("Why not buy a list?", "Why not let the model score?").
-- **V6. LinkedIn Project entry title (P2).**
-  1) "icp-scout: from open data to a ranked SDR queue"
-  2) "ICP research with an AI agent and a readable rubric"
-  3) "GTM case study: scoring a whole market from open data"
-  The post's hook gets 2-3 variants in `private/linkedin/post-draft.md`, picked
-  there.
+None. The author picked V1-V6 on 2026-10-06; the picks are under Decisions.
+The only choice left is the LinkedIn post's hook, picked in
+`private/linkedin/post-draft.md` in P2.
 
 ## Needs you
 
-- **N1. Demo data for the screenshots.** The committed fixtures give 34
-  groups, 3 researched; not worth screenshotting.
-  1) The synthetic example dataset (Architecture 1). About 300 lines with its
-  test. It also makes "try the demo" work from a fresh clone.
-  2) Screenshot the tiny fixture demo as it is (a sparse map, three rows).
-  3) No demo screenshot; the pipeline image only.
-  Default used: 1.
-- **N2. Numbers in public texts** (README, case study, LinkedIn).
-  1) Process numbers only: hours, agent sessions, cost per researched lead,
-  test count. No market or score numbers from the case run.
-  2) Also the open-data market counts that committed docs already carry
-  (funnel sizes in `docs/wp/wp5-demo.md`).
-  3) No numbers.
-  Default used: 1.
-- **N3. Merged remote branches** (10, e.g. `wp1-sourcing`).
-  1) Delete them before the flip. Their commits are in `main`, and PR refs
-  keep the history visible.
-  2) Keep them.
-  Default used: 1. This is a remote deletion, so the coordinator asks first.
-- **N4. The build log's open "author decided / caught" lines** (4 entries,
-  plus 6 author times). A public build log full of TODOs undercuts its point,
-  which is that the author made the calls.
-  1) The coordinator asks the author for each one in P2 (a few lines each);
-  author times are estimated from session timestamps as in PR #10.
-  2) Replace the decided/caught gaps with "not recorded" and estimate the
-  times.
-  3) Leave them.
-  Default used: 1.
+None. N1-N4 are answered under Decisions.
 
 ## Rulings
 
@@ -351,6 +342,7 @@ The author picks before P1's visuals part starts. Recommended option first.
 - Ruling: CLAUDE.md, requirements and plan get a past-tense note, not a rewrite; WP plans stay unchanged — they are the honest record, and readers of a case repo expect it — cost if wrong: a few lines.
 - Ruling: PR heads are fetched before the leak check, and PR and issue text gets its own check script — both become public with the repo, and `leak-check.sh` sees neither — cost if wrong: a few minutes.
 - Ruling: topics `gtm-engineering, lead-scoring, sales-intelligence, icp, open-data, ai-agents, llm, claude, streamlit, python` — the role, the method and the stack — cost if wrong: one `gh` command.
+- Ruling: the pipeline image takes its signal names, weights and tier cut-offs from `config/icp.example.yaml`, and its colours from `.streamlit/config.toml` — one source for each, and nothing case-specific can slip in — cost if wrong: one re-render.
 - Ruling: README install shows macOS/Linux first, Windows second — the author now works on macOS, and visitors mostly use POSIX shells — cost if wrong: none.
 - Ruling: the GitHub description stays as it is — it already states the pipeline in one line — cost if wrong: one `gh` command.
 
@@ -364,9 +356,10 @@ The author picks before P1's visuals part starts. Recommended option first.
   set explicitly (Architecture 1). Before committing, check that the image
   shows the example vendor.
 - **The demo's look echoes the case vendor's brand.** The WP7 deck took one
-  accent and a font close to the vendor's, and the demo theme followed it. The
-  theme is already in history, so this only matters for how recognisable the
-  shared images are. V1 option 2 is the way out if the author cares.
+  accent and a font close to the vendor's, and the demo theme followed it.
+  The author chose this theme for the pipeline image anyway (V1), knowing
+  it. The theme is already in history, so the risk is only that the shared
+  images are recognisable. Accepted; no part changes the palette.
 - **The leak check only warns in a worktree** (no `private/`). Every part
   runs the real check in the main checkout before its PR merges, or relies on
   CI with the secret.

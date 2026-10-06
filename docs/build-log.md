@@ -1030,6 +1030,15 @@ deep link so headless Chrome can capture an open lead. And it pointed out
 that PR refs and PR text go public with the repo but `leak-check.sh` sees
 neither.
 
-**The author decided / rejected / caught:** TODO (picks on V1-V6, N1-N4).
+**The author decided / rejected / caught:** took the recommended option on
+most picks: the demo's theme for the pipeline image, knowing it came from the
+case vendor's brand (V1); one image with flow and scoring and no counts (V2);
+the Queue with a lead open plus the Market page (V3); the pitch first and the
+framing as an italic note under the image (V4); a first-person case study of
+about 1,200 words (V5); the synthetic example dataset (N1); process numbers
+only (N2); deleting the merged branches before the flip (N3); and answering
+the build-log gaps when the coordinator asks (N4). Rejected all three drafted
+LinkedIn titles and wrote a new one (V6).
 
-**Output:** `docs/wp/public-release/PLAN.md`, this entry.
+**Output:** `docs/wp/public-release/PLAN.md` (written, then updated with the
+picks in a second PR), this entry.
