@@ -4,9 +4,9 @@ I built icp-scout as a take-home case for a GTM engineering role. This is what t
 
 ## The problem
 
-The brief asked for four things. Source 50 target companies for a B2B software vendor, in one country and one segment. Score each from 1 to 10, with logic that can be explained. Present the patterns to leadership. Sketch an outbound process an SDR team could scale.
+The brief asked for four things. Source a shortlist of target companies for a B2B software vendor. Score each from 1 to 10, with logic that can be explained. Present the patterns to leadership. Sketch an outbound process an SDR team could scale.
 
-I read it as two problems. The list of 50 is the visible one. The harder one is how someone would get a fifty-first, or do the same for another vendor next quarter. So I built a tool rather than a list, and the vendor-specific parts went into one config file.
+I read it as two problems. The shortlist is the visible one. The harder one is how someone would get the next company on it, or do the same for another vendor next quarter. So I built a tool rather than a list, and the vendor-specific parts went into one config file.
 
 ## The approach
 
@@ -25,7 +25,7 @@ The money goes where it matters. Stages 1, 2 and 4 cost nothing per lead. The ag
 
 ## What I learned
 
-**Start from the whole market, not a list.** A list tells you about the 50 names on it. The whole market tells you where the rest are, which regions are crowded, and what separates a good lead from a poor one. That is the material for the leadership presentation. It also keeps the agent's budget honest, because research is the one expensive stage and it only sees the shortlist. The limit is that this needs an open registry. It carries over to another country only where a comparable one exists.
+**Start from the whole market, not a list.** A list tells you about the names on it. The whole market tells you where the rest are, which regions are crowded, and what separates a good lead from a poor one. That is the material for the leadership presentation. It also keeps the agent's budget honest, because research is the one expensive stage and it only sees the shortlist. The limit is that this needs an open registry. It carries over to another country only where a comparable one exists.
 
 **Let the model extract and the code score.** The agent reads the web and reports what it finds: a signal, a grade, a quote. It never outputs the score. That makes every score checkable, because you can open a lead and read the evidence. It also turns the weights into a business conversation. In the demo you move a weight and the queue re-ranks with no model call. Someone who disagrees with the rubric can change it without arguing about a prompt.
 
@@ -49,4 +49,4 @@ The money goes where it matters. Stages 1, 2 and 4 cost nothing per lead. The ag
 
 ## How it was built
 
-Planning interviews, one work package per session, and a review before every merge. About 12 hours of my time to the presentation, 24 agent sessions, about $0.17 to $0.22 per researched lead, and 147 tests. The [build log](build-log.md) has the sessions and the [work package plans](wp/) have the detail. The leak check ([`scripts/leak-check.sh`](../scripts/leak-check.sh)) runs in CI over the whole history and kept the case company out of it.
+Planning interviews, one work package per session, and a review before every merge. It took about 12 hours of my time (estimated, to 3 October) and 24 agent sessions. Research cost about $0.17 to $0.22 per lead, and the suite has 147 tests. The [build log](build-log.md) has the sessions and the [work package plans](wp/) have the detail. The leak check ([`scripts/leak-check.sh`](../scripts/leak-check.sh)) runs in CI over the whole history and kept the case company out of it.

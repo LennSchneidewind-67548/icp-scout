@@ -88,7 +88,7 @@ icp-scout cost
 
 With Claude Code, as a workflow in which I make the calls: planning interviews, one work package per session, review before merge. The [build log](docs/build-log.md) records each session: what the agent proposed, and what I decided or caught. The work packages are planned in [`docs/wp/`](docs/wp/). The ADR 0003 leak check ([`scripts/leak-check.sh`](scripts/leak-check.sh)) runs in CI over all of git history and kept the case company out of it.
 
-In numbers: about 12 hours of my time to the presentation, 24 agent sessions, about $0.17 to $0.22 per researched lead, 147 tests.
+In numbers: about 12 hours of my time (estimated, to 3 October), 24 agent sessions, about $0.17 to $0.22 per researched lead, 147 tests.
 
 ## Repo map
 
