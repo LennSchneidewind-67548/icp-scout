@@ -49,4 +49,4 @@ The money goes where it matters. Stages 1, 2 and 4 cost nothing per lead. The ag
 
 ## How it was built
 
-Planning interviews, one work package per session, and a review before every merge. It took about 12 hours of my time (estimated, to 3 October) and 24 agent sessions. Research cost about $0.17 to $0.22 per lead, and the suite has 147 tests. The [build log](build-log.md) has the sessions and the [work package plans](wp/) have the detail. The leak check ([`scripts/leak-check.sh`](../scripts/leak-check.sh)) runs in CI over the whole history and kept the case company out of it.
+Planning interviews, one work package per session, and a review before every merge. It took about 14.5 hours of my time and 29 agent sessions up to the presentation (estimated). Research cost about $0.17 to $0.22 per lead, and the suite has 151 tests. The [build log](build-log.md) has the sessions and the [work package plans](wp/) have the detail. The leak check ([`scripts/leak-check.sh`](../scripts/leak-check.sh)) runs in CI over the whole history and kept the case company out of it.

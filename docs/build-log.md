@@ -13,9 +13,10 @@ Keep entries free of case-company specifics (ADR 0003); those go in `private/not
 
 ## Totals
 
-| Author time | Agent sessions | LLM spend (pipeline) | Work packages done |
-|---|---|---|---|
-| ~12 h (estimated from session timestamps, to 2026-10-03) | 24 | ~$2.04 API (the pilot); everything else on the subscription, $0 (list-price estimate ~$40 for 580 calls) | 7 of 8 (WP0-WP6); WP7, the deck, is left |
+| Scope | Author time | Agent sessions | LLM spend (pipeline) | Work packages done |
+|---|---|---|---|---|
+| The case, to the presentation (2026-09-29 to 2026-10-04) | ~14.5 h (estimated; see the entries) | 29 | ~$2.04 API (the pilot); everything else on the subscription, $0 (list-price estimate ~$40 for 580 calls) | 8 of 8 (WP0-WP7) |
+| The public release (2026-10-05 to the flip) | TODO | TODO | $0: no pipeline calls; the example data replays the recordings | P1-P2 |
 
 ---
 
@@ -840,7 +841,7 @@ author's HubSpot account until after the talk.
 
 ## 2026-10-03 · WP7 plan · `local`
 
-**Author time:** TODO
+**Author time:** ~30 min (the author's estimate)
 
 **Asked for:** a WP7 plan in `docs/wp/`, including a study of the vendor's
 visual identity to use as a rough direction for the deck, with the slides
@@ -863,7 +864,7 @@ cut order. The committed doc names no colours or fonts (ADR 0003).
 
 ## 2026-10-03 · WP7 deck redesign · `local`
 
-**Author time:** TODO
+**Author time:** ~30 min (the author's estimate)
 
 **Asked for:** the deck looked plain and unformatted. Keep the theme, take
 the layout of an earlier case deck as direction, and check every slide in
@@ -903,7 +904,7 @@ This entry.
 
 ## 2026-10-03 · Demo restyled to match the deck · `local`
 
-**Author time:** TODO
+**Author time:** ~30 min (the author's estimate)
 
 **Asked for:** restyle the Streamlit demo to match the deck's design, and
 check the result in Chrome.
@@ -919,7 +920,7 @@ eye lands on tier A as it does on the slides; queue movement stays
 green/red. The saved chart specs stay neutral: `demo.app_spec` swaps their
 palette for the app's at display time, the same move the deck makes.
 
-**The author decided / rejected / caught:** TODO.
+**The author decided:** took it as proposed.
 
 **Caught in the browser checks:** bordered containers carry no marker
 attribute, so the cards are keyed (`st-key-card_*`) to style them white; links
@@ -942,7 +943,7 @@ deck colours them for that one slide only).
 
 ## 2026-10-04 · Talk script in German · `local`
 
-**Author time:** TODO
+**Author time:** ~30 min (the author's estimate)
 
 **Asked for:** the script for presenting the case study. The talk is in
 German; the slides stay in English.
@@ -962,13 +963,13 @@ and contacts) and were corrected against the build log and the WP6 notes. The
 lead #1 email states a general pain point as a fact; the script gives an
 answer for when someone asks.
 
-**The author decided / rejected / caught:** TODO.
+**The author decided:** took it as proposed.
 
 **Output:** `private/deck/script-de.md` (not committed), this entry.
 
 ## 2026-10-04 · Rehearsal runs 1 and 2, feedback · `local`
 
-**Author time:** TODO
+**Author time:** ~30 min (the author's estimate)
 
 **Input:** speech-to-text transcripts of the first two timed rehearsals
 (22:35 and 21:28, demo included, target 20:00).
@@ -988,14 +989,14 @@ rewritten for screen sharing: one browser window with the deck and the demo
 as tabs, shared as a window. The old "Wi-Fi off" step was dropped, since the
 call needs the network; the demo still runs offline from recordings.
 
-**The author rejected / caught:** TODO.
+**The author rejected / caught:** nothing beyond the decisions above.
 
 **Output:** transcripts and feedback in `private/deck/rehearsal/`, the
 updated deck artifact and talk script (not committed), this entry.
 
 ## 2026-10-05 · Conductor pipeline config · `local`
 
-**Author time:** TODO
+**Author time:** ~15 min (12:47-13:42, minus a 40-minute gap; estimated from session timestamps)
 
 **The agent proposed:** a `## Pipeline` section in CLAUDE.md for the
 conductor plugin: the verify command (ruff, pytest, leak check, the same as
@@ -1007,14 +1008,14 @@ a visual decision. It flagged that the leak check is skipped in worktrees
 **The author decided:** review only after phases with browser checks; the
 review build runs on the case data; the draft went in as proposed.
 
-**The author rejected / caught:** TODO.
+**The author rejected / caught:** nothing; took it as proposed.
 
 **Output:** the Pipeline section in CLAUDE.md, `.conductor/` in
 `.gitignore`, this entry.
 
 ## 2026-10-06 · Public release plan · `local`
 
-**Author time:** TODO
+**Author time:** ~25 min (10:17-10:56, minus a 20-minute gap; estimated from session timestamps)
 
 **Asked for:** a plan to wrap up the project after the presentation: a new
 README, a public case study, repo hygiene, LinkedIn texts and a visual, then
@@ -1045,7 +1046,7 @@ picks in a second PR), this entry.
 
 ## 2026-10-06 · Public release P1 plan · `local`
 
-**Author time:** TODO
+**Author time:** ~10 min (11:05-11:12; estimated from session timestamps)
 
 **Asked for:** the phase plan for P1 of the public release, split into parts
 for one implementer each (conductor `phase-plan 1`).
@@ -1060,13 +1061,13 @@ synthetic company IDs that can't match a real one, fixed ledger timestamps so
 the screenshots are reproducible, and draft stage notes for the pipeline
 image, which the author reviews in part B.
 
-**The author decided / rejected / caught:** TODO.
+**The author decided:** took it as proposed.
 
 **Output:** `docs/wp/public-release/P1.md`, this entry.
 
 ## 2026-10-06 · Public release P1 part A · `remote`
 
-**Author time:** TODO
+**Author time:** ~10 min (review, 11:12-11:22; estimated from session timestamps)
 
 **Asked for:** the example dataset generator and the `?lead=` deep link
 (P1 steps 1 and 2).
@@ -1076,14 +1077,14 @@ fictional market on top of the fixture market and the three recorded leads and
 runs the real score and insights steps; and a 6-line `?lead=` parameter on the
 queue page that opens a lead once and is then dropped. Both come with tests.
 
-**The author decided / rejected / caught:** TODO.
+**The author decided:** took it as proposed.
 
 **Output:** `fixtures/demo/make_demo.py`, `tests/test_example_data.py`, the
 queue-page change in `app/streamlit_app.py` with two AppTests, this entry.
 
 ## 2026-10-06 · Public release P1 part B · `remote`
 
-**Author time:** TODO
+**Author time:** ~8 min (review, 11:22-11:30; estimated from session timestamps)
 
 **Asked for:** the pipeline image and the two demo screenshots (P1 steps 3 and 4).
 
@@ -1094,34 +1095,40 @@ Plain headless `--screenshot` captured a blank loading page, so the screenshots
 were taken through the DevTools protocol; the Queue shot scrolls the lead pane
 so the French quote and its English are visible.
 
-**The author decided / rejected / caught:** TODO.
+**The author decided:** took it as proposed; the reviewer caught the cut-off queue screenshot.
 
 **Output:** the three PNGs, the HTML source, `docs/assets/README.md`, a
 deviation note in the plan, this entry.
 
 ## 2026-10-06 · Public release P1 part C · `remote`
 
+**Author time:** ~5 min (review, 11:30-11:34; estimated from session timestamps)
+
 **Asked for:** the README rewrite, the docs index with the past-tense notes, and the case study (P1 steps 5 to 7).
 
 **The agent proposed:** a README in the fixed order (pitch, badge, pipeline image, framing note, then the sections), `docs/README.md`, a past-tense CLAUDE.md intro and "not in the public repo" notes on the requirements and plan, and a first-person case study of about 1,070 words. Process numbers come from the Totals row, the WP4 cost range and `pytest -q`; no market or score numbers. Also reworded the assets checklist bullet about the French quote, which the queue shot no longer shows.
 
-**The author decided / rejected / caught:** TODO.
+**The author decided:** asked what the case-study page was for, then kept it as is.
 
-**Output:** `README.md`, `docs/README.md`, `docs/case-study.md`, small edits to CLAUDE.md, `docs/requirements.md`, `docs/plan.md`, `docs/assets/README.md`, this entry. Author time: TODO.
+**Output:** `README.md`, `docs/README.md`, `docs/case-study.md`, small edits to CLAUDE.md, `docs/requirements.md`, `docs/plan.md`, `docs/assets/README.md`, this entry.
 
 ## 2026-10-06 · Public release P1 fix, pipeline image layout · `remote`
+
+**Author time:** ~10 min (11:50-12:02; estimated from session timestamps)
 
 **Asked for:** fix the pipeline image after the author saw it on GitHub: uneven title heights, loose spacing, a tiny label, and an unbalanced scoring strip.
 
 **The agent proposed:** one-line stage titles ("Registries", "Research" instead of the two-line ones), arrows centred on the title row, a large `icp-scout` title with a one-line pitch, tighter vertical spacing, and a re-render checked at 880 px wide.
 
-**The author decided / rejected / caught:** TODO.
+**The author caught:** on GitHub that the pipeline image looked off.
 
-**Output:** `docs/assets/src/pipeline.html`, `docs/assets/pipeline.png`, this entry. Author time: TODO.
+**The author decided:** approved the re-render and accepted slightly uneven arrow spacing.
+
+**Output:** `docs/assets/src/pipeline.html`, `docs/assets/pipeline.png`, this entry.
 
 ## 2026-10-06 · Public release P2 plan · `local`
 
-**Author time:** TODO
+**Author time:** ~13 min (14:40-14:53; estimated from session timestamps)
 
 **Asked for:** the phase plan for P2 of the public release (conductor
 `phase-plan 2`). The build-log questions, the branch deletion, the flip and
@@ -1144,6 +1151,25 @@ be removed by the owner, and that edited PR text keeps its old revisions.
 It proposed two Totals rows, the case and the release, and turning off the
 empty wiki.
 
-**The author decided / rejected / caught:** TODO.
+**The author decided:** took it as proposed.
 
 **Output:** `docs/wp/public-release/P2.md`, this entry.
+
+## 2026-10-06 · Public release P2 part A · `local`
+
+**Author time:** TODO
+
+**Asked for:** the GitHub-text leak check and the closed-out build log (P2
+steps 2 and 3).
+
+**The agent proposed:** `scripts/leak-check-github.sh`, which runs the leak
+terms over PR, review, issue, comment, release and repository text through
+`gh`, with a test against a stub `gh`; a CLAUDE.md rule that PR text counts as
+public; the author's build-log answers written in, author times estimated
+from session timestamps, a two-row Totals table, and the process numbers in
+the README and the case study moved to the case row.
+
+**The author decided / rejected / caught:** TODO.
+
+**Output:** `scripts/leak-check-github.sh`, `tests/test_leak_check_github.py`,
+CLAUDE.md, `docs/build-log.md`, `README.md`, `docs/case-study.md`.
