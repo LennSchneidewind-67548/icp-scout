@@ -61,7 +61,7 @@ def main() -> None:
                 try:
                     tabs = json.load(urllib.request.urlopen(f"http://127.0.0.1:{PORT}/json"))
                     break
-                except Exception:
+                except (OSError, ValueError):
                     time.sleep(0.3)
             if tabs is None:
                 raise SystemExit("Chrome did not start")
