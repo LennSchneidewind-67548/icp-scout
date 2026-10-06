@@ -1011,3 +1011,25 @@ review build runs on the case data; the draft went in as proposed.
 
 **Output:** the Pipeline section in CLAUDE.md, `.conductor/` in
 `.gitignore`, this entry.
+
+## 2026-10-06 · Public release plan · `local`
+
+**Author time:** TODO
+
+**Asked for:** a plan to wrap up the project after the presentation: a new
+README, a public case study, repo hygiene, LinkedIn texts and a visual, then
+making the repo public. The author's decisions came from a short interview
+(conductor `feature-plan`).
+
+**The agent proposed:** two phases in `docs/wp/public-release/PLAN.md`. P1 is
+the repo's public face; P2 covers the leak sweep, metadata, LinkedIn texts and
+the flip, which the coordinator confirms with the author. It flagged that the
+committed fixtures give a 34-group, 3-lead demo, too thin for a screenshot,
+and proposed a seeded synthetic example dataset. It also proposed a `?lead=`
+deep link so headless Chrome can capture an open lead. And it pointed out
+that PR refs and PR text go public with the repo but `leak-check.sh` sees
+neither.
+
+**The author decided / rejected / caught:** TODO (picks on V1-V6, N1-N4).
+
+**Output:** `docs/wp/public-release/PLAN.md`, this entry.
