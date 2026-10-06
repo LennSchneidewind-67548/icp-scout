@@ -1,5 +1,7 @@
 # Plan
 
+*Written for the case, before the presentation; `private/` is not in the public repo.*
+
 About 20 hours. Presentation date: 2026-10-05.
 Rule of thumb: if the pipeline runs late, cut app polish, never the insights.
 
@@ -27,6 +29,8 @@ Rule of thumb: if the pipeline runs late, cut app polish, never the insights.
   say so in the assumptions.
 
 ## After the presentation
+
+The release is planned in [wp/public-release/PLAN.md](wp/public-release/PLAN.md), which replaces the bullets below. The LinkedIn bullet mentions funnel numbers, which that plan rules out.
 
 - Swap in synthetic fixtures, check `git log` for anything case-specific, make the repo public.
 - LinkedIn post: the problem, the funnel numbers, cost per lead, link to the repo.

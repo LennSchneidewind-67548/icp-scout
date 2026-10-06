@@ -1,5 +1,7 @@
 # Requirements
 
+*Written for the case, before the presentation; `private/` is not in the public repo.*
+
 Fixed in the kickoff interview, 2026-09-29. The case brief itself is in
 `private/Case.md` (not committed).
 

@@ -3,10 +3,10 @@
 ## What this is
 
 A case study for a GTM engineering application, built as a general tool: source a market from open data, research a shortlist
-with an agent, score it with a rubric, hand SDRs a ranked queue. The brief is
+with an agent, score it with a rubric, hand SDRs a ranked queue. The brief was
 in `private/Case.md`, the role in `private/JobDescription.md`. Every decision
 from the kickoff is in `docs/requirements.md`; the work packages and hour
-budgets are in `docs/plan.md`.
+budgets are in `docs/plan.md`. `private/` is not in the public repo.
 
 ## Rules
 
