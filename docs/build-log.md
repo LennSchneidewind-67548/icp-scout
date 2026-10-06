@@ -1118,3 +1118,32 @@ deviation note in the plan, this entry.
 **The author decided / rejected / caught:** TODO.
 
 **Output:** `docs/assets/src/pipeline.html`, `docs/assets/pipeline.png`, this entry. Author time: TODO.
+
+## 2026-10-06 · Public release P2 plan · `local`
+
+**Author time:** TODO
+
+**Asked for:** the phase plan for P2 of the public release (conductor
+`phase-plan 2`). The build-log questions, the branch deletion, the flip and
+the social preview are steps for the coordinator or the author, not for an
+implementer. The LinkedIn texts stay in `private/linkedin/`.
+
+**The agent proposed:** `docs/wp/public-release/P2.md`, with one implementer
+part: `scripts/leak-check-github.sh` with a test against a stub `gh`, a
+CLAUDE.md rule that PR text counts as public, and the build log closed out
+with the author's answers. Everything else is a coordinator or author step
+with its commands written out. The coordinator asks the author 13 build-log
+questions (which entries and which fields), writes the LinkedIn texts in the
+main checkout, sweeps history with the PR heads fetched, deletes the merged
+branches, and sets topics and settings. The flip comes only on the author's
+yes. After it: logged-out checks and a small closing PR, which is also CI's
+first run on the public repo. It flagged that the case-era session logs
+(2026-10-03 and 10-04) aren't on this machine, so their author times are
+asked rather than estimated. It also flagged that a leak in a PR ref can't
+be removed by the owner, and that edited PR text keeps its old revisions.
+It proposed two Totals rows, the case and the release, and turning off the
+empty wiki.
+
+**The author decided / rejected / caught:** TODO.
+
+**Output:** `docs/wp/public-release/P2.md`, this entry.
