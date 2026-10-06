@@ -29,19 +29,17 @@
     font-family: "Geist", sans-serif; font-weight: 400;
     position: relative;
   }
-  .label {
-    position: absolute; left: 56px; top: 48px;
-    font-family: "Geist Mono", monospace; font-weight: 500; font-size: 20px;
-    color: var(--ink-2);
-  }
+  .head { position: absolute; left: 56px; right: 56px; top: 46px; }
+  .label { font-family: "Geist Mono", monospace; font-weight: 500; font-size: 40px; line-height: 1.1; color: var(--ink); }
+  .pitch { margin-top: 12px; font-size: 21px; line-height: 1.3; color: var(--ink-2); }
   .flow {
-    position: absolute; left: 56px; right: 56px; top: 156px;
+    position: absolute; left: 56px; right: 56px; top: 196px;
     display: flex; align-items: flex-start; justify-content: space-between;
   }
   .stage { width: 156px; }
-  .stage h2 { font-size: 24px; font-weight: 600; line-height: 1.2; height: 58px; margin-bottom: 10px; }
+  .stage h2 { font-size: 24px; font-weight: 600; line-height: 1.2; height: 30px; margin-bottom: 10px; white-space: nowrap; }
   .stage p { font-size: 17px; color: var(--ink-2); line-height: 1.35; height: 46px; margin-bottom: 18px; }
-  .arrow { color: var(--mark); font-size: 28px; line-height: 1; margin-top: 14px; }
+  .arrow { color: var(--mark); font-size: 28px; line-height: 30px; height: 30px; }
   .badge {
     display: inline-block; font-size: 14px; font-weight: 500; letter-spacing: 0.02em;
     padding: 4px 12px; border-radius: 999px;
@@ -50,8 +48,8 @@
   .badge.llm { background: var(--accent-bg); color: var(--accent); }
 
   .scoring {
-    position: absolute; left: 56px; right: 56px; top: 410px;
-    border-top: 1px solid var(--border); padding-top: 60px;
+    position: absolute; left: 56px; right: 56px; top: 396px;
+    border-top: 1px solid var(--border); padding-top: 52px;
     display: flex; align-items: center; gap: 20px;
   }
   .chips { display: flex; flex-wrap: wrap; gap: 10px; width: 420px; }
@@ -69,16 +67,16 @@
 </style>
 </head>
 <body>
-  <div class="label">icp-scout</div>
+  <div class="head"><div class="label">icp-scout</div><div class="pitch">Maps a market from open data, researches a shortlist, scores it, hands SDRs a ranked queue.</div></div>
 
   <div class="flow">
-    <div class="stage"><h2>Open registries</h2><p>Public registers, no scraping</p><span class="badge">no LLM</span></div>
+    <div class="stage"><h2>Registries</h2><p>Public registers, no scraping</p><span class="badge">no LLM</span></div>
     <div class="arrow">&rarr;</div>
     <div class="stage"><h2>Market table</h2><p>Sister companies rolled up</p><span class="badge">no LLM</span></div>
     <div class="arrow">&rarr;</div>
     <div class="stage"><h2>Pre-filter</h2><p>Rules pick the shortlist</p><span class="badge">no LLM</span></div>
     <div class="arrow">&rarr;</div>
-    <div class="stage"><h2>Agent research</h2><p>Signals with quoted evidence</p><span class="badge llm">LLM</span></div>
+    <div class="stage"><h2>Research</h2><p>Signals with quoted evidence</p><span class="badge llm">LLM</span></div>
     <div class="arrow">&rarr;</div>
     <div class="stage"><h2>Rubric score</h2><p>Readable weights, live re-rank</p><span class="badge">no LLM</span></div>
     <div class="arrow">&rarr;</div>
@@ -93,9 +91,9 @@
       <div class="chip">Growth <span>&times;2</span></div>
       <div class="chip">Tech maturity <span>&times;2</span></div>
     </div>
-    <div class="arrow" style="margin-top:0">&rarr;</div>
+    <div class="arrow">&rarr;</div>
     <div class="formula">score = 1 + 9 &times; weighted mean</div>
-    <div class="arrow" style="margin-top:0">&rarr;</div>
+    <div class="arrow">&rarr;</div>
     <div class="tiers">
       <div class="tier">A &ge; 8</div>
       <div class="tier">B &ge; 6</div>
