@@ -1215,3 +1215,22 @@ flip.
 
 **Output:** `docs/wp/public-release/PLAN.md`, `P1.md`, `P2.md`, `docs/plan.md`,
 `docs/README.md`, `docs/assets/README.md`, `README.md`, this entry.
+
+## 2026-10-06 · Social preview card · `local`
+
+**Author time:** TODO
+
+**Asked for:** a separate social preview image that stays readable when
+LinkedIn shrinks it to about 550 px wide (conductor `social-card`).
+
+**The agent proposed:** `docs/assets/src/social.html`, a 1200x627 card with
+the title, the one-line pitch and the six stage names in one row (the two LLM
+stages in the accent colour, no pills, no descriptions), rendered at 2x to
+`docs/assets/social.png` (2400x1254, 124 KB). It checked a 550 px copy; every
+word reads. Two stage names wrap to two lines so the row fits at 34 px.
+`pipeline.png` stays the README image.
+
+**The author decided:** TODO
+
+**Output:** `docs/assets/src/social.html`, `docs/assets/social.png`,
+`docs/assets/README.md`, this entry.
