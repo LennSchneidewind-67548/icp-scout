@@ -350,6 +350,12 @@ def moves_html(rows: list[tuple[str, int, int]], head: str, colour: str, show: i
 
 
 def queue_page() -> None:
+    # `?lead=<group_id>` opens a lead, for screenshots and links to one. It applies once
+    # and is then dropped, so the close button still closes it and a rerun doesn't reopen it.
+    if (wanted := st.query_params.get("lead")) is not None:
+        if wanted in set(table["group_id"]):
+            st.session_state["lead"] = wanted
+        del st.query_params["lead"]
     lead = st.session_state["lead"]
     if lead is not None and lead not in set(table["group_id"]):
         lead = st.session_state["lead"] = None
