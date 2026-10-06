@@ -1098,3 +1098,13 @@ so the French quote and its English are visible.
 
 **Output:** the three PNGs, the HTML source, `docs/assets/README.md`, a
 deviation note in the plan, this entry.
+
+## 2026-10-06 · Public release P1 part C · `remote`
+
+**Asked for:** the README rewrite, the docs index with the past-tense notes, and the case study (P1 steps 5 to 7).
+
+**The agent proposed:** a README in the fixed order (pitch, badge, pipeline image, framing note, then the sections), `docs/README.md`, a past-tense CLAUDE.md intro and "not in the public repo" notes on the requirements and plan, and a first-person case study of about 1,070 words. Process numbers come from the Totals row, the WP4 cost range and `pytest -q`; no market or score numbers. Also reworded the assets checklist bullet about the French quote, which the queue shot no longer shows.
+
+**The author decided / rejected / caught:** TODO.
+
+**Output:** `README.md`, `docs/README.md`, `docs/case-study.md`, small edits to CLAUDE.md, `docs/requirements.md`, `docs/plan.md`, `docs/assets/README.md`, this entry. Author time: TODO.
